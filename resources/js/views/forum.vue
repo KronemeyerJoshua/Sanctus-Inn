@@ -11,7 +11,7 @@
                     <template v-slot:title>{{sub.title}}</template>
                     <template v-slot:desc>{{sub.description}}</template>
                     <template v-slot:discussions>{{sub.threads_count}}</template>
-                    <template v-slot:recent>{{sub.latest_thread.title}}</template>
+                    <template v-slot:recent><router-link :to="{ name : 'threadPreview', params: {id: sub.id, threadId: sub.latest_thread.id } }">{{sub.latest_thread.title}}</router-link> by {{ sub.latest_thread.user.name}}</template>
                 </Category>
             </div>
         </section>
