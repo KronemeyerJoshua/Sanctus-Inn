@@ -59,7 +59,7 @@
                         type: "is-success",
                         position: "top-center"
                     })
-                    //this.$router.go()
+                    this.$router.go()
                 }).catch((error) => {
                     console.log(error)
                 })
