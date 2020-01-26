@@ -17,7 +17,7 @@ class ForumCategoryController extends Controller
             {
                 $sub->loadCount('threads');
                 $sub->threads_count;
-                $sub->latestThread->latestPost;
+                $sub->latestThread->user;
             }
         }
         return $forumCategories;
