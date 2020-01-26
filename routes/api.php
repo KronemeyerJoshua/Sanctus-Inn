@@ -32,6 +32,9 @@ Route::group(['middleware' => ['sameDomain']], function() {
     Route::get('postsByThreadId/{threadId}', '\App\Http\Controllers\ForumPostsController@getPostsByThreadId');
     Route::get('numThreadsByCategory/{subcategoryId}', '\App\Http\Controllers\ForumThreadsController@getNumberThreadsByCategory');
     Route::get('me', '\App\Http\Controllers\Auth\AuthController@me');
+    Route::get('/twitchdata', '\App\Http\Controllers\Live\TwitchController@streamerData');
+    Route::get('/friendly/{user}', '\App\Http\Controllers\Live\TwitchController@friendlyName');
+    Route::get('/twitchuser/{user}', '\App\Http\Controllers\Live\TwitchController@getTwitchUser');
 });
 
 Route::group(['middleware' => ['jwt']], function() {

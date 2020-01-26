@@ -45,6 +45,12 @@ apiClient.interceptors.response.use(response => {
     return Promise.reject(error)
 })
 
+export const live = {
+    getStreams() {
+        return apiClient.get('/api/twitchdata')
+    }
+}
+
 export const forum = {
     getCategories() {
         return apiClient.get('/api/categories')

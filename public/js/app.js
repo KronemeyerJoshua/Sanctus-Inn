@@ -54562,11 +54562,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 /*!***********************************************!*\
   !*** ./resources/js/services/EventService.js ***!
   \***********************************************/
-/*! exports provided: forum, default */
+/*! exports provided: live, forum, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "live", function() { return live; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "forum", function() { return forum; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
@@ -54661,6 +54662,11 @@ function () {
     return _ref.apply(this, arguments);
   };
 }());
+var live = {
+  getStreams: function getStreams() {
+    return apiClient.get('/api/twitchdata');
+  }
+};
 var forum = {
   getCategories: function getCategories() {
     return apiClient.get('/api/categories');
@@ -54767,8 +54773,8 @@ var modules = requireContext.keys().map(function (file) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\joshu\Evolution\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\joshu\Evolution\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\joshu\evolution-laravel-vue\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\joshu\evolution-laravel-vue\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
