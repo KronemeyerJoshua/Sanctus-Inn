@@ -44,6 +44,7 @@ router.beforeEach(async (to, from, next) => {
             await store.dispatch('auth/fetchUser')
                 .then( () => next() )
                 .catch(error => {
+                    router.go();
                     console.log(error);
                 })
         } catch (e) {
