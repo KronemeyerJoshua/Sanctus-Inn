@@ -2,8 +2,10 @@ import router from './router/routes'
 import store from './store'
 import Vue from 'vue'
 import Vuelidate from 'vuelidate'
+import CKEditor from '@ckeditor/ckeditor5-vue';
 
 Vue.use(Vuelidate);
+Vue.use(CKEditor);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
