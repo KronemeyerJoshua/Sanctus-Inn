@@ -118,9 +118,10 @@ export default {
     }
 
     .navbar-item, .navbar-link {
-        font-size: 20px;
+        font-size: 22px;
         text-transform: uppercase;
         font-weight: bold;
+        font-family: 'IM Fell Great Primer SC', serif;
         color: rgba(255, 255, 255, 0.7)
     }
 
