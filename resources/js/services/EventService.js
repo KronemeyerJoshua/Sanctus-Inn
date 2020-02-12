@@ -66,6 +66,9 @@ export const forum = {
     },
     getNumOfThreadsByCat(subcategoryId) {
         return apiClient.get('/api/numThreadsByCategory/' + subcategoryId)
+    },
+    newPost(post) {
+        return apiClient.post('/api/requestPostForumThread' + post)
     }
 }
 
