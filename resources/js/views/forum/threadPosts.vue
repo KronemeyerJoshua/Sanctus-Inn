@@ -17,6 +17,8 @@
     import { forum } from "../../services/EventService"
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
+    import "../../../../public/css/editor.css"
+
     export default {
         name: "threadPosts",
         components: {
@@ -48,5 +50,4 @@
 </script>
 
 <style scoped>
-
 </style>
