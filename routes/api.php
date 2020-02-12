@@ -34,6 +34,7 @@ Route::group(['middleware' => ['sameDomain']], function() {
     Route::get('/twitchdata', '\App\Http\Controllers\Live\TwitchController@streamerData');
     Route::get('/friendly/{user}', '\App\Http\Controllers\Live\TwitchController@friendlyName');
     Route::get('/twitchuser/{user}', '\App\Http\Controllers\Live\TwitchController@getTwitchUser');
+    Route::post('requestPostForumThread', '\App\Http\Controllers\ForumPostsController@newPost');
 });
 
 Route::group(['middleware' => ['jwt']], function() {
