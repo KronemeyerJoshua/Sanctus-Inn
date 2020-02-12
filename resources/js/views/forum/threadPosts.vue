@@ -8,6 +8,7 @@
     </Post>
         <div>
             <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+            <button class="button is-primary" @click="submitPost">Post That Shizz</button>
         </div>
     </div>
 </template>
@@ -26,11 +27,20 @@
         },
         methods: {
             dateFormat(date) {
+            },
+            submitPost()
+            {
+                forum.newPost({thread_id: this.thread_id, user_id: 1, content: this.editorData})
+                .then(({data}) => {
+                    console.log(data.message);
+                })
             }
         },
         data() {
             return {
                 posts: {},
+                thread_id: this.$route.params.threadId,
+                user_id: 1,
                 editor: ClassicEditor,
                 editorData: '<p>Content of the editor.</p>',
                 editorConfig: {
