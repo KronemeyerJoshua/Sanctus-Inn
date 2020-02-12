@@ -1,9 +1,9 @@
 html {
-    background-image: url("../images/caravan_bg.jpg");
-    background-size: 100%;
-    background-position: top center;
-    background-repeat: no-repeat;
-    background-color: #161328;
+    background-size: 100% 50%, 100% 50%;
+    background-color: #000000;
+    background-image: url("../images/bg-top.png"), url("../images/bg-bottom.png");
+    background-repeat: no-repeat, no-repeat;
+    background-position: top center, bottom center;
     height: 100%;
 }
 
