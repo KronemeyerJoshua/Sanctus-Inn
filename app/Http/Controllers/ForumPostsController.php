@@ -32,6 +32,7 @@ class ForumPostsController extends Controller
             $post->content = $request->content;
 
             $post->save();
+            $post->thread()->touch();
 
             return response()->json(['status' => '200', 'message' => 'Successfully posted']); // TODO: Check valid SQL response before returning successful json message
         }
