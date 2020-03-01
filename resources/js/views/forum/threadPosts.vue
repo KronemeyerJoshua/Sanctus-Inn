@@ -6,7 +6,7 @@
         <template v-slot:timestamp>{{ dateFormat(post.created_at) }}</template>
         <template v-slot:content><p v-html="post.content"></p></template>
     </Post>
-        <div>
+        <div v-if="this.$store.state.auth.user !== null">
             <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
             <button class="button is-primary" @click="submitPost">Post That Shizz</button>
         </div>
