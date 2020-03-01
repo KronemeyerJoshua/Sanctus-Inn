@@ -11,16 +11,15 @@ class ForumCategoryController extends Controller
     public function getCategories() {
         $forumCategories = forum_category::with(['subcategories', 'subcategories.latestThread', 'subcategories.latestThread.latestPost:id,thread_id,updated_at,user_id', 'subcategories.latestThread.latestPost.user'])->get();
 
-        /*
+
         foreach ($forumCategories as $fc)
         {
             foreach($fc->subcategories as $sub)
             {
                 $sub->loadCount('threads');
-                $sub->threads_count;
-                $sub->latestThread->user;
             }
-        }*/
+        }
+
         return $forumCategories;
     }
 }
