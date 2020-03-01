@@ -4,7 +4,7 @@
         <template v-slot:avatar><img src="https://assets.rebelmouse.io/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbWFnZSI6Imh0dHBzOi8vYXNzZXRzLnJibC5tcy80MTQyNjY5L29yaWdpbi5qcGciLCJleHBpcmVzX2F0IjoxNTgwNDMzNjcyfQ.na9LHtGFnpQGv-AtAgl9c84BkPaAYICRVmnancQL_qU/img.jpg?width=980"></template>
         <template v-slot:username>{{post.user.name}}</template>
         <template v-slot:timestamp>{{ dateFormat(post.created_at) }}</template>
-        <template v-slot:content>{{ post.content }}</template>
+        <template v-slot:content><p v-html="post.content"></p></template>
     </Post>
         <div>
             <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
@@ -30,9 +30,18 @@
             },
             submitPost()
             {
-                forum.newPost({thread_id: this.thread_id, user_id: 1, content: this.editorData})
+                forum.newPost({thread_id: this.thread_id, user_id: this.$store.state.auth.user.id, content: this.editorData})
                 .then(({data}) => {
                     console.log(data.message);
+                    if (data.status == '200')
+                    {
+                        forum.getPosts(this.$route.params.threadId)
+                            .then(({data}) =>
+                                this.posts = data)
+                            .catch((error) => {
+                                console.log(error)
+                            })
+                    }
                 })
             }
         },
@@ -40,10 +49,15 @@
             return {
                 posts: {},
                 thread_id: this.$route.params.threadId,
-                user_id: 1,
                 editor: ClassicEditor,
                 editorData: '<p>Content of the editor.</p>',
                 editorConfig: {
+                    heading: {
+                        options: [
+                            { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                            { model: 'heading1', view: { name: 'h1', classes:'title'}, title: 'Heading 1',  class: 'ck-heading_heading1' },
+                        ]
+                    }
                     // The configuration of the editor.
                 }
             }
