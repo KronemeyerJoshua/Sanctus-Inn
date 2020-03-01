@@ -23,14 +23,21 @@ class ForumPostsController extends Controller
 
     public function newPost(Request $request)
     {
-        $post = new forum_posts;
+        $user = auth()->user();
 
-        $post->thread_id = $request->thread_id;
-        $post->user_id = $request->user_id; // TODO: Primitive, Authenticate User via JWT before posting
-        $post->content = $request->content;
+        if ($user) {
+            $post = new forum_posts;
+            $post->thread_id = $request->thread_id;
+            $post->user_id = $user['id'];
+            $post->content = $request->content;
 
-        $post->save();
+            $post->save();
 
-        return response()->json(['message' => 'Successfully posted']); // TODO: Check valid SQL response before returning successful json message
+            return response()->json(['status' => '200', 'message' => 'Successfully posted']); // TODO: Check valid SQL response before returning successful json message
+        }
+        else
+        {
+            return response()->json(['message' => 'Uh oh.. Something went wrong..']);
+        }
     }
 }
