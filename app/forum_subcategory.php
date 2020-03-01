@@ -15,6 +15,6 @@ class forum_subcategory extends Model
     }
 
     public function latestThread() {
-        return $this->hasOne('App\forum_threads', 'subcategory_id')->latest();
+        return $this->hasOne('App\forum_threads', 'subcategory_id')->latest('updated_at');
     }
 }
