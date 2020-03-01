@@ -35,7 +35,7 @@
     export default {
         name: "Post",
         props: {
-            id: [Number, String]
+            id: [Number, String],
         }
     }
 </script>
