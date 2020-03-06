@@ -51,6 +51,12 @@ export const live = {
     }
 }
 
+export const user = {
+    getProfile(userId) {
+        return apiClient.get('/api/profile/' + userId)
+    }
+}
+
 export const forum = {
     getCategories() {
         return apiClient.get('/api/categories')
