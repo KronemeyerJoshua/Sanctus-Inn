@@ -34,10 +34,11 @@ Route::group(['middleware' => ['sameDomain']], function() {
     Route::get('/twitchdata', '\App\Http\Controllers\Live\TwitchController@streamerData');
     Route::get('/friendly/{user}', '\App\Http\Controllers\Live\TwitchController@friendlyName');
     Route::get('/twitchuser/{user}', '\App\Http\Controllers\Live\TwitchController@getTwitchUser');
-    Route::post('requestPostForumThread', '\App\Http\Controllers\ForumPostsController@newPost');
+    Route::get('/profile/{userId}', '\App\Http\Controllers\ProfileController@getProfile');
 });
 
 Route::group(['middleware' => ['jwt']], function() {
+    Route::post('requestPostForumThread', '\App\Http\Controllers\ForumPostsController@newPost');
     Route::get('me', '\App\Http\Controllers\Auth\AuthController@me');
     Route::post('logout', '\App\Http\Controllers\Auth\AuthController@logout');
     Route::put('profile', 'ProfileController@update');
