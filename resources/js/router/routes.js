@@ -11,6 +11,7 @@ const apocCalc = () => import('../views/apocCalc.vue')
 const apply = () => import('../views/apply.vue')
 const threads = () => import('../views/forum/threads')
 const threadPosts = () => import('../views/forum/threadPosts')
+const profile = () => import('../views/user/profile')
 
 
 Vue.use(Router)
@@ -63,6 +64,11 @@ const router = new Router({
             path: '/forum/:id/:threadId',
             name: 'threadPreview',
             component: threadPosts,
+        },
+        {
+            path: '/profile/:userId',
+            name: 'profile',
+            component: profile,
         },
     ]
 })
