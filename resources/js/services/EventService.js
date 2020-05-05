@@ -45,6 +45,12 @@ apiClient.interceptors.response.use(response => {
     return Promise.reject(error)
 })
 
+export const roster = {
+    getRosterData() {
+        return apiClient.get('/api/getDiscordRoster')
+    }
+}
+
 export const live = {
     getStreams() {
         return apiClient.get('/api/twitchdata')
