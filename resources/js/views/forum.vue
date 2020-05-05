@@ -12,7 +12,7 @@
                     <template v-slot:desc>{{sub.description}}</template>
                     <template v-slot:discussions>{{sub.threads_count}}</template>
                     <template v-slot:recent><router-link :to="{ name : 'threadPreview', params: {id: sub.id, threadId: sub.latest_thread.id } }">{{sub.latest_thread.title}}</router-link> by
-                        <router-link :to="{ name : 'threadPreview', params: {id: sub.id, threadId: sub.latest_thread.id } }" v-if="sub.latest_thread.latest_post !== null">{{sub.latest_thread.latest_post.user.name}}</router-link></template>
+                        <router-link :to="{ name : 'profile', params: {userId: sub.latest_thread.latest_post.user.id } }" v-if="sub.latest_thread.latest_post !== null">{{sub.latest_thread.latest_post.user.name}}</router-link></template>
                 </Category>
             </div>
         </section>
