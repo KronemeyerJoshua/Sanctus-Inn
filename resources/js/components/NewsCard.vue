@@ -1,12 +1,9 @@
 <template>
-    <div class="NewsCard">
-        <div class="banner"
-             :style="'background: url(images/test-news-image.jpg); background-size: 100%; background-position: 50%;'">
-            <span class="date">12-19-2019</span>
-        </div>
-
-        <div class="NewsTitle">
-            <p>Do not trust China, China is Asshoe</p>
+    <div class="card">
+        <div class="media-content">
+            <p class="headline title is-4"><router-link :to="{ name : 'home' }">Evolution Guild Site Live! Evolution Guild Site Live!</router-link></p>
+            <p class="content">Sometimes when I code, I make mistakes. Don't tell Alerion, he'll have my ass.
+            </p>
         </div>
     </div>
 </template>
@@ -21,6 +18,66 @@ export default {
 </script>
 
 <style scoped>
+    .card a
+    {
+        color: white;
+    }
+    .card a:hover
+    {
+        color: #00b89c;
+    }
+    .card {
+        background: no-repeat rgba(0,0,0,0.7) center url('https://happygamer.com/wp-content/uploads/2019/09/Ashes-of-Creation.jpg'); background-size: auto 250px;
+        text-align: center;
+        color: white;
+        min-width: 250px;
+        min-height: 250px;
+        max-width: 250px;
+        max-height: 250px;
+        margin: 10px;
+        box-shadow: #0a0a0a 1px 1px 2px 2px;
+        border-radius: 5px;
+        padding: 0;
+        overflow: hidden;
+        transition: linear 0.2s;
+    }
+    .card:hover
+    {
+        background-size: auto 105% !important;
+        box-shadow: #00b89c 1px 1px 8px 2px;
+        border: 2px rgba(133,207,170,1) solid;
+        border-radius: 5px;
+    }
+    .headline {
+        text-align: center;
+        color: rgba(255,255,255,0.9);;
+        overflow: hidden;
+        line-height: 1em;
+        text-shadow: #0a0a0a 2px 2px;
+    }
+    .media-content
+    {
+        padding: 5px;
+        text-align: center;
+        transition: linear 0.2s;
+        height: 255px;
+        background-color: rgba(0,0,0,0.7);
+        position: absolute;
+        bottom: -200px;
+    }
+    .content
+    {
+        margin-bottom: 0.5rem;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+    }
+    .card:hover .media-content
+    {
+        background-color: rgba(0,0,0,0.9);
+        bottom: -8px;
+    }
     .NewsCard {
         border: solid 1px white;
         overflow:hidden;
