@@ -35,7 +35,7 @@ Route::group(['middleware' => ['sameDomain']], function() {
     Route::get('/friendly/{user}', '\App\Http\Controllers\Live\TwitchController@friendlyName');
     Route::get('/twitchuser/{user}', '\App\Http\Controllers\Live\TwitchController@getTwitchUser');
     Route::get('/profile/{userId}', '\App\Http\Controllers\ProfileController@getProfile');
-    Route::get('/getDiscordRoster', '\App\Http\Controllers\RosterController@getRosterData');
+    Route::get('getDiscordRoster', '\App\Http\Controllers\RosterController@getRosterData');
 });
 
 Route::group(['middleware' => ['jwt']], function() {
