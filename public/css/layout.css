@@ -1,15 +1,13 @@
 html {
-    background-size: 100% 50%, 100% 50%;
-    background-color: #000000;
-    background-image: url("../images/bg-top.png"), url("../images/bg-bottom.png");
-    background-repeat: no-repeat, no-repeat;
-    background-position: top center, bottom center;
+    background: #000000 url("../images/bg_custom.jpg") no-repeat fixed bottom;
+    background-size: cover;
     height: 100%;
+    overflow: auto;
 }
 
 .container {
     padding-top: 20px;
+    height: 90%;
 }
 
 [v-cloak] { display:none; !important }
-as
