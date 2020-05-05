@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Cache;
-class RosterController
-
+class RosterController extends Controller
 {
-    public function rosterdata(Request $request)
+    public function getRosterData()
     {
         $json_options = [
             "http" => [
@@ -17,11 +15,6 @@ class RosterController
             ]
         ];
         $json_decode = array();
-        $dbupdate = \DB::table('last_updated')->where('name', 'roster')->value('last_updated');
-        $dbupdate = strtotime($dbupdate);
-        if (Cache::has('roster')) {
-            return Cache::get('roster');
-        } else {
             $game_races = array("Kaelar", "Vaelune", "Empyrean", "Py'Rai", "Ren'Kai", "Vek", "Dünir", "Niküa", "Tulnar");
             $game_classes = array("Bard", "Cleric", "Fighter", "Mage", "Ranger", "Rogue", "Summoner", "Tank");
 
@@ -72,8 +65,6 @@ class RosterController
 
             }
             $json_decode = \DB::table('discord_roster')->select(array('name', 'race', 'class'))->get();
-            Cache::add('roster', $json_decode, now()->addHours('12'));
-        }
 
         return $json_decode;
     }
