@@ -51,9 +51,21 @@ export const roster = {
     }
 }
 
+export const gameDb = {
+    getAllItems() {
+        return apiClient.get('/api/getAllItems');
+    },
+    getAllSpells() {
+        return apiClient.get('/api/getAllSpells');
+    }
+}
+
 export const live = {
     getStreams() {
         return apiClient.get('/api/twitchdata')
+    },
+    getStreamsByGameId(id) {
+        return apiClient.get('/api/twitchdata/' + id)
     }
 }
 
