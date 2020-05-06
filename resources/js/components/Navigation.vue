@@ -32,7 +32,7 @@
 
                     <div class="navbar-dropdown">
                         <a class="navbar-item">
-                            Apoc Calc
+                            <router-link :to="{ name : 'apoc-calc' }" class="navbar-item">Apoc Calc</router-link>
                         </a>
                     </div>
                 </div>
