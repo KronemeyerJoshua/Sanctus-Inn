@@ -34,6 +34,9 @@
         color: #bd8647;
         text-shadow: #eea756 0 0 10px;
     }
+    .table thead th {
+        color: rgba(255,255,255,0.7);
+    }
 </style>
 
 <script>
