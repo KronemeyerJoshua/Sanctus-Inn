@@ -46,7 +46,7 @@ const router = new Router({
             component: forum,
         },
         {
-            path: '/apoc-calc',
+            path: '/apoc-calc/:premade?',
             name: 'apoc-calc',
             component: apocCalc,
         },
