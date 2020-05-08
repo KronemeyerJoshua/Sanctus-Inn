@@ -47,11 +47,14 @@
         data() {
             return {
                 sortProps: {name: 'name', dir: 'asc', inverse: 1},
-                currentPage: 1
             }
         },
 
         props: {
+            currentPage: {
+                type: Number,
+                default: 1
+            },
             columns: {
                 type: Array,
                 default: function() {
