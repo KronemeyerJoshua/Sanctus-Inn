@@ -1,10 +1,16 @@
+// DEPRECIATED, DO NOT USE, ONLY FOR REFERENCE
+// DEPRECIATED, DO NOT USE, ONLY FOR REFERENCE
+// DEPRECIATED, DO NOT USE, ONLY FOR REFERENCE
+// DEPRECIATED, DO NOT USE, ONLY FOR REFERENCE
+// DEPRECIATED, DO NOT USE, ONLY FOR REFERENCE
+// DEPRECIATED, DO NOT USE, ONLY FOR REFERENCE
 <template>
 <div class="container">
     <transition name="fade">
     <div v-if="isLoading" class="text-center" key="1" style="height: 0;">
         <h3>Please wait a moment while our GM fetches our records...</h3>
     </div>
-    <div v-else key="2">
+    <div v-else key="2" class="table-container">
         <table class="table is-hoverable is-fullwidth">
             <thead>
             <tr>
@@ -19,7 +25,7 @@
                 <td>{{member.class}}</td>
             </tr>
         </table>
-        <p>
+        <p class="has-text-centered">
             <button @click="decrementPage" :disabled="this.currentPage === 1">Previous</button>
             <button @click="incrementPage">Next</button>
         </p>
@@ -31,7 +37,7 @@
 <style>
     .table {
         font-family: 'EB Garamond', serif;
-        background: rgba(0,0,0,0.7);
+        background: transparent;
         color: rgba(240,240,240,0.9);
     }
     .table > tr:hover {
@@ -44,6 +50,11 @@
     .table thead th:hover {
         color: #bd8647;
         text-shadow: #eea756 0 0 10px;
+    }
+    .table-container {
+        border-radius: 3px;
+        margin: 5px;
+        background: rgba(0,0,0,0.7);
     }
 </style>
 
