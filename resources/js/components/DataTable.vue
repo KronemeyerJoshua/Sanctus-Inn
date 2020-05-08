@@ -47,11 +47,12 @@
         data() {
             return {
                 sortProps: {name: 'name', dir: 'asc', inverse: 1},
+                currentPage: this.pageNum
             }
         },
 
         props: {
-            currentPage: {
+            pageNum: {
                 type: Number,
                 default: 1
             },
@@ -75,11 +76,11 @@
         methods: {
             incrementPage() {
                 this.currentPage++;
-                window.history.pushState(this.currentPage, null, this.$route.path + "/" + this.currentPage);
+                this.$router.replace({name: this.$route.name, params: {pageNumber: this.currentPage.toString()}} )
             },
             decrementPage() {
                 this.currentPage--;
-                window.history.pushState(this.currentPage, null, this.$route.path + "/" + this.currentPage);
+                this.$router.replace({name: this.$route.name, params: {pageNumber: this.currentPage.toString()}} );
             },
             sortListString(columnName) {
                 if (this.sortProps.name != columnName) {
