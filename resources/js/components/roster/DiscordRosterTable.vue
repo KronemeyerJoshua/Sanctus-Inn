@@ -13,12 +13,16 @@
                 <th>Class</th>
             </tr>
             </thead>
-            <tr v-for="member in roster_json">
+            <tr v-for="member in roster_json.slice(( (this.currentPage-1) * pageSize), pageSize * currentPage)">
                 <td>{{member.name}}</td>
                 <td>{{member.race}}</td>
                 <td>{{member.class}}</td>
             </tr>
         </table>
+        <p>
+            <button @click="decrementPage" :disabled="cantGoBack">Previous</button>
+            <button @click="incrementPage">Next</button>
+        </p>
     </div>
     </transition>
 </div>
@@ -51,23 +55,27 @@ export default {
                 columns: [{field: 'name', label: 'Name', sortable: true},
                           {field: 'race', label: 'Race', sortable: true},
                           {field: 'class', label: 'Class', sortable: true}],
-                options: {
-                    search: true,
-                    showColumns: true
-                },
                 isLoading: true,
-                isPaginated: true,
-                isPaginationSimple: false,
-                paginationPosition: 'bottom',
-                sortIcon: 'arrow-up',
-                sortIconSize: 'is-small',
-                currentPage: 1,
-                perPage: 5,
+                pageSize: 15,
+                currentPage: 1
             }
         },
 
         methods: {
+            incrementPage() {
+                this.currentPage++;
+            },
+            decrementPage() {
+                this.currentPage--;
+            }
         },
+
+    computed: {
+            cantGoBack() {
+                return this.currentPage === 1;
+            },
+
+    },
 
         async created() {
             roster.getRosterData()
