@@ -21,7 +21,9 @@ export const mutations = {
 
     FETCH_USER_FAILURE(state) {
         state.user = null
+        state.token = null
         window.localStorage.removeItem('token')
+        window.location.reload()
     },
 
     SET_TOKEN(state, { token }) {
@@ -48,15 +50,23 @@ export const actions = {
         }
     },
     async fetchUser({ commit }) {
-        try {
-            const { data } = await apiClient.verifyByToken()
-            commit('SET_USER', data)
-        } catch (e) {
-            commit('FETCH_USER_FAILURE')
-        }
+        await apiClient.verifyByToken()
+            .then(({data}) => commit('SET_USER', data))
+            .catch((error) => {
+                if (error.message.localeCompare('Token has expired')) {
+                    apiClient.refreshToken()
+                        .then( ({data}) => { commit('SET_TOKEN', data);
+                            apiClient.verifyByToken()
+                                .then( ({data}) => commit('SET_USER', data))
+                                .catch((error) => console.log(error))
+                        })
+                        .catch(() => commit('FETCH_USER_FAILURE'))
+                } else {
+                    commit('FETCH_USER_FAILURE')
+                }
+            })
     },
     setUser({ commit }, payload) {
-        console.log(payload)
         commit('SET_USER', payload)
     },
     saveToken({ commit }, payload) {
