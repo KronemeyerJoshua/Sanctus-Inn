@@ -30,7 +30,7 @@ const router = new Router({
             component: aboutUs,
         },
         {
-            path: '/roster',
+            path: '/roster/:pageNumber?',
             name: 'roster',
             component: roster,
         },
