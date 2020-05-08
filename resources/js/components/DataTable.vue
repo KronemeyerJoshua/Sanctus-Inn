@@ -10,10 +10,24 @@
                         <td v-for="column in columns">{{member[column.field]}}</td>
                     </tr>
                 </table>
-                <p class="has-text-centered">
+
+
+                <nav class="pagination is-small is-centered" role="navigation" aria-label="pagination">
+                    <a class="pagination-previous" @click="decrementPage">Previous</a>
+                    <a class="pagination-next" @click="incrementPage">Next page</a>
+                    <ul class="pagination-list">
+                        <li><a class="pagination-link" aria-label="Goto page 1" :class="{'is-current': isStartPage}" @click="goToPage(1)">1</a></li>
+                        <li v-if="currentPage-1 > 1"><a class="pagination-link" :aria-label="'Goto page' + currentPage-1" @click="decrementPage">{{currentPage-1}}</a></li>
+                        <li v-if="currentPage !== 1 && currentPage !== maxPages"><a class="pagination-link is-current"  :aria-label="'Page' + currentPage" aria-current="page">{{currentPage}}</a></li>
+                        <li v-if="currentPage+1 < maxPages"><a class="pagination-link" :aria-label="'Goto page' + currentPage+1" @click="incrementPage">{{currentPage+1}}</a></li>
+                        <li><a class="pagination-link" :class="{'is-current': isEndPage}" :aria-label="'Goto page' + maxPages" @click="goToPage(maxPages)">{{maxPages}}</a></li>
+                    </ul>
+                </nav>
+
+                <!--<p class="has-text-centered">
                     <button @click="decrementPage" :disabled="this.currentPage === 1">Previous</button>
                     <button @click="incrementPage">Next</button>
-                </p>
+                </p> -->
             </div>
 </template>
 
@@ -39,6 +53,21 @@
         margin: 5px;
         background: rgba(0,0,0,0.7);
     }
+    .pagination {
+        margin: 0;
+    }
+    .pagination-previous, .pagination-next, .pagination-link {
+        color: rgba(240,240,240,0.9);
+    }
+    .pagination-previous:hover, .pagination-next:hover, .pagination-link:hover {
+        color: #bd8647;
+        text-shadow: #eea756 0 0 10px;
+    }
+    .pagination-link.is-current {
+        background: transparent;
+        color: #bd8647;
+        text-shadow: #eea756 0 0 10px;
+    }
 </style>
 
 <script>
@@ -47,7 +76,8 @@
         data() {
             return {
                 sortProps: {name: 'name', dir: 'asc', inverse: 1},
-                currentPage: this.pageNum
+                currentPage: this.pageNum,
+                maxPages: Math.ceil(this.data.length / this.pageSize)
             }
         },
 
@@ -73,14 +103,31 @@
                 }
             }
         },
+        computed: {
+            isStartPage() {
+                return this.currentPage === 1;
+            },
+            isEndPage() {
+                return this.currentPage === this.maxPages;
+            }
+        },
         methods: {
+            goToPage(page) {
+                if (page !== this.currentPage) {
+                    this.currentPage = Number(page);
+                    this.$router.replace({name: this.$route.name, params: {pageNumber: this.currentPage.toString()}})
+                }
+            },
             incrementPage() {
+
                 this.currentPage++;
                 this.$router.replace({name: this.$route.name, params: {pageNumber: this.currentPage.toString()}} )
             },
             decrementPage() {
-                this.currentPage--;
-                this.$router.replace({name: this.$route.name, params: {pageNumber: this.currentPage.toString()}} );
+                if (this.currentPage > 1) {
+                    this.currentPage--;
+                    this.$router.replace({name: this.$route.name, params: {pageNumber: this.currentPage.toString()}});
+                }
             },
             sortListString(columnName) {
                 if (this.sortProps.name != columnName) {
