@@ -25,11 +25,7 @@
                             {field: 'class', label: 'Class'}]
             }
         },
-        computed: {
-
-        },
         async created() {
-            console.log(this.$route.matched.some(({ name }) => name === 'pageNumber'));
             roster.getRosterData()
                 .then(({data}) => {
                     this.data_json = data;
