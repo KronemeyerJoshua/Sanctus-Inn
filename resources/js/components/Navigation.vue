@@ -1,6 +1,15 @@
 <template>
     <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div id="navbar" class="navbar-menu" style="flex-grow: 1; justify-content: center;">
+        <div class="navbar-brand">
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar-main">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navbar-main" class="navbar-menu columns">
+            <div style="width: 13%"></div>
+            <div class="navbar-start" style="width: 74%; flex-grow: 1; justify-content: center;">
                 <router-link :to="{ name : 'about-us' }" class="navbar-item">
                     About
                 </router-link>
@@ -31,17 +40,15 @@
                     </a>
 
                     <div class="navbar-dropdown">
-                        <a class="navbar-item">
                             <router-link :to="{ name : 'apoc-calc' }" class="navbar-item">Apoc Calc</router-link>
-                        </a>
                     </div>
                 </div>
-        </div>
+            </div>
 
-            <div class="navbar-end" style="width: 0px;">
+            <div class="navbar-end" style="width: 13%; min-width: 170px;">
                 <div class="navbar-item has-dropdown is-hoverable" v-if="userexists">
 
-                    <a class="navbar-link">
+                    <a class="navbar-link is-arrowless">
                         <router-link :to="'/profile/' + userid" class="navbar-item">{{username}}</router-link>
                     </a>
 
@@ -61,6 +68,9 @@
                     </div>
                 </div>
             </div>
+
+
+        </div>
     </nav>
 </template>
 
@@ -112,7 +122,34 @@ export default {
     },
     created() {
     }
+
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Get all "navbar-burger" elements
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+    // Check if there are any navbar burgers
+    if ($navbarBurgers.length > 0) {
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach( el => {
+            el.addEventListener('click', () => {
+
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+            });
+        });
+    }
+
+});
 </script>
 
 <style scoped>
@@ -138,6 +175,7 @@ export default {
     .nav-image-parent
     {
         width: 48px;
+        min-width: 40px;
     }
     .nav-image:hover
     {
@@ -149,7 +187,6 @@ export default {
         font-weight: bold;
         font-family: 'EB Garamond', serif;
         color: rgba(150, 150, 150, 0.7);
-        text-shadow: black 0px 0px 4px;
         padding-top: 0px;
         padding-bottom: 0px;
         transition: linear 0.2s;
@@ -181,7 +218,7 @@ export default {
     .router-link-active {
         color: #3490dc;
     }
-    @media screen and (min-width: 1025px) {
+    @media screen and (min-width: 1024px) {
         .navbar-item.is-hoverable:hover .navbar-dropdown {
             display: block !important;
         }
@@ -189,4 +226,17 @@ export default {
             display: none;
         }
     }
+    @media screen and (min-width: 1024px) {
+        .navbar-end .navbar-dropdown .navbar-item {
+            padding: 0;
+            justify-content: center;
+        }
+    }
+
+    @media screen and (max-width: 1023px) {
+        .navbar-menu {
+            background: rgba(0,0,0,0.3);
+        }
+    }
+
 </style>
