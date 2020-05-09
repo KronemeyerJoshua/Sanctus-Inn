@@ -5,5 +5,7 @@
 @import 'variables';
 
 //Bulma
+@import "~bulma/sass/utilities/initial-variables.sass";
+$navbar-breakpoint: $tablet;
 @import '~bulma';
 @import url('https://fonts.googleapis.com/css?family=EB+Garamond&display=swap');
