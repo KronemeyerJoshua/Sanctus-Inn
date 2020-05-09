@@ -7,7 +7,7 @@
                 <span aria-hidden="true"></span>
             </a>
         </div>
-        <div id="navbar-main" class="navbar-menu columns">
+        <div id="navbar-main" class="navbar-menu">
             <div style="width: 13%"></div>
             <div class="navbar-start" style="width: 74%; flex-grow: 1; justify-content: center;">
                 <router-link :to="{ name : 'about-us' }" class="navbar-item">
