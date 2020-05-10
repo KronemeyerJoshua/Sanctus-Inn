@@ -165,6 +165,13 @@
                         }
                     });
             }
+        },
+        mounted() {
+            // Param input exceeds maxPages, default to last page
+            if (this.currentPage > this.maxPages) {
+                this.currentPage = this.maxPages;
+                this.$router.replace({name: this.$route.name, params: {pageNumber: this.currentPage.toString()}})
+            }
         }
     }
 </script>
