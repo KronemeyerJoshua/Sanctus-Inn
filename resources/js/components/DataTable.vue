@@ -35,7 +35,10 @@
     .table {
         font-family: 'EB Garamond', serif;
         background: transparent;
-        color: rgba(240,240,240,0.9);
+        color: rgba(220, 220, 220, 0.9);
+    }
+    td {
+        border-color: rgba(0,0,0,0.9) !important;
     }
     .table > tr:hover {
         color: #bd8647;
@@ -43,6 +46,7 @@
     }
     .table thead th {
         color: rgba(255,255,255,0.7);
+        border-color: rgba(0,0,0,0.9) !important;
     }
     .table thead th:hover {
         color: #bd8647;
@@ -51,7 +55,9 @@
     .table-container {
         border-radius: 3px;
         margin: 5px;
-        background: rgba(0,0,0,0.7);
+        background: rgba(201,201,201,0.05);
+        border: 1px solid rgba(10,10,10,0.9);
+
     }
     .pagination {
         margin: 0;
@@ -119,9 +125,10 @@
                 }
             },
             incrementPage() {
-
-                this.currentPage++;
-                this.$router.replace({name: this.$route.name, params: {pageNumber: this.currentPage.toString()}} )
+                if (this.currentPage < this.maxPages) {
+                    this.currentPage++;
+                    this.$router.replace({name: this.$route.name, params: {pageNumber: this.currentPage.toString()}})
+                }
             },
             decrementPage() {
                 if (this.currentPage > 1) {
