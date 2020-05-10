@@ -166,11 +166,17 @@
                     });
             }
         },
-        mounted() {
+        async mounted() {
             // Param input exceeds maxPages, default to last page
             if (this.currentPage > this.maxPages) {
                 this.currentPage = this.maxPages;
-                this.$router.replace({name: this.$route.name, params: {pageNumber: this.currentPage.toString()}})
+                await this.$router.replace({name: this.$route.name, params: {pageNumber: this.currentPage.toString()}})
+            }
+
+            // Param input is negative, please don't do that, default back to page 1
+            if (this.currentPage < 1) {
+                this.currentPage = 1;
+                await this.$router.replace({name: this.$route.name, params: {pageNumber: this.currentPage.toString()}})
             }
         }
     }
