@@ -73,6 +73,9 @@ export const user = {
     getProfile(userId) {
         return apiClient.get('/api/profile/' + userId)
     },
+    updateBio(bio) {
+        return apiClient.put('/api/updateUserBio', bio)
+    },
     updateProfilePicture(image) {
         return apiClient.post('/api/uploadProfileImage', image, { headers: { 'Content-Type': 'image/jpeg'} })
     }
