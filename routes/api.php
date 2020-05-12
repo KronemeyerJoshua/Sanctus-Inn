@@ -45,4 +45,5 @@ Route::group(['middleware' => ['jwt']], function() {
     Route::get('me', '\App\Http\Controllers\Auth\AuthController@me');
     Route::post('logout', '\App\Http\Controllers\Auth\AuthController@logout');
     Route::put('profile', 'ProfileController@update');
+    Route::post('uploadProfileImage', 'ProfileController@updateProfilePic');
 });
