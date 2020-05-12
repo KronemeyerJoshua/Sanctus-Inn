@@ -5,7 +5,7 @@
                 <div class="profile-avatar is-flex">
                     <div class="avatar-container">
                         <img id="avatar" :src="profilePictureUrl" class="avatar" @error="noUserImage">
-                        <div class="change-image" >
+                        <div class="change-image" v-if="this.$store.state.auth.user.id === this.profile.id">
                             <label for="uploader" class="change-image-text">
                                 <a>Change</a>
                             </label>
@@ -15,7 +15,18 @@
                     <div class="title" style="flex: 1 0 100%">{{ this.profile.forum_id }}</div>
                 </div>
             </div>
-            <div class="profile-bio column is-three-fifths"> {{ this.profile.bio }}</div>
+            <div class="profile-bio column is-three-fifths">
+
+                <div class="bioPreview" v-if="bioEditMode === false">
+                    <div class="bioEditButton" v-if="this.$store.state.auth.user.id === this.profile.id" @click="editBio"><a>Edit</a></div>
+                    {{ this.profile.bio }}
+                </div>
+
+                <div class="bioEdit" v-if="bioEditMode === true">
+                    <textarea v-model="bioTextArea" class="textarea" placeholder="Tell us about yourself">{{ this.profile.bio }}</textarea>
+                    <button class="is-small is-dark" @click="updateBio">Save</button>
+                </div>
+            </div>
             <div class="profile-char column is-one-fifth">
                 <ul>
                     <li>Character Name: {{ this.profile.character }}</li>
@@ -28,6 +39,14 @@
 </template>
 
 <style scoped>
+    .bioEditButton {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    .profile-bio {
+        position: relative;
+    }
     .profile
     {
         color: white;
@@ -84,7 +103,25 @@
         name: "profile",
         components: {
         },
+        data() {
+            return {
+                profile: null,
+                loaded: false,
+                dataUrl: null,
+                profilePictureUrl: null,
+                isOwnProfile: false,
+                bioEditMode: false,
+                bioTextArea: "",
+            }
+        },
         methods: {
+            updateBio() {
+                this.bioEditMode = false;
+                this.profile.bio = this.bioTextArea;
+            },
+            editBio() {
+                this.bioEditMode = true
+            },
             noUserImage() {
                 this.profilePictureUrl = '/storage/images/default.jpg'
             },
@@ -156,15 +193,6 @@
                 reader.readAsDataURL(file)
             }
         },
-        data() {
-            return {
-                profile: null,
-                loaded: false,
-                dataUrl: null,
-                profilePictureUrl: null,
-                isOwnProfile: false
-            }
-        },
         watch: {
             $route(to, from) {
                 user.getProfile(this.$route.params.userId)
@@ -185,6 +213,7 @@
                     this.profile = data;
                     this.profilePictureUrl = '/storage/images/' + this.profile.id + '.jpg';
                     this.isOwnProfile = (this.profile.id === this.$store.state.auth.user.id);
+                    this.bioTextArea = this.profile.bio;
                 })
                 .catch((error) =>
                         console.log(error))
