@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '../store'
 const apiClient = axios.create({
-    baseURL: 'http://72.201.145.171:8000',
+    baseURL: 'http://72.208.200.244:8000',
     withCredentials: false, // This is the default
     headers: {
         Accept: 'application/json',
@@ -72,6 +72,9 @@ export const live = {
 export const user = {
     getProfile(userId) {
         return apiClient.get('/api/profile/' + userId)
+    },
+    updateProfilePicture(image) {
+        return apiClient.post('/api/uploadProfileImage', image, { headers: { 'Content-Type': 'image/jpeg'} })
     }
 }
 
