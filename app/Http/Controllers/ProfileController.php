@@ -12,4 +12,10 @@ class ProfileController extends Controller
     {
         return Profile::where('id', $userId)->first();
     }
+
+    public function updateProfilePic(Request $request)
+    {
+        $path = $request->file('image')->storeAs('public/images', $request->user()->id . ".jpg");
+        return response()->json(['message' => $path]);
+    }
 }
