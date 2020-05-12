@@ -117,6 +117,7 @@
         methods: {
             updateBio() {
                 this.bioEditMode = false;
+                user.updateBio({bio: this.bioTextArea});
                 this.profile.bio = this.bioTextArea;
             },
             editBio() {
