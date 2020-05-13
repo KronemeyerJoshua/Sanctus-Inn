@@ -10,6 +10,7 @@ class ForumPostsController extends Controller
 {
     public function getPostsByThreadId(Request $request, $threadId) {
         $posts = forum_posts::where('thread_id', $threadId)->get();
+        $posts[0]->thread;
         foreach ($posts as $post)
         {
             $post->user->name;
