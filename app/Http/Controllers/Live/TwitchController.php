@@ -8,13 +8,30 @@ use Illuminate\Http\Request;
 
 class TwitchController extends Controller
 {
-    public function streamerData($gameid = 510699) {
+
+    protected function getJsonPost($url) {
+        $json_options = [
+            "http" => [
+                "method" => "POST"
+            ]
+        ];
+        $json_context = stream_context_create($json_options);
+        $response = file_get_contents($url, false, $json_context);
+        return json_decode($response);
+    }
+    private function getAuthToken() {
+        $url = "https://id.twitch.tv/oauth2/token";
+        $tokenInfo = collect($this->getJsonPost($url . '?client_id=8byk0sdns7qlyjkijamyowgg47ed8t&client_secret=oiusgwc7r9q824myvm98sg9q2wym8r&grant_type=client_credentials'));
+        return $tokenInfo['access_token'];
+    }
+    public function streamerData($gameid = 138585) {
         $json_decode = [];
         $user = "";
         $json_options = [
             "http" => [
                 "method" => "GET",
-                "header" => "Client-ID: 8byk0sdns7qlyjkijamyowgg47ed8t"
+                "header" =>  "Client-ID: 8byk0sdns7qlyjkijamyowgg47ed8t\r\n" .
+                             "Authorization: Bearer ". $this->getAuthToken() ."\r\n"
             ]
         ];
 
