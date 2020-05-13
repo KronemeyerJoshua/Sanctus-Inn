@@ -10,7 +10,7 @@
     <Post v-for="post in posts" :key="post.id">
         <template v-slot:avatar><img :id="'avatar' + post.id" :src="'/storage/images/' + post.user_id + '.jpg'" @error="noImageFound(post.id)"></template>
         <template v-slot:username><router-link :to="'/profile/' + post.user.id">{{post.user.name}}</router-link></template>
-        <template v-slot:timestamp>{{ dateFormat(post.created_at) }}</template>
+        <template v-slot:timestamp>{{ formatDate(post.created_at) }}</template>
         <template v-slot:content><p v-html="post.content" style="word-wrap: break-word; color: rgba(215,215,215, 0.8);"></p></template>
     </Post>
         <div v-if="this.$store.state.auth.user !== null">
@@ -25,6 +25,7 @@
     import Post from "../../components/forum/Post";
     import { forum } from "../../services/EventService"
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+    import moment from 'moment'
 
     import "../../../../public/css/editor.css"
 
@@ -54,6 +55,9 @@
                             })
                     }
                 })
+            },
+            formatDate(date) {
+                return moment(date).format('llll')
             }
         },
         data() {
