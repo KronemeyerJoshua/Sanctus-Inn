@@ -1,15 +1,23 @@
 <template>
-    <div>
+    <div style="">
+    <div v-if="isLoading">
+        Loading...
+    </div>
+    <div v-else>
+        <div class="forum-title" style="">
+            <h1 class="title">{{ this.posts[0].thread.title }}</h1>
+        </div>
     <Post v-for="post in posts" :key="post.id">
-        <template v-slot:avatar><img src="https://assets.rebelmouse.io/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbWFnZSI6Imh0dHBzOi8vYXNzZXRzLnJibC5tcy80MTQyNjY5L29yaWdpbi5qcGciLCJleHBpcmVzX2F0IjoxNTgwNDMzNjcyfQ.na9LHtGFnpQGv-AtAgl9c84BkPaAYICRVmnancQL_qU/img.jpg?width=980"></template>
+        <template v-slot:avatar><img :id="'avatar' + post.id" :src="'/storage/images/' + post.user_id + '.jpg'" @error="noImageFound(post.id)"></template>
         <template v-slot:username>{{post.user.name}}</template>
         <template v-slot:timestamp>{{ dateFormat(post.created_at) }}</template>
-        <template v-slot:content><p v-html="post.content"></p></template>
+        <template v-slot:content><p v-html="post.content" style="word-wrap: break-word; color: rgba(215,215,215, 0.8);"></p></template>
     </Post>
         <div v-if="this.$store.state.auth.user !== null">
             <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
             <button class="button is-primary" @click="submitPost">Post That Shizz</button>
         </div>
+    </div>
     </div>
 </template>
 
@@ -27,6 +35,9 @@
         },
         methods: {
             dateFormat(date) {
+            },
+            noImageFound(e) {
+                document.getElementById('avatar' + e).src = "/storage/images/default.jpg";
             },
             submitPost()
             {
@@ -48,8 +59,10 @@
         data() {
             return {
                 posts: {},
+                thread: {},
                 thread_id: this.$route.params.threadId,
                 editor: ClassicEditor,
+                isLoading: true,
                 editorData: '<p>Content of the editor.</p>',
                 editorConfig: {
                     heading: {
@@ -64,8 +77,10 @@
         },
         created() {
             forum.getPosts(this.$route.params.threadId)
-                .then(({data}) =>
-                    this.posts = data)
+                .then(({data}) => {
+                    this.posts = data;
+                    this.isLoading = false;
+                })
                 .catch((error) => {
                     console.log(error)
                 })
@@ -74,4 +89,10 @@
 </script>
 
 <style scoped>
+    .title {
+        border-bottom: #c0a16b 2px solid;
+        margin-bottom: 20px;
+        padding-bottom: 5px;
+        color: rgba(215,215,215, 0.8);
+    }
 </style>
