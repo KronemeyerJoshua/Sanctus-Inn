@@ -2,18 +2,12 @@
     <article class="media">
         <figure class="media-left">
             <p class="avatar"><slot name="avatar"><img src="public/images/test-news-image.jpg"></slot></p>
-            <strong><slot name="username" class="username">John Smith</slot></strong>
-            <slot name="replyTime"></slot>
+            <strong class="username"><slot name="username">John Smith</slot></strong>
+            <slot name="timestamp"></slot>
         </figure>
         <div class="media-content">
             <div class="content">
-                <p>
-                    <br>
-                    <slot name="content" class="postBody">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</slot>
-                </p>
-                <p>
-                    <small><slot name="timestamp">20m</slot></small>
-                </p>
+                <slot name="content" class="postBody"></slot>
             </div>
             <nav class="level is-mobile">
                 <div class="level-left">
@@ -39,19 +33,29 @@
     export default {
         name: "Post",
         props: {
-            id: [Number, String],
+            post: [String],
+            default: "Post could not be loaded"
+        },
+        data() {
+            return {
+                postBody: this.post,
+            }
         }
     }
 </script>
 
 <style scoped>
     .media-content {
-        width: 80%;
+        width: 100%;
     }
     .avatar img {
         max-height: 64px;
         height: 64px;
         width: auto;
+    }
+    .username {
+        display: block;
+        width: 100%;
     }
     .avatar {
         text-align: center;
@@ -60,11 +64,13 @@
         justify-content: center;
         align-items: center;
     }
-    .media-left {
+    .media .media-left {
         width: 232px;
         max-width: 232px;
+        text-align: center;
     }
-    .media {
-        text-align: center !important;
+    .media .media-content {
+        max-width: 100% !important;
+        width: 50% !important;
     }
 </style>
