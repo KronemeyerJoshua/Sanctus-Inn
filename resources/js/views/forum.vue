@@ -50,12 +50,14 @@
 
 <style scoped>
     .forumContainer {
-        padding: 5px;
-        color: white;
-        background: black;
+        padding: 10px;
+        color: rgba(215,215,215,0.9);
+        background: rgba(73, 47, 19, 0.6);
     }
     .categoryContainer {
-        border: 1px solid white;
+        border-radius: 5px;
+        border: 1px solid rgba(30,30,30,0.8);
+        box-shadow: #0a0a0a 1px 1px 2px 2px;
     }
     .categoryContainer > .category:last-child {
         border: none;
@@ -68,4 +70,5 @@
         padding-left: 5px;
         border-bottom: 1px solid white;
     }
+
 </style>
