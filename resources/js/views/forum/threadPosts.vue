@@ -9,7 +9,7 @@
         </div>
     <Post v-for="post in posts" :key="post.id">
         <template v-slot:avatar><img :id="'avatar' + post.id" :src="'/storage/images/' + post.user_id + '.jpg'" @error="noImageFound(post.id)"></template>
-        <template v-slot:username>{{post.user.name}}</template>
+        <template v-slot:username><router-link :to="'/profile/' + post.user.id">{{post.user.name}}</router-link></template>
         <template v-slot:timestamp>{{ dateFormat(post.created_at) }}</template>
         <template v-slot:content><p v-html="post.content" style="word-wrap: break-word; color: rgba(215,215,215, 0.8);"></p></template>
     </Post>
