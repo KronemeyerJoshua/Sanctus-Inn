@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div style="padding: 10px;">
         <transition name="fade">
             <h1 key="1" v-if="isLoading" style="height: 0" class="text-center">Loading...</h1>
             <div v-else class="" key="2">
@@ -39,9 +39,9 @@
                     <div class="column is-tab" @click="{ loadgame(18122); activetab = 1; }" :class="{'active' : activetab === 1}">World of Warcraft</div>
                     <div class="column is-tab" @click="{ loadguild(); activetab = 2; }" :class="{'active' : activetab === 2}">Guild</div>
                 </div>
-                <div class="columns is-multiline" key="3" style="padding-top: 10px;">
-                    <a v-for="user in twitchdata.twitch.data" @click="loadIframe(user.user_id)"  class="column is-one-quarter" style="overflow: hidden;">
-                        <div id="live-card" class="card" :style="'background: url(' + user.thumbnail_url + '); height: 200px; width: 300px; max-width: 300px; position: relative; background-size: 100% 100%; background-position: center center; background-repeat: no-repeat;'">
+                <div class="columns is-multiline is-centered" key="3" style="padding-top: 10px;">
+                    <a v-for="user in twitchdata.twitch.data" @click="loadIframe(user.user_id)"  class="column is-one-quarter" style="overflow: hidden; flex-direction: row; justify-content: center; align-content: center; align-items: center;">
+                        <div id="live-card" class="card" :style="'background: url(' + user.thumbnail_url + '); height: 150px; width: 250px; position: relative; background-size: 100% 100%; background-position: center center; background-repeat: no-repeat; margin: auto;'">
                             <div class="titlebar">{{user.user_name}}</div>
                             <div class="viewers" >Viewers: {{user.viewer_count}}</div>
                         </div>
