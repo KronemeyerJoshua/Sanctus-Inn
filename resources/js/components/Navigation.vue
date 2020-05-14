@@ -1,6 +1,9 @@
 <template>
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
+            <router-link :to="{ name : 'home' }" class="navbar-item">
+                <img src="/images/logo.png">
+            </router-link>
             <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar-main">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -8,8 +11,7 @@
             </a>
         </div>
         <div id="navbar-main" class="navbar-menu">
-            <div style="width: 13%"></div>
-            <div class="navbar-start" style="width: 74%; flex-grow: 1; justify-content: center;">
+            <div class="navbar-start" style="margin: 0 auto; width: 90%; flex-flow: row wrap; text-align: center; justify-content: space-around; ">
                 <router-link :to="{ name : 'about-us' }" class="navbar-item">
                     About
                 </router-link>
@@ -20,10 +22,6 @@
 
                 <router-link :to="{ name : 'live' }" class="navbar-item">
                     Live
-                </router-link>
-
-                <router-link :to="{ name : 'home' }" class="nav-image-parent">
-                    <img src="/images/logo.png" alt="" class="nav-image">
                 </router-link>
 
                 <router-link :to="{ name : 'apply' }" class="navbar-item">
@@ -45,14 +43,14 @@
                 </div>
             </div>
 
-            <div class="navbar-end" style="width: 13%; min-width: 170px;">
+            <div class="navbar-end" style="">
                 <div class="navbar-item has-dropdown is-hoverable" v-if="userexists">
 
                     <a class="navbar-link is-arrowless">
                         <router-link :to="'/profile/' + userid" class="navbar-item">{{username}}</router-link>
                     </a>
 
-                    <div class="navbar-dropdown">
+                    <div class="navbar-dropdown is-left">
                         <a class="navbar-item" @click="logout">
                             Logout
                         </a>
@@ -153,12 +151,13 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <style scoped>
+    .navbar-brand .navbar-item img {
+        max-height: 2.8rem;
+    }
     .navbar {
         background: rgba(0,0,0,0.3);
         border-bottom: 1px solid rgba(255,255,255,0.1);
-        -webkit-box-shadow: 0 8px 6px -6px #000;
-        -moz-box-shadow: 0 8px 6px -6px #000;
-        box-shadow: 0 8px 6px -6px #000;
+        box-shadow: 0px 12px 14px -14px #000;
     }
     .button
     {
@@ -181,8 +180,8 @@ document.addEventListener('DOMContentLoaded', () => {
     {
         opacity: 1;
     }
-    .navbar-item, .navbar-link {
-        font-size: 24px;
+    .navbar-menu .navbar-item, .navbar-link {
+        font-size: 20px;
         text-transform: uppercase;
         font-weight: bold;
         font-family: 'EB Garamond', serif;
@@ -192,16 +191,23 @@ document.addEventListener('DOMContentLoaded', () => {
         transition: linear 0.2s;
     }
 
-    .navbar-item:hover, .navbar-link:hover, .has-dropdown:hover, .navbar-item.has-dropdown:focus .navbar-link, .navbar-item.has-dropdown:hover .navbar-link, .navbar-item.has-dropdown.is-active .navbar-link {
+    .navbar-menu .navbar-item:hover,
+    .navbar-menu .navbar-link:hover,
+    .navbar-menu .has-dropdown:hover,
+    .navbar-menu .navbar-item.has-dropdown:focus .navbar-link,
+    .navbar-menu .navbar-item.has-dropdown:hover .navbar-link,
+    .navbar-menu .navbar-item.has-dropdown.is-active .navbar-link {
         background: none !important;
     }
 
-    .navbar-link:hover, a.navbar-item:hover, .navbar-dropdown a.navbar-item:hover  {
+    .navbar-menu .navbar-link:hover,
+    .navbar-menu a.navbar-item:hover,
+    .navbar-menu .navbar-dropdown a.navbar-item:hover  {
 
         color: #bd8647;
         text-shadow: #eea756 0 0 10px;
     }
-    .router-link-exact-active, .router-link-active, .router-link-exact-active .nav-image
+    .navbar-menu .router-link-exact-active, .navbar-menu .router-link-active, .navbar-menu .router-link-exact-active .nav-image
     {
         opacity: 1;
         color: #bd8647 !important;
