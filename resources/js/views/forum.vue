@@ -52,12 +52,9 @@
     .forumContainer {
         padding: 10px;
         color: rgba(215,215,215,0.9);
-        background: rgba(73, 47, 19, 0.6);
     }
     .categoryContainer {
-        border-radius: 5px;
-        border: 1px solid rgba(30,30,30,0.8);
-        box-shadow: #0a0a0a 1px 1px 2px 2px;
+        padding: 10px;
     }
     .categoryContainer > .category:last-child {
         border: none;
@@ -66,9 +63,13 @@
         color: rgba(0,0,0,0.7) !important;
         font-weight: bold;
     }
+    .forumHeader {
+        padding: -5px;
+        border: 1px solid black;
+    }
     .categories {
         padding-left: 5px;
-        border-bottom: 1px solid white;
+        /* border-bottom: 1px solid white; */
     }
 
 </style>
