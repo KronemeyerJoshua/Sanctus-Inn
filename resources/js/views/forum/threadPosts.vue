@@ -1,5 +1,5 @@
 <template>
-    <div style="">
+    <div class="postsContainer">
     <div v-if="isLoading">
         Loading...
     </div>
@@ -98,5 +98,9 @@
         margin-bottom: 20px;
         padding-bottom: 5px;
         color: rgba(215,215,215, 0.8);
+    }
+    .postsContainer {
+        padding: 10px;
+        min-height: 100vh;
     }
 </style>
