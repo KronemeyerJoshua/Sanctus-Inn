@@ -67,8 +67,6 @@
     .threadContainer {
         padding: 10px;
         color: rgba(215,215,215,0.9);
-        background: rgba(73, 47, 19, 0.6);
-        box-shadow: #0a0a0a 1px 1px 2px 2px;
         width: 100%;
         max-width: 100%;
     }
@@ -82,6 +80,9 @@
         border: none;
     }
     .forumHeader {
-        margin-bottom: 0;
+        border: 1px solid black;
+    }
+    .columns {
+        margin: 0;
     }
 </style>
