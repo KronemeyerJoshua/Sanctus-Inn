@@ -53,10 +53,7 @@
         text-shadow: #eea756 0 0 10px;
     }
     .table-container {
-        border-radius: 3px;
         margin: 5px;
-        background: rgba(201,201,201,0.05);
-        border: 1px solid rgba(10,10,10,0.9);
 
     }
     .pagination {
