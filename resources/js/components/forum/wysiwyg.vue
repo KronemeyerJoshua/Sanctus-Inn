@@ -1,36 +1,97 @@
 <template>
     <div style="position: relative;">
             <div class="toolbar is-flex" style="flex-flow: row wrap">
-                <button class="toolbar-btn button" @click="executeCommand('underline')"><font-awesome-icon class="icon" icon="underline" /></button>
-                <button class="toolbar-btn button" @click="executeCommand('bold')"><font-awesome-icon class="icon" icon="bold" /></button>
-                <button class="toolbar-btn button" @click="executeCommand('italic')"><font-awesome-icon class="icon" icon="italic" /></button>
-                <button class="toolbar-btn button" @click="executeCommand('strikethrough')"><font-awesome-icon class="icon" icon="strikethrough" /></button>
-                <button class="toolbar-btn button" @click="executeCommand('subscript')"><font-awesome-icon class="icon" icon="subscript" /></button>
-                <button class="toolbar-btn button" @click="executeCommand('superscript')"><font-awesome-icon class="icon" icon="superscript" /></button>
-                <button class="toolbar-btn button" @click="executeCommand"><font-awesome-icon class="icon" icon="paragraph" /></button>
-                <button class="toolbar-btn button" @click="executeCommand('insertOrderedList')"><font-awesome-icon class="icon" icon="list-ol" /></button>
-                <button class="toolbar-btn button" @click="executeCommand('insertUnorderedList')"><font-awesome-icon class="icon" icon="list-ul" /></button>
-                <button class="toolbar-btn button" @click="show('align')" ref="align"><font-awesome-icon class="icon" icon="align-left" /></button>
-                <button class="toolbar-btn button" @click="show('link')" ref="link"><font-awesome-icon class="icon" icon="link" /></button>
-                <button class="toolbar-btn button" @click="show('image')" ref="image"><font-awesome-icon class="icon" icon="image" /></button>
-                <button class="toolbar-btn button" @click="show('video')" ref="video"><font-awesome-icon class="icon" icon="video" /></button>
-                <button class="toolbar-btn button" @click="show('table')" ref="table"><font-awesome-icon class="icon" icon="table" /></button>
+                <button class="toolbar-btn button" @click="executeCommand('underline')"><FontAwesomeIcon class="icon" icon="underline" /></button>
+                <button class="toolbar-btn button" @click="executeCommand('bold')"><FontAwesomeIcon class="icon" icon="bold" /></button>
+                <button class="toolbar-btn button" @click="executeCommand('italic')"><FontAwesomeIcon class="icon" icon="italic" /></button>
+                <button class="toolbar-btn button" @click="executeCommand('strikethrough')"><FontAwesomeIcon class="icon" icon="strikethrough" /></button>
+                <button class="toolbar-btn button" @click="executeCommand('subscript')"><FontAwesomeIcon class="icon" icon="subscript" /></button>
+                <button class="toolbar-btn button" @click="executeCommand('superscript')"><FontAwesomeIcon class="icon" icon="superscript" /></button>
+                <button class="toolbar-btn button" @click="executeCommand"><FontAwesomeIcon class="icon" icon="paragraph" /></button>
+                <button class="toolbar-btn button" @click="executeCommand('insertOrderedList')"><FontAwesomeIcon class="icon" icon="list-ol" /></button>
+                <button class="toolbar-btn button" @click="executeCommand('insertUnorderedList')"><FontAwesomeIcon class="icon" icon="list-ul" /></button>
+                <button class="toolbar-btn button" @click="show('align')" ref="align"><FontAwesomeIcon class="icon" icon="align-left" /></button>
+                <button class="toolbar-btn button" @click="show('link')" ref="link"><FontAwesomeIcon class="icon" icon="link" /></button>
+                <button class="toolbar-btn button" @click="show('image')" ref="image"><FontAwesomeIcon class="icon" icon="image" /></button>
+                <button class="toolbar-btn button" @click="show('video')" ref="video"><FontAwesomeIcon class="icon" icon="video" /></button>
+                <button class="toolbar-btn button" @click="show('table')" ref="table"><FontAwesomeIcon class="icon" icon="table" /></button>
             </div>
             <div class="popup" v-if="showws" :style="'left:' + this.x + 'px; top: ' + this.y + 'px'">
                 <InsertLink v-if="this.el === 'link'" :link-prop="link" :value-prop="newValue" @insert-link="insertLink"></InsertLink>
+                <input v-model="link" />
+                <button @click="insertImage(link)">Insert</button>
             </div>
-            <div @focus="showws = false" class="textarea" ref="text" v-html="content" contenteditable></div>
+            <div @focus="showws = false" id="content-area" class="textarea" ref="text" contenteditable></div>
 
 
     </div>
 </template>
 
 <script>
+    import { library } from '@fortawesome/fontawesome-svg-core'
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+    import {
+        faUnderline,
+        faCode,
+        faBold,
+        faItalic,
+        faStrikethrough,
+        faSubscript,
+        faSuperscript, faParagraph, faListOl, faListUl, faAlignLeft, faLink, faImage, faVideo, faTable
+    } from "@fortawesome/free-solid-svg-icons";
+
+    library.add(faUnderline,
+        faCode,
+        faBold,
+        faItalic,
+        faStrikethrough,
+        faSubscript,
+        faSuperscript,
+        faParagraph,
+        faListOl,
+        faListUl,
+        faAlignLeft,
+        faLink,
+        faImage,
+        faVideo,
+        faTable);
+    // TODO: Image, video, table, align, paragraph
     import InsertLink from "../wysiwyg/InsertLink";
     export default {
         name: "wysiwyg",
-        components: {InsertLink},
+        components: {InsertLink, FontAwesomeIcon},
         methods: {
+            insertImage(imgUrl) {
+                this.imageExists(imgUrl, 5000)
+                .then( () => this.insert( "<img src='" + imgUrl + "'>"))
+                .catch( () => false); // TODO: SEND ERROR MESSAGE TO POP-UP WINDOW
+            },
+            imageExists(imgUrl, timeoutT) {
+                return new Promise(function (resolve, reject) {
+                    let timeout = timeoutT;
+                    let timer, img = new Image();
+
+                    // Image could not be loaded
+                    img.onerror = img.onabort = function() {
+                        clearTimeout(timer);
+                        reject("Image could not be loaded");
+                    };
+
+                    // Image Loaded Successfully
+                    img.onload = function() {
+                        clearTimeout(timer);
+                        resolve("success");
+                    };
+
+                    // Image timed out, reset img src
+                    timer = setTimeout(function () {
+                        img.src = "//!!!!/test.jpg";
+                        reject("timeout");
+                    }, timeout);
+
+                    img.src = imgUrl;
+                })
+            },
             insertLink(value, link) {
                 // Grab data from insert-link event
                 this.newValue = value;
@@ -38,19 +99,22 @@
 
                 // We don't want random anchor tags, ensure content is valid
                 if (this.originSelect.length > 0 && this.link.length > 0) {
-                    this.content = this.content.replace(this.originSelect, "<a href='" + this.link + "'>" + this.newValue + "</a>");
+                    this.$refs.text.innerHTML = this.$refs.text.innerHTML.replace(this.originSelect, "<a href='" + this.link + "'>" + this.newValue + "</a>");
                 }
                 else if (this.link.length < 1 || this.newValue < 1) {
-                    this.content += this.newValue
+                    this.insert(this.newValue);
                 }
                 else {
-                    this.content += "<a href='" + this.link + "'>" + this.newValue + "</a>";
+                    this.insert("<a href='" + this.link + "'>" + this.newValue + "</a>");
                 }
 
                 // Hide the window, reset the input data
                 this.showws = false;
                 this.link = '';
                 this.newValue = '';
+            },
+            insert(string) {
+                this.$refs.text.innerHTML = this.$refs.text.innerHTML.substr(0, this.caretPosition) + string + this.$refs.text.innerHTML.substr(0, this.$refs.text.innerHTML.length);
             },
             executeCommand(cmd, src) {
                 document.execCommand(cmd, false, src);
@@ -69,12 +133,22 @@
                     this.x = this.$refs[ref].offsetLeft - 30;
                     this.y = this.$refs[ref].offsetTop + 45;
                 }
-                this.originSelect = this.selection;
-                this.newValue = this.selection;
+
+                if (document.getSelection().type.localeCompare("Range") === 0 && document.getSelection().anchorNode.parentElement === this.$refs.text) {
+                    console.log(document.getSelection());
+                    this.newValue = this.content.substr(document.getSelection().focusOffset, document.getSelection().anchorOffset);
+                    this.originSelect = this.newValue;
+                    this.caretPosition = document.getSelection().focusOffset;
+                }
+
+                if (document.getSelection().type.localeCompare("Caret") === 0 && document.getSelection().anchorNode.parentElement === this.$refs.text) {
+                    this.caretPosition = document.getSelection().anchorOffset;
+                }
             }
         },
         data() {
             return {
+                caretPosition: 0,
                 originSelect: '',
                 content: '',
                 link: '',
@@ -83,16 +157,6 @@
                 x: 0,
                 y: 0,
                 showws: false
-            }
-        },
-        computed: {
-            selection() {
-                // Check for nulls
-                if (document.getSelection().anchorNode) {
-                    return document.getSelection().anchorNode.data;
-                } else {
-                    return '';
-                }
             }
         },
         beforeDestroy: function () {
@@ -125,6 +189,7 @@
         background: transparent;
     }
     .textarea {
+        padding: 20px;
         width: 300px;
         overflow: auto;
         text-wrap: normal;
@@ -140,5 +205,8 @@
         padding: 10px;
     }
     .toolbar-btn {
+    }
+    ul {
+        list-style: inherit !important;
     }
 </style>
