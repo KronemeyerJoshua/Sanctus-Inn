@@ -44,6 +44,8 @@
                 .catch((error) => {
                     console.log(error)
                 })
+
+            document.title = process.env.MIX_APP_NAME + ' Forums' + '- Ashes Community Site'
         },
     }
 </script>
