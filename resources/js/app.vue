@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <Navigation @show-login-modal="showLogin" @show-register-modal="showRegister"></Navigation>
+    <div class="appContainer">
     <div class="container">
+        <Navigation @show-login-modal="showLogin" @show-register-modal="showRegister"></Navigation>
         <keep-alive>
         <router-view v-if="$route.meta.keepAlive" />
         </keep-alive>
