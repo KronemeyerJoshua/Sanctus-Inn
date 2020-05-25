@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-            <p class="headline title is-4 is-flex"><router-link :to="{ name : 'home' }">Evolution Guild Site Live! Evolution Guild Site Live!</router-link></p>
+            <p class="headline title is-4 is-flex"><router-link :to="{ name : 'home' }">Welcome to Sanctus Inn</router-link></p>
             <p class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
@@ -33,7 +33,7 @@ export default {
         text-shadow: #bd8647 0px 0px 6px;
     }
     .card {
-        background: rgba(0,0,0,0.7);
+        background: transparent;
         text-align: center;
         color: rgba(255,255,255,0.8);
         min-height: 250px;
@@ -41,9 +41,7 @@ export default {
         min-width: 100%;
         max-width: 100%;
         margin: 10px;
-        box-shadow: #0a0a0a 1px 1px 2px 2px;
-        border: 1px solid rgba(0,0,0,0.5);
-        border-radius: 5px;
+        border: 1px inset rgba(221, 221, 221, 0.1);
         padding: 0;
         overflow: hidden;
         transition: linear 0.2s;
@@ -51,7 +49,8 @@ export default {
     }
     .card:hover
     {
-        box-shadow: #bd8647 1px 1px 8px 2px;
+        background-color: rgba(212,212,212,.05);
+        /* box-shadow: #bd8647 1px 1px 8px 2px; */
     }
     .headline a
     {
