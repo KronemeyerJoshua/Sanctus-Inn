@@ -11,11 +11,12 @@
         <template v-slot:avatar><img :id="'avatar' + post.id" :src="'/storage/images/' + post.user_id + '.jpg'" @error="noImageFound(post.id)"></template>
         <template v-slot:username><router-link :to="'/profile/' + post.user.id">{{post.user.name}}</router-link></template>
         <template v-slot:timestamp>{{ formatDate(post.created_at) }}</template>
+        <template v-slot:post-count>Tales Told: {{post.user.posts_count}}</template>
         <template v-slot:content><p v-html="post.content" style="word-wrap: break-word; color: rgba(215,215,215, 0.8);"></p></template>
     </Post>
         <div v-if="this.$store.state.auth.user !== null">
-            <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
-            <button class="button is-primary" @click="submitPost">Post That Shizz</button>
+            <wysiwyg></wysiwyg>
+            <button class="button is-primary" @click="">Post That Shizz</button>
         </div>
     </div>
     </div>
@@ -24,14 +25,16 @@
 <script>
     import Post from "../../components/forum/Post";
     import { forum } from "../../services/EventService"
-    import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-    import moment from 'moment'
+    import dayjs from 'dayjs'
+    import localizedFormat from 'dayjs/plugin/localizedFormat';
 
     import "../../../../public/css/editor.css"
+    import Wysiwyg from "../../components/forum/wysiwyg";
 
     export default {
         name: "threadPosts",
         components: {
+            Wysiwyg,
             Post
         },
         methods: {
@@ -57,7 +60,8 @@
                 })
             },
             formatDate(date) {
-                return moment(date).format('llll')
+                dayjs.extend(localizedFormat);
+                return dayjs(date).format('llll')
             }
         },
         data() {
@@ -65,18 +69,7 @@
                 posts: {},
                 thread: {},
                 thread_id: this.$route.params.threadId,
-                editor: ClassicEditor,
                 isLoading: true,
-                editorData: '<p>Content of the editor.</p>',
-                editorConfig: {
-                    heading: {
-                        options: [
-                            { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                            { model: 'heading1', view: { name: 'h1', classes:'title'}, title: 'Heading 1',  class: 'ck-heading_heading1' },
-                        ]
-                    }
-                    // The configuration of the editor.
-                }
             }
         },
         created() {
