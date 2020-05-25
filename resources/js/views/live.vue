@@ -1,7 +1,7 @@
 <template>
     <div style="padding: 10px;">
         <transition name="fade">
-            <h1 key="1" v-if="isLoading" style="height: 0" class="text-center">Loading...</h1>
+            <Loading key="1" v-if="isLoading"></Loading>
             <div v-else class="" key="2">
                 <div class="columns" style="height: 60vh">
 
@@ -86,6 +86,7 @@
 
 <script>
     import { live } from "../services/EventService"
+    import Loading from "../components/Loading";
     export default {
         name: "live",
 
@@ -99,6 +100,7 @@
                 activetab: 0,
             }
         },
+        components: {Loading},
         methods: {
             loadIframe: function(user) {
                 axios.get('/api/friendly/' + user)
