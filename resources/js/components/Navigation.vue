@@ -1,8 +1,8 @@
 <template>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <nav class="navbar" role="navigation" aria-label="main navigation" style="flex-flow: row wrap; ">
         <div class="navbar-brand">
             <router-link :to="{ name : 'home' }" class="navbar-item">
-                <img src="/images/logo.png">
+                <img src="/images/logo.webp" width="664" height="124">
             </router-link>
             <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar-main">
                 <span aria-hidden="true"></span>
@@ -151,8 +151,13 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <style scoped>
+    .container > .navbar .navbar-menu {
+        margin: 0;
+    }
     .navbar-brand .navbar-item img {
-        max-height: 2.8rem;
+        max-height: 2.2rem;
+        width: auto;
+        height: auto;
     }
     .navbar {
         background: rgba(0,0,0,0.3);
@@ -184,8 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
         font-size: 20px;
         text-transform: uppercase;
         font-weight: bold;
-        font-family: 'EB Garamond', serif;
-        color: rgba(150, 150, 150, 0.7);
+        font-family: "EB Garamond", serif;
+        color: rgba(251, 174, 58, 0.7);
         padding-top: 0px;
         padding-bottom: 0px;
         transition: linear 0.2s;
@@ -224,25 +229,9 @@ document.addEventListener('DOMContentLoaded', () => {
     .router-link-active {
         color: #3490dc;
     }
-    @media screen and (min-width: 1024px) {
-        .navbar-item.is-hoverable:hover .navbar-dropdown {
-            display: block !important;
-        }
-        .navbar-item.is-hoverable:focus-within .navbar-dropdown {
-            display: none;
+    @media screen and (min-width: 769px) {
+        .navbar-dropdown a.navbar-item {
+            padding-right: 1rem;
         }
     }
-    @media screen and (min-width: 1024px) {
-        .navbar-end .navbar-dropdown .navbar-item {
-            padding: 0;
-            justify-content: center;
-        }
-    }
-
-    @media screen and (max-width: 1023px) {
-        .navbar-menu {
-            background: rgba(0,0,0,0.3);
-        }
-    }
-
 </style>
