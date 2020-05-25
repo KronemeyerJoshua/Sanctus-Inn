@@ -15,3 +15,5 @@ composer.lock
 .DS_Store
 .idea
 /public/*.js
+/public/css/app.css
+/public/js/app.js
