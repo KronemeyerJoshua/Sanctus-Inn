@@ -9,9 +9,6 @@
 
     <title>{{ config('app.name') }} - Ashes Community Site</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -25,4 +22,10 @@
         <App></App>
     </div>
 </body>
+
+<!-- Scripts -->
+<script src="/js/manifest.js"></script>
+<script src="/js/vendor.js"></script>
+<script src="/js/app.js"></script>
+
 </html>
