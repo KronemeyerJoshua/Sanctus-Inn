@@ -14,6 +14,7 @@ class ForumPostsController extends Controller
         foreach ($posts as $post)
         {
             $post->user->name;
+            $post->user->loadCount('posts');
         }
         return $posts;
     }
