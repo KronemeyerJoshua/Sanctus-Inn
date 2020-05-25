@@ -1,5 +1,5 @@
 <template>
-    <div id="apoc-calc" class="container">
+    <div id="apoc-calc">
         <div class="columns">
             <div class="column is-horizontal">
                 <h6 class="title is-4">Buffs</h6>
@@ -16,7 +16,7 @@
             <div class="column is-two-fifths">
                 <h3 class="title is-4">Armor</h3>
                 <div class="parent columns is-multiline" style="overflow-y: auto;">
-                    <div v-for="item in armor" class="child card" style="width: 100px;" :data-tippy-content="'<img src=' + item.tooltip + '>'" :key="item.id">
+                    <div v-for="item in armor" class="child card tooltip" style="width: 100px;" :data-tippy-content="'<img src=' + item.tooltip + '>'" :key="item.id">
                         <img :src="item.img" class="border border-gold" style="height: 79px; width: 79px;" draggable="true" v-on:dragstart="drag(item)" />
 
                         <p style="font-size: 13; font-weight: bold;">{{item.name}}</p>
@@ -73,6 +73,7 @@
             </div>
         </div>
 
+
     </div>
 
 
@@ -81,7 +82,6 @@
 
 </template>
 <style>
-
     #apoc-calc .card {
         background: transparent !important;
     }
@@ -94,6 +94,9 @@
     .title {
         font-family: 'EB Garamond', serif;
         color: rgba(255,255,255,0.8);
+    }
+    #apoc-calc {
+        padding: 0 10% 0 10%;
     }
 </style>
 
