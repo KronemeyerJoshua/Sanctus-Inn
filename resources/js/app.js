@@ -2,10 +2,8 @@ import router from './router/routes'
 import store from './store'
 import Vue from 'vue'
 import Vuelidate from 'vuelidate'
-import CKEditor from '@ckeditor/ckeditor5-vue';
 
 Vue.use(Vuelidate);
-Vue.use(CKEditor);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -28,12 +26,13 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('Navigation', require('./components/Navigation').default);
-Vue.component('NewsCard', require('./components/NewsCard').default);
-Vue.component('Login', require('./components/Login').default);
-Vue.component('Register', require('./components/Register').default);
-Vue.component('App', require('./app.vue').default);
+
+Vue.component('example-component', () => import('./components/ExampleComponent.vue'));
+Vue.component('Navigation', () => import('./components/Navigation'));
+Vue.component('NewsCard', () => import('./components/NewsCard'));
+Vue.component('Login', () => import('./components/Login'));
+Vue.component('Register', () => import('./components/Register'));
+Vue.component('App', () => import('./app.vue'));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -62,6 +61,9 @@ const app = new Vue({
     el: '#app',
     router,
     store,
+    components: {
+
+    },
     data: {
         loginShow: false,
     },
