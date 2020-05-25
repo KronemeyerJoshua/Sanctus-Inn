@@ -33,7 +33,8 @@
 <script>
     import ThreadPreview from "../../components/forum/ThreadPreview";
     import { forum } from "../../services/EventService"
-    import moment from 'moment'
+    import dayjs from 'dayjs'
+    import localizedFormat from "dayjs/plugin/localizedFormat";
     export default {
         name: "threads",
         components: {ThreadPreview},
@@ -57,7 +58,8 @@
         },
         methods: {
             formatDate(date) {
-                return moment(date).format('llll')
+                dayjs.extend(localizedFormat);
+                return dayjs(date).format('llll')
             }
         }
     }
