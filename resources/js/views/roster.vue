@@ -1,7 +1,7 @@
 <template>
         <transition name="fade">
-            <div v-if="isLoading" class="text-center" key="1" style="height: 0;">
-                <h3>Please wait a moment while our GM fetches our records...</h3>
+            <div v-if="isLoading" key="1">
+                <Loading></Loading>
             </div>
             <div v-else key="2">
                 <DataTable :data="data_json" :columns="columns" :pageNum="(typeof this.$route.params.pageNumber !== 'undefined') ? Number(this.$route.params.pageNumber) : 1"></DataTable>
@@ -9,13 +9,18 @@
         </transition>
 </template>
 
+<style scoped>
+
+</style>
+
 <script>
     import {roster} from "../services/EventService";
     import DataTable from "../components/DataTable";
+    import Loading from "../components/Loading";
 
     export default {
         name: 'roster',
-        components: {DataTable},
+        components: {Loading, DataTable},
         data() {
             return {
                 isLoading: true,
