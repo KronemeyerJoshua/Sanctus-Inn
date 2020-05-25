@@ -3,6 +3,7 @@
         <figure class="media-left">
             <p class="avatar"><slot name="avatar"><img src="public/images/test-news-image.jpg"></slot></p>
             <strong class="username"><slot name="username">John Smith</slot></strong>
+            <div class="post-count"><slot name="post-count"></slot></div>
             <slot name="timestamp"></slot>
         </figure>
         <div class="media-content">
@@ -45,6 +46,9 @@
 </script>
 
 <style scoped>
+    .post-count {
+        width: 100%;
+    }
     .media-content {
         width: 100%;
     }
