@@ -16,11 +16,11 @@
     </Post>
         <nav class="pagination is-small is-centered" role="navigation" aria-label="pagination">
             <ul class="pagination-list">
-                <li ><a class="pagination-link" aria-label="Goto page 1" :class="{}" @click="">1</a></li>
-                <li v-if="currentPage-1 > 1"><a class="pagination-link" :aria-label="'Goto page'" @click="">{{currentPage-1}}</a></li>
+                <li ><a class="pagination-link" aria-label="Goto page 1" :class="{}" @click="goToPage(1)">1</a></li>
+                <li v-if="currentPage-1 > 1"><a class="pagination-link" :aria-label="'Goto page'" @click="goToPage(currentPage-1)">{{currentPage-1}}</a></li>
                 <li v-if="currentPage !== 1 && currentPage !== pages"><a class="pagination-link is-current"  :aria-label="'Page'" aria-current="page">{{currentPage}}</a></li>
-                <li v-if="currentPage+1 < pages"><a class="pagination-link" :aria-label="'Goto page'" @click="">{{currentPage+1}}</a></li>
-                <li v-if="currentPage !== 1"><a class="pagination-link" :class="{}" :aria-label="'Goto page'" @click="">{{pages}}</a></li>
+                <li v-if="currentPage+1 < pages"><a class="pagination-link" :aria-label="'Goto page'" @click="goToPage(currentPage+1)">{{currentPage+1}}</a></li>
+                <li v-if="pages > 1"><a class="pagination-link" :class="{}" :aria-label="'Goto page'" @click="goToPage(pages)">{{pages}}</a></li>
             </ul>
         </nav>
         <div v-if="this.$store.state.auth.user !== null">
@@ -57,6 +57,21 @@
             }
         },
         methods: {
+            goToPage(pageNum) {
+
+                if (pageNum !== this.currentPage) {
+                    this.currentPage = Number(pageNum);
+                    this.$router.replace({name: this.$route.name, params: {page: this.currentPage.toString()}})
+                    forum.getPosts(this.$route.params.threadId, this.currentPage)
+                        .then(({data}) => {
+                            this.posts = data;
+                            this.isLoading = false;
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        })
+                }
+            },
             dateFormat(date) {
             },
             noImageFound(e) {
@@ -84,7 +99,10 @@
             }
         },
         created() {
-            forum.getPosts(this.$route.params.threadId)
+            if (this.$route.params.page) {
+                this.currentPage = this.$route.params.page;
+            }
+            forum.getPosts(this.$route.params.threadId, this.currentPage)
                 .then(({data}) => {
                     this.posts = data;
                     this.max_posts = this.posts[0]['threadPostCount'];
