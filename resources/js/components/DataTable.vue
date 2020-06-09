@@ -20,7 +20,7 @@
                         <li v-if="currentPage-1 > 1"><a class="pagination-link" :aria-label="'Goto page' + currentPage-1" @click="decrementPage">{{currentPage-1}}</a></li>
                         <li v-if="currentPage !== 1 && currentPage !== maxPages"><a class="pagination-link is-current"  :aria-label="'Page' + currentPage" aria-current="page">{{currentPage}}</a></li>
                         <li v-if="currentPage+1 < maxPages"><a class="pagination-link" :aria-label="'Goto page' + currentPage+1" @click="incrementPage">{{currentPage+1}}</a></li>
-                        <li v-if="currentPage !== 1"><a class="pagination-link" :class="{'is-current': isEndPage}" :aria-label="'Goto page' + maxPages" @click="goToPage(maxPages)">{{maxPages}}</a></li>
+                        <li v-if="maxPages > 1"><a class="pagination-link" :class="{'is-current': isEndPage}" :aria-label="'Goto page' + maxPages" @click="goToPage(maxPages)">{{maxPages}}</a></li>
                     </ul>
                 </nav>
 
