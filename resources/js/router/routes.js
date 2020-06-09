@@ -61,8 +61,9 @@ const router = new Router({
             component: threads,
         },
         {
-            path: '/forum/:id/:threadId',
+            path: '/forum/:id/:threadId/:page?',
             name: 'threadPreview',
+            props: true,
             component: threadPosts,
         },
         {
