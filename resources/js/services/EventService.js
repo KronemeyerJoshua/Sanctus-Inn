@@ -91,8 +91,8 @@ export const forum = {
     getThreads(subcategoryId) {
         return apiClient.get('/api/threadsByCategory/' + subcategoryId)
     },
-    getPosts(threadId) {
-        return apiClient.get('/api/postsByThreadId/' + threadId)
+    getPosts(threadId, page) {
+        return apiClient.get('/api/postsByThreadId/' + threadId + '/' + page)
     },
     getNumOfThreadsByCat(subcategoryId) {
         return apiClient.get('/api/numThreadsByCategory/' + subcategoryId)
