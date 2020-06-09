@@ -97,8 +97,6 @@
 <script>
     import {user} from "../../services/EventService"
 
-    import "../../../../public/css/editor.css"
-
     export default {
         name: "profile",
         components: {
