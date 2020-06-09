@@ -29,7 +29,7 @@ Route::group(['middleware' => ['sameDomain']], function() {
     Route::get('categories', '\App\Http\Controllers\ForumCategoryController@getCategories');
     Route::get('subcategories', '\App\Http\Controllers\ForumSubcategoryController@getSubcategories');
     Route::get('threadsByCategory/{subcategoryId}', '\App\Http\Controllers\ForumSubcategoryController@getThreads');
-    Route::get('postsByThreadId/{threadId}', '\App\Http\Controllers\ForumPostsController@getPostsByThreadId');
+    Route::get('postsByThreadId/{threadId}/{pagination?}', '\App\Http\Controllers\ForumPostsController@getPostsByThreadId');
     Route::get('numThreadsByCategory/{subcategoryId}', '\App\Http\Controllers\ForumThreadsController@getNumberThreadsByCategory');
     Route::get('/twitchdata/{gameid?}', '\App\Http\Controllers\Live\TwitchController@streamerData');
     Route::get('/friendly/{user}', '\App\Http\Controllers\Live\TwitchController@friendlyName');
