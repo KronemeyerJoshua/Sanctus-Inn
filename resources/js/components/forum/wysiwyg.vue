@@ -18,11 +18,19 @@
             </div>
             <div class="popup" v-if="showws" :style="'left:' + this.x + 'px; top: ' + this.y + 'px'">
                 <InsertLink v-if="this.el === 'link'" :link-prop="link" :value-prop="newValue" @insert-link="insertLink"></InsertLink>
-                <input v-model="link" />
-                <button @click="insertImage(link)">Insert</button>
+
+                <div v-if="this.el === 'image'">
+                    <input v-model="link" />
+                    <button @click="insertImage(link)">Insert</button>
+                </div>
+
+                <div v-if="this.el === 'video'">
+                    <input v-model="link" />
+                    <button @click="insertVideo(link)">Insert</button>
+                </div>
             </div>
             <div @focus="showws = false" id="content-area" class="textarea" ref="text" contenteditable></div>
-
+            <button class="button is-primary" @click="emitButton">Post That Shizz</button>
 
     </div>
 </template>
@@ -61,10 +69,17 @@
         name: "wysiwyg",
         components: {InsertLink, FontAwesomeIcon},
         methods: {
+            emitButton() {
+                this.$emit('button-clicked', this.$refs.text.innerHTML);
+                this.$refs.text.innerHTML = '';
+            },
             insertImage(imgUrl) {
                 this.imageExists(imgUrl, 5000)
                 .then( () => this.insert( "<img src='" + imgUrl + "'>"))
                 .catch( () => false); // TODO: SEND ERROR MESSAGE TO POP-UP WINDOW
+            },
+            insertVideo(vidUrl) {
+                this.insert("<iframe width='400' height='400' src='" + vidUrl + "' />")
             },
             imageExists(imgUrl, timeoutT) {
                 return new Promise(function (resolve, reject) {
@@ -127,7 +142,7 @@
                 }
             },
             show(ref) {
-                this.showws = !this.showws;
+                this.showws = true;
                 if (this.showws) {
                     this.el = ref;
                     this.x = this.$refs[ref].offsetLeft - 30;
