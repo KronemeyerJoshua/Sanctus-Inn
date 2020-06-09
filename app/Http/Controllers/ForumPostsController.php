@@ -8,8 +8,8 @@ use App\forum_posts;
 
 class ForumPostsController extends Controller
 {
-    public function getPostsByThreadId(Request $request, $threadId) {
-        $posts = forum_posts::where('thread_id', $threadId)->take(10)->get();
+    public function getPostsByThreadId(Request $request, $threadId, $pagination = 1) {
+        $posts = forum_posts::where('thread_id', $threadId)->offset(($pagination-1)*10)->take(10)->get();
         $threadPostCount = forum_posts::where('thread_id', $threadId)->count();
         $posts[0]->thread;
         $posts[0]->threadPostCount = $threadPostCount;
