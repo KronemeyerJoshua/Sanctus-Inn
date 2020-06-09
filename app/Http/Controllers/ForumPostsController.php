@@ -9,8 +9,10 @@ use App\forum_posts;
 class ForumPostsController extends Controller
 {
     public function getPostsByThreadId(Request $request, $threadId) {
-        $posts = forum_posts::where('thread_id', $threadId)->get();
+        $posts = forum_posts::where('thread_id', $threadId)->take(10)->get();
+        $threadPostCount = forum_posts::where('thread_id', $threadId)->count();
         $posts[0]->thread;
+        $posts[0]->threadPostCount = $threadPostCount;
         foreach ($posts as $post)
         {
             $post->user->name;
