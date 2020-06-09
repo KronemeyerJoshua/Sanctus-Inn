@@ -14,9 +14,17 @@
         <template v-slot:post-count>Tales Told: {{post.user.posts_count}}</template>
         <template v-slot:content><p v-html="post.content" style="word-wrap: break-word; color: rgba(215,215,215, 0.8);"></p></template>
     </Post>
+        <nav class="pagination is-small is-centered" role="navigation" aria-label="pagination">
+            <ul class="pagination-list">
+                <li ><a class="pagination-link" aria-label="Goto page 1" :class="{}" @click="">1</a></li>
+                <li v-if="currentPage-1 > 1"><a class="pagination-link" :aria-label="'Goto page'" @click="">{{currentPage-1}}</a></li>
+                <li v-if="currentPage !== 1 && currentPage !== pages"><a class="pagination-link is-current"  :aria-label="'Page'" aria-current="page">{{currentPage}}</a></li>
+                <li v-if="currentPage+1 < pages"><a class="pagination-link" :aria-label="'Goto page'" @click="">{{currentPage+1}}</a></li>
+                <li v-if="currentPage !== 1"><a class="pagination-link" :class="{}" :aria-label="'Goto page'" @click="">{{pages}}</a></li>
+            </ul>
+        </nav>
         <div v-if="this.$store.state.auth.user !== null">
-            <wysiwyg></wysiwyg>
-            <button class="button is-primary" @click="">Post That Shizz</button>
+            <wysiwyg @button-clicked="submitPost"></wysiwyg>
         </div>
     </div>
     </div>
@@ -28,7 +36,6 @@
     import dayjs from 'dayjs'
     import localizedFormat from 'dayjs/plugin/localizedFormat';
 
-    import "../../../../public/css/editor.css"
     import Wysiwyg from "../../components/forum/wysiwyg";
 
     export default {
@@ -37,15 +44,27 @@
             Wysiwyg,
             Post
         },
+        data() {
+            return {
+                currentPage: 1,
+                pagination: 10,
+                pages: 0,
+                posts: {},
+                thread: {},
+                max_posts: 0,
+                thread_id: this.$route.params.threadId,
+                isLoading: true,
+            }
+        },
         methods: {
             dateFormat(date) {
             },
             noImageFound(e) {
                 document.getElementById('avatar' + e).src = "/storage/images/default.jpg";
             },
-            submitPost()
+            submitPost(postData)
             {
-                forum.newPost({thread_id: this.thread_id, user_id: this.$store.state.auth.user.id, content: this.editorData})
+                forum.newPost({thread_id: this.thread_id, user_id: this.$store.state.auth.user.id, content: postData})
                 .then(({data}) => {
                     console.log(data.message);
                     if (data.status == '200')
@@ -64,19 +83,13 @@
                 return dayjs(date).format('llll')
             }
         },
-        data() {
-            return {
-                posts: {},
-                thread: {},
-                thread_id: this.$route.params.threadId,
-                isLoading: true,
-            }
-        },
         created() {
             forum.getPosts(this.$route.params.threadId)
                 .then(({data}) => {
                     this.posts = data;
+                    this.max_posts = this.posts[0]['threadPostCount'];
                     this.isLoading = false;
+                    this.pages = Math.ceil(this.max_posts / this.pagination);
                 })
                 .catch((error) => {
                     console.log(error)
@@ -95,5 +108,23 @@
     .postsContainer {
         padding: 10px;
         min-height: 100vh;
+    }
+    .pagination {
+        margin: 0;
+    }
+    li {
+        color: rgba(240,240,240,0.9);
+    }
+    .pagination-previous, .pagination-next, .pagination-link {
+        color: rgba(240,240,240,0.9);
+    }
+    .pagination-previous:hover, .pagination-next:hover, .pagination-link:hover {
+        color: #bd8647;
+        text-shadow: #eea756 0 0 10px;
+    }
+    .pagination-link.is-current {
+        background: transparent;
+        color: #bd8647;
+        text-shadow: #eea756 0 0 10px;
     }
 </style>
