@@ -4,6 +4,11 @@
         Loading...
     </div>
     <div v-else>
+        <div>
+            <router-link :to="'/forum'">{{this.posts[0].thread.subcategory.category.title}}</router-link>
+            ->
+            <router-link :to="'/forum/' + this.posts[0].thread.subcategory.id">{{this.posts[0].thread.subcategory.title}}</router-link>
+        </div>
         <div class="forum-title" style="">
             <h1 class="title">{{ this.posts[0].thread.title }}</h1>
         </div>
