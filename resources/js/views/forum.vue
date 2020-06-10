@@ -3,7 +3,7 @@
         <section class="forumContainer" v-for="cat in categories" :key="cat.id">
             <div class="forumHeader columns is-mobile">
                 <div class="column is-three-fifths">{{cat.title}}</div>
-                <div class="column is-one-fifth">Discussions</div>
+                <div class="column is-one-fifth has-text-centered">Discussions</div>
                 <div class="column is-one-fifth">Recent</div>
             </div>
             <div class="categories" v-for="sub in cat.subcategories" :key="sub.id">
@@ -54,6 +54,8 @@
     .forumContainer {
         padding: 10px;
         color: rgba(215,215,215,0.9);
+        width: 100%;
+        max-width: 100%;
     }
     .categoryContainer {
         padding: 10px;
