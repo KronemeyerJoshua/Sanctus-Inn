@@ -12,6 +12,7 @@ class ForumPostsController extends Controller
         $posts = forum_posts::where('thread_id', $threadId)->offset(($pagination-1)*10)->take(10)->get();
         $threadPostCount = forum_posts::where('thread_id', $threadId)->count();
         $posts[0]->thread;
+        $posts[0]->thread->subcategory->category;
         $posts[0]->threadPostCount = $threadPostCount;
         foreach ($posts as $post)
         {
