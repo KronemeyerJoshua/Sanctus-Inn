@@ -1,7 +1,8 @@
 <template>
 
     <div class="threadContainer">
-        <section class="forumContainer">
+        <div v-if="loading"></div>
+        <section class="forumContainer" v-if="!loading">
             <div id="forumHeaderButtons" style="display: flex; flex-direction: row; justify-content: space-between; padding-bottom: 1rem; align-items: center;">
                 <div style="">
                     <router-link to="/forum">{{subcategory.category.title}} </router-link>
@@ -45,13 +46,15 @@
     import { forum } from "../../services/EventService"
     import dayjs from 'dayjs'
     import localizedFormat from "dayjs/plugin/localizedFormat";
+    import Loading from "../../components/Loading";
     export default {
         name: "threads",
-        components: {ThreadPreview},
+        components: {Loading, ThreadPreview},
         data() {
             return {
                 threads: {},
                 subcategory: {},
+                loading: true
             }
         },
         created() {
@@ -59,6 +62,7 @@
                 .then(({data}) => {
                     this.threads = data.threads;
                     this.subcategory = data;
+                    this.loading = false;
                 })
                 .catch((error) => {
                     console.log(error)
