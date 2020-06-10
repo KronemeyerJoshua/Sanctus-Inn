@@ -17,4 +17,8 @@ class forum_threads extends Model
     public function latestPost() {
         return $this->hasOne('App\forum_posts', 'thread_id')->latest();
     }
+
+    public function subcategory() {
+        return $this->belongsTo('App\forum_subcategory', 'subcategory_id');
+    }
 }
