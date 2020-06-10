@@ -18,12 +18,12 @@ class ForumSubcategoryController extends Controller
         $subc = forum_subcategory::where('id', $id)
             ->with("threads.latestpost.user")
             ->first();
-
+        $subc->category;
         foreach ($subc->threads as $thread )
         {
             $thread->loadCount('posts');
         }
-        return $subc->threads;
+        return $subc;
     }
 
 }
