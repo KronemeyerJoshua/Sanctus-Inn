@@ -133,6 +133,7 @@
             },
             executeCommand(cmd, src) {
                 document.execCommand(cmd, false, src);
+                document.getElementById('content-area').focus();
             },
             updatePopupPosition() {
                 // On window.resize, ensures button popup stays below button
