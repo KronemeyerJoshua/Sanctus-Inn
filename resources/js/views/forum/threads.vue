@@ -2,6 +2,16 @@
 
     <div class="threadContainer">
         <section class="forumContainer">
+            <div id="forumHeaderButtons" style="display: flex; flex-direction: row; justify-content: space-between; padding-bottom: 1rem; align-items: center;">
+                <div style="">
+                    <router-link to="/forum">{{subcategory.category.title}} </router-link>
+                    ->
+                    <router-link :to="'/forum/' + subcategory.id">{{subcategory.title}}</router-link>
+                </div>
+                <button id="btnNewThread" class="button is-dark">
+                    New Thread
+                </button>
+            </div>
             <div class="forumHeader columns is-mobile">
                 <div class="column is-three-fifths">Title</div>
                 <div class="column is-one-fifth has-text-centered">Discussions</div>
@@ -40,13 +50,16 @@
         components: {ThreadPreview},
         data() {
             return {
-                threads: {}
+                threads: {},
+                subcategory: {},
             }
         },
         created() {
             forum.getThreads(this.$route.params.id)
-                .then(({data}) =>
-                    this.threads = data)
+                .then(({data}) => {
+                    this.threads = data.threads;
+                    this.subcategory = data;
+                })
                 .catch((error) => {
                     console.log(error)
                 })
