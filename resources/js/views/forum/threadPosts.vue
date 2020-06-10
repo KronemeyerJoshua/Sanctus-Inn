@@ -72,8 +72,6 @@
                         })
                 }
             },
-            dateFormat(date) {
-            },
             noImageFound(e) {
                 document.getElementById('avatar' + e).src = "/storage/images/default.jpg";
             },
@@ -100,7 +98,7 @@
         },
         created() {
             if (this.$route.params.page) {
-                this.currentPage = this.$route.params.page;
+                this.currentPage = Number(this.$route.params.page);
             }
             forum.getPosts(this.$route.params.threadId, this.currentPage)
                 .then(({data}) => {
