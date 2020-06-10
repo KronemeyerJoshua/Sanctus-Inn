@@ -8,7 +8,7 @@
                 <slot name="desc"></slot>
             </div>
         </div>
-        <div class="column is-one-fifth">
+        <div class="column is-one-fifth has-text-centered">
             <slot name="discussions"></slot>
         </div>
         <div class="column is-one-fifth">
