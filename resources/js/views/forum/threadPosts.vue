@@ -19,7 +19,7 @@
         <template v-slot:post-count>Tales Told: {{post.user.posts_count}}</template>
         <template v-slot:content><p v-html="post.content" style="word-wrap: break-word; color: rgba(215,215,215, 0.8);"></p></template>
     </Post>
-        <nav class="pagination is-small is-centered" role="navigation" aria-label="pagination">
+        <nav v-if="pages > 1" class="pagination is-small is-centered" role="navigation" aria-label="pagination">
             <ul class="pagination-list">
                 <li ><a class="pagination-link" aria-label="Goto page 1" :class="{}" @click="goToPage(1)">1</a></li>
                 <li v-if="currentPage-1 > 1"><a class="pagination-link" :aria-label="'Goto page'" @click="goToPage(currentPage-1)">{{currentPage-1}}</a></li>
