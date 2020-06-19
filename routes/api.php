@@ -31,6 +31,7 @@ Route::group(['middleware' => ['sameDomain']], function() {
     Route::get('threadsByCategory/{subcategoryId}', '\App\Http\Controllers\ForumSubcategoryController@getThreads');
     Route::get('postsByThreadId/{threadId}/{pagination?}', '\App\Http\Controllers\ForumPostsController@getPostsByThreadId');
     Route::get('numThreadsByCategory/{subcategoryId}', '\App\Http\Controllers\ForumThreadsController@getNumberThreadsByCategory');
+    Route::post('createThread', '\App\Http\Controllers\ForumThreadsController@create');
     Route::get('/twitchdata/{gameid?}', '\App\Http\Controllers\Live\TwitchController@streamerData');
     Route::get('/friendly/{user}', '\App\Http\Controllers\Live\TwitchController@friendlyName');
     Route::get('/twitchuser/{user}', '\App\Http\Controllers\Live\TwitchController@getTwitchUser');
