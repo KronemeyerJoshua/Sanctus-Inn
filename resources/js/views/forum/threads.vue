@@ -9,7 +9,7 @@
                     ->
                     <router-link :to="'/forum/' + subcategory.id">{{subcategory.title}}</router-link>
                 </div>
-                <button id="btnNewThread" class="button is-dark" @click="newThread = !newThread">
+                <button v-if="this.$store.state.auth.user !== null" id="btnNewThread" class="button is-dark" @click="newThread = !newThread">
                     New Thread
                 </button>
             </div>
