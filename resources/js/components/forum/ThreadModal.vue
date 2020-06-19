@@ -31,7 +31,7 @@
             submit(postData) {
                 forum.newThread({
                     title: this.title,
-                    subcategory_id: 1,
+                    subcategory_id: this.subcategory_id,
                     content: postData
                 })
             }
