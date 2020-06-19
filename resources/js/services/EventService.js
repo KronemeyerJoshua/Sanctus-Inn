@@ -99,6 +99,9 @@ export const forum = {
     },
     newPost(post) {
         return apiClient.post('/api/requestPostForumThread', post)
+    },
+    newThread(threadData) {
+        return apiClient.post('/api/createThread', threadData)
     }
 }
 
