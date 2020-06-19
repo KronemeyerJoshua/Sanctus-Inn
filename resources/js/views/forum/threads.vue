@@ -9,7 +9,7 @@
                     ->
                     <router-link :to="'/forum/' + subcategory.id">{{subcategory.title}}</router-link>
                 </div>
-                <button id="btnNewThread" class="button is-dark">
+                <button id="btnNewThread" class="button is-dark" @click="newThread = !newThread">
                     New Thread
                 </button>
             </div>
@@ -38,6 +38,7 @@
                 </ThreadPreview>
             </div>
         </section>
+        <ThreadModal :class="newThread ? 'is-active' : ''" @minimize-thread-modal="newThread = false" :subcategory_id="subcategory.category_id"></ThreadModal>
     </div>
 </template>
 
@@ -47,14 +48,16 @@
     import dayjs from 'dayjs'
     import localizedFormat from "dayjs/plugin/localizedFormat";
     import Loading from "../../components/Loading";
+    import ThreadModal from "../../components/forum/ThreadModal";
     export default {
         name: "threads",
-        components: {Loading, ThreadPreview},
+        components: {ThreadModal, Loading, ThreadPreview},
         data() {
             return {
                 threads: {},
                 subcategory: {},
-                loading: true
+                loading: true,
+                newThread: false
             }
         },
         created() {
