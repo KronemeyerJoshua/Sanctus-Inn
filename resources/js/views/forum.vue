@@ -13,6 +13,7 @@
                     <template v-slot:discussions>{{sub.threads_count}}</template>
                     <template v-slot:recent><router-link :to="{ name : 'threadPreview', params: {id: sub.id, threadId: sub.latest_thread.id } }">{{sub.latest_thread.title}}</router-link> by
                         <router-link :to="{ name : 'profile', params: {userId: sub.latest_thread.latest_post.user.id } }" v-if="sub.latest_thread.latest_post !== null">{{sub.latest_thread.latest_post.user.name}}</router-link></template>
+                    <template v-slot:date>{{ formatDate(sub.latest_thread.updated_at) }}</template>
                 </Category>
             </div>
         </section>
@@ -21,7 +22,9 @@
 
 <script>
     import Category from "../components/forum/Category";
+    import dayjs from 'dayjs';
     import { forum } from '../services/EventService'
+    import localizedFormat from "dayjs/plugin/localizedFormat";
     export default {
         name: 'forum',
         components: {Category},
@@ -35,6 +38,12 @@
         computed: {
             subNum() {
                 return this.categories.num;
+            }
+        },
+        methods: {
+            formatDate(date) {
+                dayjs.extend(localizedFormat);
+                return dayjs(date).format('llll')
             }
         },
         created() {
