@@ -13,6 +13,7 @@
         </div>
         <div class="column is-one-fifth">
             <slot name="recent"></slot>
+            <div><slot name="date"></slot></div>
         </div>
     </div>
 </template>
