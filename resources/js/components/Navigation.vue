@@ -166,27 +166,12 @@ export default {
         border-color: rgb(133,207,170);
         color: rgba(255,255,255,0.7);
     }
-    .nav-image
-    {
-        top: 2px;
-        opacity: 0.7;
-        position: absolute;
-    }
-    .nav-image-parent
-    {
-        width: 48px;
-        min-width: 40px;
-    }
-    .nav-image:hover
-    {
-        opacity: 1;
-    }
     .navbar-menu .navbar-item, .navbar-link {
         font-size: 20px;
         text-transform: uppercase;
         font-weight: bold;
         font-family: "EB Garamond", serif;
-        color: rgba(251, 174, 58, 0.7);
+        color: var(--nav-text-color);
         padding-top: 0px;
         padding-bottom: 0px;
         transition: linear 0.2s;
@@ -204,7 +189,6 @@ export default {
     .navbar-menu .navbar-link:hover,
     .navbar-menu a.navbar-item:hover,
     .navbar-menu .navbar-dropdown a.navbar-item:hover  {
-
         color: #bd8647;
         text-shadow: #eea756 0 0 10px;
     }
@@ -221,9 +205,6 @@ export default {
     }
     a.navbar-item:focus, a.navbar-item:focus-within, a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:focus, .navbar-link:focus-within, .navbar-link:hover, .navbar-link.is-active {
         background: none;
-    }
-    .router-link-active {
-        color: #3490dc;
     }
     @media screen and (min-width: 769px) {
         .navbar-dropdown a.navbar-item {
