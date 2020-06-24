@@ -37,7 +37,6 @@
 
 <script>
     import { library } from '@fortawesome/fontawesome-svg-core'
-    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
     import {
         faUnderline,
         faCode,
@@ -67,7 +66,7 @@
     import InsertLink from "../wysiwyg/InsertLink";
     export default {
         name: "wysiwyg",
-        components: {InsertLink, FontAwesomeIcon},
+        components: {InsertLink},
         methods: {
             emitButton() {
                 this.$emit('button-clicked', this.$refs.text.innerHTML);
