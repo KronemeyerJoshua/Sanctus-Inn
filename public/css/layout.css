@@ -1,3 +1,8 @@
+:root {
+    --bg-color: rgb(40,40,38);
+    --nav-text-color: rgba(251, 174, 58, 0.7);
+}
+
 html {
     background: #000000 url("../images/background-races.webp") no-repeat fixed bottom;
     background-size: cover;
