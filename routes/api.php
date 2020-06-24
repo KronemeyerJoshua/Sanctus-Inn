@@ -26,12 +26,15 @@ Route::group(['middleware' => ['guest:api']], function() {
 });
 
 Route::group(['middleware' => ['sameDomain']], function() {
-    Route::get('categories', '\App\Http\Controllers\ForumCategoryController@getCategories');
-    Route::get('subcategories', '\App\Http\Controllers\ForumSubcategoryController@getSubcategories');
-    Route::get('threadsByCategory/{subcategoryId}', '\App\Http\Controllers\ForumSubcategoryController@getThreads');
-    Route::get('postsByThreadId/{threadId}/{pagination?}', '\App\Http\Controllers\ForumPostsController@getPostsByThreadId');
-    Route::get('numThreadsByCategory/{subcategoryId}', '\App\Http\Controllers\ForumThreadsController@getNumberThreadsByCategory');
-    Route::post('createThread', '\App\Http\Controllers\ForumThreadsController@create');
+
+    // Forum API Calls
+    Route::get('categories', '\App\Http\Controllers\Forum\ForumCategoryController@getCategories');
+    Route::get('subcategories', '\App\Http\Controllers\Forum\ForumSubcategoryController@getSubcategories');
+    Route::get('threadsByCategory/{subcategoryId}', '\App\Http\Controllers\Forum\ForumSubcategoryController@getThreads');
+    Route::get('postsByThreadId/{threadId}/{pagination?}', '\App\Http\Controllers\Forum\ForumPostsController@getPostsByThreadId');
+    Route::get('numThreadsByCategory/{subcategoryId}', '\App\Http\Controllers\Forum\ForumThreadsController@getNumberThreadsByCategory');
+    Route::post('createThread', '\App\Http\Controllers\Forum\ForumThreadsController@create');
+
     Route::get('/twitchdata/{gameid?}', '\App\Http\Controllers\Live\TwitchController@streamerData');
     Route::get('/friendly/{user}', '\App\Http\Controllers\Live\TwitchController@friendlyName');
     Route::get('/twitchuser/{user}', '\App\Http\Controllers\Live\TwitchController@getTwitchUser');
