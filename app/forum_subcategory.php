@@ -11,7 +11,7 @@ class forum_subcategory extends Model
     }
 
     public function threads() {
-        return $this->hasMany('App\forum_threads', 'subcategory_id');
+        return $this->hasMany('App\forum_threads', 'subcategory_id')->select('id', 'title', 'subcategory_id')->orderBy('updated_at', 'desc');
     }
 
     public function latestThread() {
