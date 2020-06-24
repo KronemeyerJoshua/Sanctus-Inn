@@ -2,6 +2,7 @@ import router from './router/routes'
 import store from './store'
 import Vue from 'vue'
 import Vuelidate from 'vuelidate'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 Vue.use(Vuelidate);
 
@@ -26,7 +27,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-
+Vue.component('FontAwesomeIcon', FontAwesomeIcon)
 Vue.component('example-component', () => import('./components/ExampleComponent.vue'));
 Vue.component('Navigation', () => import('./components/Navigation'));
 Vue.component('NewsCard', () => import('./components/NewsCard'));
