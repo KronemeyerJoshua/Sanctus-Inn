@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Forum;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\forum_subcategory;
 
@@ -16,6 +17,7 @@ class ForumSubcategoryController extends Controller
     public function getThreads(Request $request, $id)
     {
         $subc = forum_subcategory::where('id', $id)
+            ->select('id', 'category_id', 'title')
             ->with("threads.latestpost.user")
             ->first();
         $subc->category;
