@@ -34,6 +34,7 @@
                     subcategory_id: this.subcategory_id,
                     content: postData
                 })
+                .then(() => this.$emit('minimize-thread-modal'))
             }
         }
     }
