@@ -1,5 +1,5 @@
 <template>
-    <div class="category columns is-mobile">
+    <div class="category columns is-mobile is-vcentered">
         <div class="column is-three-fifths">
             <div class="categoryTitle">
                 <router-link :to="{ name : 'category', params: { id: this.id } }"><slot name="title"></slot></router-link>
@@ -13,7 +13,7 @@
         </div>
         <div class="column is-one-fifth">
             <slot name="recent"></slot>
-            <div><slot name="date"></slot></div>
+            <slot name="date"></slot>
         </div>
     </div>
 </template>
