@@ -5,9 +5,7 @@
     </div>
     <div v-else>
         <div>
-            <router-link :to="'/forum'">{{this.posts[0].thread.subcategory.category.title}}</router-link>
-            ->
-            <router-link :to="'/forum/' + this.posts[0].thread.subcategory.id">{{this.posts[0].thread.subcategory.title}}</router-link>
+            <NavTree :nav-data="NavData"></NavTree>
         </div>
         <div class="forum-title" style="">
             <h1 class="title">{{ this.posts[0].thread.title }}</h1>
@@ -42,10 +40,12 @@
     import localizedFormat from 'dayjs/plugin/localizedFormat';
 
     import Wysiwyg from "../../components/forum/wysiwyg";
+    import NavTree from "../../../../app/Http/Controllers/Forum/NavTree";
 
     export default {
         name: "threadPosts",
         components: {
+            NavTree,
             Wysiwyg,
             Post
         },
@@ -59,6 +59,7 @@
                 max_posts: 0,
                 thread_id: this.$route.params.threadId,
                 isLoading: true,
+                NavData: []
             }
         },
         methods: {
@@ -98,7 +99,7 @@
             },
             formatDate(date) {
                 dayjs.extend(localizedFormat);
-                return dayjs(date).format('llll')
+                return dayjs(date).format('lll')
             }
         },
         created() {
@@ -109,8 +110,12 @@
                 .then(({data}) => {
                     this.posts = data;
                     this.max_posts = this.posts[0]['threadPostCount'];
-                    this.isLoading = false;
+                    this.NavData = [
+                        {title: this.posts[0].thread.subcategory.category.title, link: '/forum'},
+                        {title: this.posts[0].thread.subcategory.title, link: '/forum/' + this.posts[0].thread.subcategory.id}
+                    ];
                     this.pages = Math.ceil(this.max_posts / this.pagination);
+                    this.isLoading = false;
                 })
                 .catch((error) => {
                     console.log(error)
@@ -121,7 +126,7 @@
 
 <style scoped>
     .title {
-        border-bottom: #c0a16b 2px solid;
+        border-bottom: #c0a16b 2px inset;
         margin-bottom: 20px;
         padding-bottom: 5px;
         color: rgba(215,215,215, 0.8);
