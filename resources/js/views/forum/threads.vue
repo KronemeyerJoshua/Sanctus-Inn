@@ -4,11 +4,7 @@
         <div v-if="loading"></div>
         <section class="forumContainer" v-if="!loading">
             <div id="forumHeaderButtons" style="display: flex; flex-direction: row; justify-content: space-between; padding-bottom: 1rem; align-items: center;">
-                <div style="">
-                    <router-link to="/forum">{{subcategory.category.title}} </router-link>
-                    ->
-                    <router-link :to="'/forum/' + subcategory.id">{{subcategory.title}}</router-link>
-                </div>
+                <NavTree :nav-data="NavData" style="width: 100%;"></NavTree>
                 <button v-if="this.$store.state.auth.user !== null" id="btnNewThread" class="button is-dark" @click="newThread = !newThread">
                     New Thread
                 </button>
@@ -38,7 +34,7 @@
                 </ThreadPreview>
             </div>
         </section>
-        <ThreadModal :class="newThread ? 'is-active' : ''" @minimize-thread-modal="newThread = false" :subcategory_id="subcategory.category_id"></ThreadModal>
+        <ThreadModal :class="newThread ? 'is-active' : ''" @minimize-thread-modal="closeModalAndRefresh" :subcategory_id="subcategory.category_id" :key="modalRefreshKey"></ThreadModal>
     </div>
 </template>
 
@@ -49,15 +45,18 @@
     import localizedFormat from "dayjs/plugin/localizedFormat";
     import Loading from "../../components/Loading";
     import ThreadModal from "../../components/forum/ThreadModal";
+    import NavTree from "../../../../app/Http/Controllers/Forum/NavTree";
     export default {
         name: "threads",
-        components: {ThreadModal, Loading, ThreadPreview},
+        components: {NavTree, ThreadModal, Loading, ThreadPreview},
         data() {
             return {
                 threads: {},
                 subcategory: {},
                 loading: true,
-                newThread: false
+                newThread: false,
+                modalRefreshKey: 0,
+                NavData: {}
             }
         },
         created() {
@@ -65,6 +64,10 @@
                 .then(({data}) => {
                     this.threads = data.threads;
                     this.subcategory = data;
+                    this.NavData = [
+                        {title: data.category.title, link:"/forum" },
+                        {title: data.title, link: '/forum/' + data.id}
+                    ];
                     this.loading = false;
                 })
                 .catch((error) => {
@@ -79,7 +82,19 @@
         methods: {
             formatDate(date) {
                 dayjs.extend(localizedFormat);
-                return dayjs(date).format('llll')
+                return dayjs(date).format('lll')
+            },
+            closeModalAndRefresh() {
+                this.newThread = false;
+                this.modalRefreshKey++;
+                forum.getThreads(this.$route.params.id)
+                    .then(({data}) => {
+                        this.threads = data.threads;
+                        this.subcategory = data;
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
             }
         }
     }
@@ -96,7 +111,10 @@
         border: 1px solid white;
     }
     .thread {
-        border-bottom: 1px solid white;
+        border-bottom: 1px solid rgba(132,140,142, 0.7);
+    }
+    .thread:not(:first-child) {
+        border-top: 1px solid black;
     }
     .forumContainer > .thread:last-child {
         border: none;
