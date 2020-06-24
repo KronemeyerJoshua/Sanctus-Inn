@@ -15,7 +15,7 @@ class forum_threads extends Model
     }
 
     public function latestPost() {
-        return $this->hasOne('App\forum_posts', 'thread_id')->latest();
+        return $this->hasOne('App\forum_posts', 'thread_id')->select('id', 'thread_id', 'user_id', 'updated_at')->latest();
     }
 
     public function subcategory() {
