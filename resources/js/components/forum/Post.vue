@@ -46,11 +46,17 @@
 </script>
 
 <style scoped>
+    .media + .media {
+
+        border-top: 1px rgba(150,150,150,0.7) inset;
+    }
     .post-count {
         width: 100%;
     }
     .media-content {
         width: 100%;
+    }
+    .media-left {
     }
     .avatar img {
         max-height: 64px;
@@ -69,8 +75,9 @@
         align-items: center;
     }
     .media .media-left {
-        width: 232px;
-        max-width: 232px;
+        border-right: solid 1px rgba(60,60,60,0.7);
+        width: 190px;
+        max-width: 190px;
         text-align: center;
     }
     .media .media-content {
