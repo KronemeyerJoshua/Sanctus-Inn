@@ -5,7 +5,7 @@
                 <div class="profile-avatar is-flex">
                     <div class="avatar-container">
                         <img id="avatar" :src="profilePictureUrl" class="avatar" @error="noUserImage">
-                        <div class="change-image" v-if="this.$store.state.auth.user.id === this.profile.id">
+                        <div class="change-image" v-if="this.$store.state.auth.user &&  this.$store.state.auth.user.id === this.profile.id">
                             <label for="uploader" class="change-image-text">
                                 <a>Change</a>
                             </label>
@@ -18,7 +18,7 @@
             <div class="profile-bio column is-three-fifths">
 
                 <div class="bioPreview" v-if="bioEditMode === false">
-                    <div class="bioEditButton" v-if="this.$store.state.auth.user.id === this.profile.id" @click="editBio"><a>Edit</a></div>
+                    <div class="bioEditButton" v-if="this.$store.state.auth.user && this.$store.state.auth.user.id === this.profile.id" @click="editBio"><a>Edit</a></div>
                     {{ this.profile.bio }}
                 </div>
 
