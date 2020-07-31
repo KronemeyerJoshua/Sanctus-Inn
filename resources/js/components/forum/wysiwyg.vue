@@ -70,7 +70,6 @@
         methods: {
             emitButton() {
                 this.$emit('button-clicked', this.$refs.text.innerHTML);
-                this.$refs.text.innerHTML = '';
             },
             insertImage(imgUrl) {
                 this.imageExists(imgUrl, 5000)
