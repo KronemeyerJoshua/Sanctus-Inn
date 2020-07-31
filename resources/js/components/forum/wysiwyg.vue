@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div @focus="showws = false" id="content-area" class="textarea" ref="text" contenteditable></div>
-            <button class="button is-primary" @click="emitButton">Post That Shizz</button>
+            <button class="button is-primary" @click="emitButton">Post</button>
 
     </div>
 </template>
