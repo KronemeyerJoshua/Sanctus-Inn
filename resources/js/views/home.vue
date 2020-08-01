@@ -5,14 +5,22 @@
                 <BigNewsCard v-for="count in counter" class="column" style="" :key="count"></BigNewsCard>
             </div>
         </div>
-
         <div class="column is-one-third">
+            <div id="recent-forum" class="recent-forum">
+                <h1 class="title">Recent Forum Posts</h1>
+                <ul>
+                    <li v-for="thread in recentThreads">
+                        <router-link :to='"/forum/" + thread.subcategory_id + "/" + thread.id'>{{thread.title}}</router-link>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     import BigNewsCard from "../components/BigNewsCard";
+    import {getRecentThreads} from "../services/EventService";
     export default {
         components: {
             BigNewsCard
@@ -20,12 +28,23 @@
         data() {
             return {
                 counter: 3,
+                recentThreads: {}
             }
         },
         methods: {
+        },
+        created() {
+            getRecentThreads(5)
+            .then(({data}) => {
+                this.recentThreads = data;
+            })
         }
     }
 </script>
 
 <style scoped>
+    .columns {
+        margin-left: 0;
+        margin-right: 0;
+    }
 </style>
