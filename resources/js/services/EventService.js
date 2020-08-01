@@ -105,6 +105,10 @@ export const forum = {
     }
 }
 
+export function getRecentThreads(amount) {
+    return apiClient.get('/api/getRecentThreads/' + amount)
+}
+
 export default {
     login(credentials) {
         return apiClient.post('/api/authenticate', credentials)
