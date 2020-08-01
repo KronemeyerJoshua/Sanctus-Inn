@@ -1,6 +1,7 @@
 :root {
     --bg-color: rgb(40,40,38);
     --nav-text-color: rgba(251, 174, 58, 0.7);
+    --light-grey-bg: rgba(60,60,60,0.5);
 }
 
 html {
@@ -14,6 +15,15 @@ body {
 
 #app .appContainer {
 
+}
+
+a {
+    color: rgba(255,200,160,0.7);
+}
+
+a:hover {
+    color: var(--nav-text-color);
+    text-decoration: underline;
 }
 .container {
     min-height: 100vh;
