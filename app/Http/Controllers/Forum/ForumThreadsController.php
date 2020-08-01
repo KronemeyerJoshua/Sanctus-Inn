@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Forum;
 
+use App\Http\Controllers\Controller;
 use App\forum_posts;
 use Illuminate\Http\Request;
 use App\forum_threads;
@@ -15,6 +16,10 @@ class ForumThreadsController extends Controller
     public function getNumberThreadsByCategory(Request $request, $subcategoryId)
     {
         return forum_threads::where('subcategory_id', $subcategoryId)->count();
+    }
+
+    public function getRecentThreads($amount) {
+        return forum_threads::latest()->take(5)->get();
     }
 
     public function create(Request $request)
