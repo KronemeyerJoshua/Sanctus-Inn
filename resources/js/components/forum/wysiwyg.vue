@@ -1,5 +1,5 @@
 <template>
-    <div style="position: relative;">
+    <div style="">
             <div class="toolbar is-flex" style="flex-flow: row wrap">
                 <button class="toolbar-btn button" @click="executeCommand('underline')"><FontAwesomeIcon class="icon" icon="underline" /></button>
                 <button class="toolbar-btn button" @click="executeCommand('bold')"><FontAwesomeIcon class="icon" icon="bold" /></button>
@@ -205,6 +205,7 @@
     .textarea {
         padding: 20px;
         width: 300px;
+        height: 200px;
         overflow: auto;
         text-wrap: normal;
         resize: vertical;
