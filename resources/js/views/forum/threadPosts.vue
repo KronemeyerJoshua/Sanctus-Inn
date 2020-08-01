@@ -10,7 +10,7 @@
         <div class="forum-title" style="">
             <h1 class="title">{{ this.posts[0].thread.title }}</h1>
         </div>
-    <Post v-for="post in posts" :key="post.id">
+    <Post v-for="post in posts" :key="post.id" :user-id='post.user.id'>
         <template v-slot:avatar><img :id="'avatar' + post.id" :src="'/storage/images/' + post.user_id + '.jpg'" @error="noImageFound(post.id)"></template>
         <template v-slot:username><router-link :to="'/profile/' + post.user.id">{{post.user.name}}</router-link></template>
         <template v-slot:timestamp>{{ formatDate(post.created_at) }}</template>
@@ -27,7 +27,7 @@
             </ul>
         </nav>
         <div v-if="this.$store.state.auth.user !== null">
-            <wysiwyg @button-clicked="submitPost"></wysiwyg>
+            <wysiwyg id="wysiwyg" class="wysiwyg" @button-clicked="submitPost"></wysiwyg>
         </div>
     </div>
     </div>
@@ -136,6 +136,9 @@
     }
     .pagination {
         margin: 0;
+    }
+    .wysiwyg {
+        margin-top: 2%;
     }
     li {
         color: rgba(240,240,240,0.9);
