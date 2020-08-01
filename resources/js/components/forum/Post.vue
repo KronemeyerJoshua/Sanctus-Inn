@@ -6,36 +6,58 @@
             <div class="post-count"><slot name="post-count"></slot></div>
             <slot name="timestamp"></slot>
         </figure>
-        <div class="media-content">
-            <div class="content">
-                <slot name="content" class="postBody"></slot>
+        <div class="media-content" style="align-self: stretch;">
+            <div class="content" style="height: 100%;">
+                <slot name="content" class="postBody" style="flex-direction: row;"></slot>
+                <nav class="level is-mobile" style="justify-content: flex-end; margin-top: -20px;">
+                    <div class="level-right">
+                        <a class="level-item" v-if="userId === userid">
+                            <span class="icon is-small"><FontAwesomeIcon class="icon" icon="edit" title="Edit" /></span>
+                        </a>
+                        <a class="level-item">
+                            <span class="icon is-small"><FontAwesomeIcon class="icon" icon="smile" title="Agree" /></span>
+                        </a>
+                        <a class="level-item">
+                            <span class="icon is-small"><FontAwesomeIcon class="icon" icon="frown" title="Disagree" /></span>
+                        </a>
+                        <a class="level-item">
+                            <span class="icon is-small"><FontAwesomeIcon class="icon" icon="quote-left" title="Quote" /></span>
+                        </a>
+                        <a class="level-item">
+                            <span class="icon is-small"><FontAwesomeIcon class="icon" icon="flag" title="Report" /></span>
+                        </a>
+                    </div>
+                </nav>
             </div>
-            <nav class="level is-mobile">
-                <div class="level-left">
-                    <a class="level-item">
-                        <span class="icon is-small"><i class="fas fa-reply"></i></span>
-                    </a>
-                    <a class="level-item">
-                        <span class="icon is-small"><i class="fas fa-retweet"></i></span>
-                    </a>
-                    <a class="level-item">
-                        <span class="icon is-small"><i class="fas fa-heart"></i></span>
-                    </a>
-                </div>
-            </nav>
-        </div>
-        <div class="media-right">
 
         </div>
     </article>
 </template>
 
 <script>
+    import { library } from '@fortawesome/fontawesome-svg-core';
+    import {faEdit, faFlag, faFrown, faQuoteLeft, faSmile} from "@fortawesome/free-solid-svg-icons";
+
+    library.add(faFlag,
+                faEdit,
+                faQuoteLeft,
+                faSmile,
+                faFrown);
     export default {
         name: "Post",
         props: {
             post: [String],
+            userId: [Number],
             default: "Post could not be loaded"
+        },
+        computed: {
+            userid() {
+                try {
+                    return this.$store.state.auth.user.id;
+                } catch (e)
+                {
+                }
+            }
         },
         data() {
             return {
@@ -49,6 +71,13 @@
     .media + .media {
 
         border-top: 1px rgba(150,150,150,0.7) inset;
+    }
+    .media-bottom-right {
+
+    }
+    p {
+        height: 100%;
+        margin-bottom: 15px;
     }
     .post-count {
         width: 100%;
