@@ -130,8 +130,8 @@
                 this.$refs.text.innerHTML = this.$refs.text.innerHTML.substr(0, this.caretPosition) + string + this.$refs.text.innerHTML.substr(0, this.$refs.text.innerHTML.length);
             },
             executeCommand(cmd, src) {
-                document.execCommand(cmd, false, src);
                 document.getElementById('content-area').focus();
+                document.execCommand(cmd, false, src);
             },
             updatePopupPosition() {
                 // On window.resize, ensures button popup stays below button
