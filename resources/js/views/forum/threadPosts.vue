@@ -133,7 +133,6 @@
     }
     .postsContainer {
         padding: 10px;
-        min-height: 100vh;
     }
     .pagination {
         margin: 0;
