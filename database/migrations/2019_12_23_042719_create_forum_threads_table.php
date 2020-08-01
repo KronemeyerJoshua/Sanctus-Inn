@@ -19,6 +19,7 @@ class CreateForumThreadsTable extends Migration
             $table->integer('thread_id');
             $table->string('title');
             $table->integer('user_id');
+            $table->integer('permission_id');
             $table->timestamps();
         });
     }
