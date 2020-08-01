@@ -47,7 +47,7 @@ Route::group(['middleware' => ['sameDomain']], function() {
 });
 
 Route::group(['middleware' => ['jwt']], function() {
-    Route::post('requestPostForumThread', '\App\Http\Controllers\ForumPostsController@newPost');
+    Route::post('requestPostForumThread', '\App\Http\Controllers\Forum\ForumPostsController@newPost');
     Route::get('me', '\App\Http\Controllers\Auth\AuthController@me');
     Route::post('logout', '\App\Http\Controllers\Auth\AuthController@logout');
     Route::put('profile', 'ProfileController@update');
