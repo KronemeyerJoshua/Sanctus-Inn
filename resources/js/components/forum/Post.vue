@@ -8,8 +8,8 @@
         </figure>
         <div class="media-content" style="align-self: stretch;">
             <div class="content" style="height: 100%;">
-                <slot name="content" class="postBody" style="flex-direction: row;"></slot>
-                <nav class="level is-mobile" style="justify-content: flex-end; margin-top: -20px;">
+                <slot name="content" id="post-body" class="post-body" style="flex-direction: row;"></slot>
+                <nav class="level is-mobile" style="justify-content: flex-end; margin-top: -20px;" v-if="this.$store.state.auth.user">
                     <div class="level-right">
                         <a class="level-item" v-if="userId === userid">
                             <span class="icon is-small"><FontAwesomeIcon class="icon" icon="edit" title="Edit" /></span>
@@ -21,7 +21,7 @@
                             <span class="icon is-small"><FontAwesomeIcon class="icon" icon="frown" title="Disagree" /></span>
                         </a>
                         <a class="level-item">
-                            <span class="icon is-small"><FontAwesomeIcon class="icon" icon="quote-left" title="Quote" /></span>
+                            <span class="icon is-small"><FontAwesomeIcon class="icon" icon="quote-left" title="Quote" @click="this.scrollIntoView" /></span>
                         </a>
                         <a class="level-item">
                             <span class="icon is-small"><FontAwesomeIcon class="icon" icon="flag" title="Report" /></span>
@@ -46,7 +46,7 @@
     export default {
         name: "Post",
         props: {
-            post: [String],
+            postId: [Number],
             userId: [Number],
             default: "Post could not be loaded"
         },
@@ -62,6 +62,15 @@
         data() {
             return {
                 postBody: this.post,
+            }
+        },
+        methods: {
+            scrollIntoView() {
+                let editor = document.querySelector("#content-area");
+                let quote = document.querySelector("#post-" + this.postId);
+                editor.scrollIntoView();
+                console.log(quote.innerHTML);
+                this.$emit('quote-clicked', quote.innerHTML);
             }
         }
     }
