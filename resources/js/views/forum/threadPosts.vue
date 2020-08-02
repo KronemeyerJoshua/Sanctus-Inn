@@ -10,12 +10,12 @@
         <div class="forum-title" style="">
             <h1 class="title">{{ this.posts[0].thread.title }}</h1>
         </div>
-    <Post v-for="post in posts" :key="post.id" :user-id='post.user.id'>
+    <Post v-for="post in posts" :key="post.id" :user-id='post.user.id' :post-id="post.id" @quote-clicked="quoteInsert">
         <template v-slot:avatar><img :id="'avatar' + post.id" :src="'/storage/images/' + post.user_id + '.jpg'" @error="noImageFound(post.id)"></template>
         <template v-slot:username><router-link :to="'/profile/' + post.user.id">{{post.user.name}}</router-link></template>
         <template v-slot:timestamp>{{ formatDate(post.created_at) }}</template>
         <template v-slot:post-count>Tales Told: {{post.user.posts_count}}</template>
-        <template v-slot:content><p v-html="post.content" style="word-wrap: break-word; color: rgba(215,215,215, 0.8);"></p></template>
+        <template v-slot:content><p :id="'post-'+post.id" v-html="post.content" style="word-wrap: break-word; color: rgba(215,215,215, 0.8);"></p></template>
     </Post>
         <nav v-if="pages > 1" class="pagination is-small is-centered" role="navigation" aria-label="pagination">
             <ul class="pagination-list">
@@ -27,7 +27,7 @@
             </ul>
         </nav>
         <div v-if="this.$store.state.auth.user !== null">
-            <wysiwyg id="wysiwyg" class="wysiwyg" @button-clicked="submitPost"></wysiwyg>
+            <wysiwyg ref="wysiwyg" id="wysiwyg" class="wysiwyg" @button-clicked="submitPost"></wysiwyg>
         </div>
     </div>
     </div>
@@ -63,6 +63,10 @@
             }
         },
         methods: {
+            quoteInsert(data) {
+                console.log(data);
+                this.$refs.wysiwyg.insert(data);
+            },
             goToPage(pageNum) {
 
                 if (pageNum !== this.currentPage) {
