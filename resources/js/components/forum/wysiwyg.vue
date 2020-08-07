@@ -1,20 +1,20 @@
 <template>
     <div style="">
             <div class="toolbar is-flex" style="flex-flow: row wrap">
-                <button class="toolbar-btn button" @click="executeCommand('underline')"><FontAwesomeIcon class="icon" icon="underline" /></button>
-                <button class="toolbar-btn button" @click="executeCommand('bold')"><FontAwesomeIcon class="icon" icon="bold" /></button>
-                <button class="toolbar-btn button" @click="executeCommand('italic')"><FontAwesomeIcon class="icon" icon="italic" /></button>
-                <button class="toolbar-btn button" @click="executeCommand('strikethrough')"><FontAwesomeIcon class="icon" icon="strikethrough" /></button>
-                <button class="toolbar-btn button" @click="executeCommand('subscript')"><FontAwesomeIcon class="icon" icon="subscript" /></button>
-                <button class="toolbar-btn button" @click="executeCommand('superscript')"><FontAwesomeIcon class="icon" icon="superscript" /></button>
-                <button class="toolbar-btn button" @click="executeCommand"><FontAwesomeIcon class="icon" icon="paragraph" /></button>
-                <button class="toolbar-btn button" @click="executeCommand('insertOrderedList')"><FontAwesomeIcon class="icon" icon="list-ol" /></button>
-                <button class="toolbar-btn button" @click="executeCommand('insertUnorderedList')"><FontAwesomeIcon class="icon" icon="list-ul" /></button>
-                <button class="toolbar-btn button" @click="show('align')" ref="align"><FontAwesomeIcon class="icon" icon="align-left" /></button>
-                <button class="toolbar-btn button" @click="show('link')" ref="link"><FontAwesomeIcon class="icon" icon="link" /></button>
-                <button class="toolbar-btn button" @click="show('image')" ref="image"><FontAwesomeIcon class="icon" icon="image" /></button>
-                <button class="toolbar-btn button" @click="show('video')" ref="video"><FontAwesomeIcon class="icon" icon="video" /></button>
-                <button class="toolbar-btn button" @click="show('table')" ref="table"><FontAwesomeIcon class="icon" icon="table" /></button>
+                <span class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.underline)"><FontAwesomeIcon class="icon" icon="underline" /></span>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.bold)"><FontAwesomeIcon class="icon" icon="bold" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.italic)"><FontAwesomeIcon class="icon" icon="italic" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.strikethrough)"><FontAwesomeIcon class="icon" icon="strikethrough" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.subscript)"><FontAwesomeIcon class="icon" icon="subscript" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.superscript)"><FontAwesomeIcon class="icon" icon="superscript" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="executeCommand"><FontAwesomeIcon class="icon" icon="paragraph" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="executeCommand('insertOrderedList')"><FontAwesomeIcon class="icon" icon="list-ol" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="executeCommand('insertUnorderedList')"><FontAwesomeIcon class="icon" icon="list-ul" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('align')" ref="align"><FontAwesomeIcon class="icon" icon="align-left" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('link')" ref="link"><FontAwesomeIcon class="icon" icon="link" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('image')" ref="image"><FontAwesomeIcon class="icon" icon="image" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('video')" ref="video"><FontAwesomeIcon class="icon" icon="video" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('table')" ref="table"><FontAwesomeIcon class="icon" icon="table" /></button>
             </div>
             <div class="popup" v-if="showws" :style="'left:' + this.x + 'px; top: ' + this.y + 'px'">
                 <InsertLink v-if="this.el === 'link'" :link-prop="link" :value-prop="newValue" @insert-link="insertLink"></InsertLink>
@@ -29,14 +29,17 @@
                     <button @click="insertVideo(link)">Insert</button>
                 </div>
             </div>
-            <div @focus="showws = false" id="content-area" class="textarea" ref="text" contenteditable></div>
-            <button class="button is-primary" @click="emitButton">Post</button>
+            <textarea @focus="showws = false" id="content-area" class="textarea" ref="text" v-model="content"></textarea>
+            <button class="button is-primary" @click="bbCodeParse">Post</button>
+        <button class="button is-primary" @click="preview">Preview</button>
 
     </div>
 </template>
 
 <script>
     import { library } from '@fortawesome/fontawesome-svg-core'
+    import bbcode from "../../services/BbcodeService";
+    import { decode } from "../../services/BbcodeService";
     import {
         faUnderline,
         faCode,
@@ -68,9 +71,29 @@
         name: "wysiwyg",
         components: {InsertLink},
         methods: {
+            preventDefault(e) {
+                // This prevents the textarea from losing focus on button mousedown
+                e.preventDefault();
+            },
+            preview() {
+                // TODO: Implement Preview Window
+            },
+            insertbb(ref) {
+                let e = this.$refs.text;
+                let selectionStart = e.selectionStart;
+                let selectionEnd = e.selectionEnd;
+                this.content = this.content.substring(0, e.selectionStart) + ref.tagStart + this.content.substring(e.selectionStart, e.selectionEnd) + ref.tagEnd + this.content.substring(e.selectionEnd, e.length);
+
+                // This forces vue to setSelectionRange after the content variable has been updated
+                setTimeout(() => this.$refs.text.setSelectionRange(selectionStart + ref.tagStart.length, selectionEnd + ref.tagEnd.length-1));
+            },
+            bbCodeParse() {
+                console.log(decode(this.content));
+            },
             emitButton() {
                 this.$emit('button-clicked', this.$refs.text.innerHTML);
             },
+            // TODO: UPDATE BELOW FUNCTIONS TO CORRESPOND TO TEXTAREA AND V-MODEL UPDATES
             insertImage(imgUrl) {
                 this.imageExists(imgUrl, 5000)
                 .then( () => this.insert( "<img src='" + imgUrl + "'>"))
@@ -129,10 +152,7 @@
             insert(string) {
                 this.$refs.text.innerHTML = this.$refs.text.innerHTML.substr(0, this.caretPosition) + string + this.$refs.text.innerHTML.substr(0, this.$refs.text.innerHTML.length);
             },
-            executeCommand(cmd, src) {
-                document.getElementById('content-area').focus();
-                document.execCommand(cmd, false, src);
-            },
+            // END TODO
             updatePopupPosition() {
                 // On window.resize, ensures button popup stays below button
                 if (this.showws) {
@@ -147,35 +167,26 @@
                     this.x = this.$refs[ref].offsetLeft - 30;
                     this.y = this.$refs[ref].offsetTop + 45;
                 }
-
-                if (document.getSelection().type.localeCompare("Range") === 0 && document.getSelection().anchorNode.parentElement === this.$refs.text) {
-                    console.log(document.getSelection());
-                    this.newValue = this.content.substr(document.getSelection().focusOffset, document.getSelection().anchorOffset);
-                    this.originSelect = this.newValue;
-                    this.caretPosition = document.getSelection().focusOffset;
-                }
-
-                if (document.getSelection().type.localeCompare("Caret") === 0 && document.getSelection().anchorNode.parentElement === this.$refs.text) {
-                    this.caretPosition = document.getSelection().anchorOffset;
-                }
             }
         },
         data() {
             return {
-                caretPosition: 0,
-                originSelect: '',
                 content: '',
                 link: '',
                 newValue: '',
                 el: {},
                 x: 0,
                 y: 0,
-                showws: false
+                showws: false,
             }
         },
         beforeDestroy: function () {
             // No longer on this page, destroy our listener
             window.removeEventListener('resize', this.updatePopupPosition)
+        },
+        beforeCreate() {
+            // This needs to be established for us to use bbcode library in our html template
+            this.bbcode = bbcode;
         },
         mounted() {
             // For popup adjust position on resize
