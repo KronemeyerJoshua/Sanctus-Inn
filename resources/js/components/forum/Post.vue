@@ -86,7 +86,6 @@
     }
     p {
         height: 100%;
-        margin-bottom: 15px;
     }
     .post-count {
         width: 100%;
