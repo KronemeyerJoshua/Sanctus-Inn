@@ -1,8 +1,11 @@
 <template>
     <div class="card">
             <p class="headline title is-4 is-flex"><router-link :to="{ name : 'home' }">Welcome to Sanctus Inn</router-link></p>
-            <p class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <p class="content">Hi there and welcome to Sanctus-Inn. This site is currently in a <strong>HEAVY DEVELOPMENT STATE</strong>
+            Any information you leave here will be wiped. If you have questions or concerns, feel free to email me at
+                <a href="mailto: jkroneme@asu.edu">jkroneme@asu.edu</a>
+                <br>
+                Thanks!
             </p>
         <div class="bottom-card is-flex" style="justify-content: space-between">
             <p><router-link to="/forum/1">Announcements</router-link> by <router-link to="/profile/1">Gubstep</router-link></p>
