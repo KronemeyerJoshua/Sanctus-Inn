@@ -12,8 +12,8 @@ let bbcode = {
         tagEnd: "[/i]"
     },
     strikethrough: {
-        tagStart: "[del]",
-        tagEnd: "[/del]"
+        tagStart: "[s]",
+        tagEnd: "[/s]"
     },
     subscript: {
         tagStart: "[sub]",
