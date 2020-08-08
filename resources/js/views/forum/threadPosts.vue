@@ -89,12 +89,18 @@
             {
                 forum.newPost({thread_id: this.thread_id, user_id: this.$store.state.auth.user.id, content: postData})
                 .then(({data}) => {
-                    console.log(data.message);
                     if (data.status == '200')
                     {
-                        forum.getPosts(this.$route.params.threadId)
-                            .then(({data}) =>
-                                this.posts = data)
+                        // Determine if we need to create a new page
+                        if (this.posts[0]['threadPostCount'] % 10 === 0) {
+                            this.pages++;
+                        }
+                        forum.getPosts(this.$route.params.threadId, this.pages)
+                            .then(({data}) => {
+                                this.posts = data;
+                                this.currentPage = this.pages;
+                                this.$router.replace({name: this.$route.name, params: {page: this.currentPage.toString()}})
+                            })
                             .catch((error) => {
                                 console.log(error)
                             })
