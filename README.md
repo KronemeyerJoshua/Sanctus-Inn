@@ -10,6 +10,7 @@ Sanctus Inn is an Ashes forum site built on top of the Laravel and VueJS framewo
 The site is intended to be a project to learn and re-iterate full-stack development
 Any inquiries should be directed to <a href="mailto:jkroneme@asu.edu">jkroneme@asu.edu</a>
 
+- Custom RestAPI built with Laravel
 - Custom WYSIWYG w/ bbcode
 - Custom Datatable built for Vue
 - Custom Forums and Profiles
