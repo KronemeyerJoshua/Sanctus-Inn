@@ -14,10 +14,10 @@ class DiscordRoster extends Migration
     public function up()
     {
         Schema::create('discord_roster', function (Blueprint $table) {
-            $table->integer('id');
+            $table->bigInteger('id');
             $table->text('name');
-            $table->text('race');
-            $table->text('class');
+            $table->text('race')->nullable(true);
+            $table->text('class')->nullable(true);
             $table->timestamps();
         });
     }
