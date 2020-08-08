@@ -10,7 +10,7 @@
         <div class="forum-title" style="">
             <h1 class="title">{{ this.posts[0].thread.title }}</h1>
         </div>
-    <Post v-for="post in posts" :key="post.id" :user-id='post.user.id' :post-id="post.id" @quote-clicked="quoteInsert">
+    <Post v-for="post in posts" :key="post.id" :user-id='post.user.id' :post-id="post.id" @quote-clicked="quoteInsert(post.content, post.user)">
         <template v-slot:avatar><img :id="'avatar' + post.id" :src="'/public/images/' + post.user_id + '.jpg'" @error="noImageFound(post.id)"></template>
         <template v-slot:username><router-link :to="'/profile/' + post.user.id">{{post.user.name}}</router-link></template>
         <template v-slot:timestamp>{{ formatDate(post.created_at) }}</template>
@@ -63,9 +63,9 @@
             }
         },
         methods: {
-            quoteInsert(data) {
+            quoteInsert(data, user) {
                 console.log(data);
-                this.$refs.wysiwyg.insert("<blockquote>" + data + "</blockquote><br>");
+                this.$refs.wysiwyg.insert("[quote=\"" + user.name + ";" + user.id + "\"]" + data + "[/quote]");
             },
             goToPage(pageNum) {
 
