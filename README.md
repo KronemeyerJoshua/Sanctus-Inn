@@ -29,3 +29,8 @@ Anything NOT listed below and found in site dependencies is temporary until I ca
 - <a href="https://github.com/tymondesigns/jwt-auth">JWT-Auth - JSON Web Token Authentication</a>
 - <a href="https://fontawesome.com/">FontAwesome - SVG Icons</a>
 
+### Tokens/Keys Found in the Repo
+
+Yes, I am aware there are tokens/keys in the repo.
+
+They are no longer active and pose no security risk.
