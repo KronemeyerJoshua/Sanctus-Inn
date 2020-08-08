@@ -12,7 +12,16 @@ class SampleForumSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\User::class, 30)->create();
+        factory(\App\User::class, 30)->create()
+        ->each(function ($user) {
+            $user->profile()->saveMany(factory(\App\Profile::class, 1)->create([
+                'id' => $user->id,
+                'forum_id' => $user->name,
+                'discord_id' => $user->name . '#' . rand(1000,9999),
+                'twitch_id' => $user->name . rand(100,1000),
+                'youtube_id' => $user->name . rand(999,9999)
+            ]));
+        });
         factory(\App\forum_category::class, 5)->create()
             ->each(function($cat) {
                 $cat->subcategories()->saveMany(factory(\App\forum_subcategory::class, rand(1,3))->create()
