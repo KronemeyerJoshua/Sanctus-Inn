@@ -40,6 +40,7 @@ class RegisterController extends Controller
         if ($user)
         {
             $profile = new Profile;
+            $profile->id = $user->id;
             $profile->forum_id = $user->name;
             $profile->save();
         }
