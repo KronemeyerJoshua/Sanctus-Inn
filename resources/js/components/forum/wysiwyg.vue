@@ -7,9 +7,9 @@
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.strikethrough)"><FontAwesomeIcon class="icon" icon="strikethrough" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.subscript)"><FontAwesomeIcon class="icon" icon="subscript" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.superscript)"><FontAwesomeIcon class="icon" icon="superscript" /></button>
-                <button class="toolbar-btn button" @mousedown="preventDefault" @click="executeCommand"><FontAwesomeIcon class="icon" icon="paragraph" /></button>
-                <button class="toolbar-btn button" @mousedown="preventDefault" @click="executeCommand('insertOrderedList')"><FontAwesomeIcon class="icon" icon="list-ol" /></button>
-                <button class="toolbar-btn button" @mousedown="preventDefault" @click="executeCommand('insertUnorderedList')"><FontAwesomeIcon class="icon" icon="list-ul" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click=""><FontAwesomeIcon class="icon" icon="paragraph" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click=""><FontAwesomeIcon class="icon" icon="list-ol" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click=""><FontAwesomeIcon class="icon" icon="list-ul" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('align')" ref="align"><FontAwesomeIcon class="icon" icon="align-left" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('link')" ref="link"><FontAwesomeIcon class="icon" icon="link" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('image')" ref="image"><FontAwesomeIcon class="icon" icon="image" /></button>
@@ -88,10 +88,8 @@
                 setTimeout(() => this.$refs.text.setSelectionRange(selectionStart + ref.tagStart.length, selectionEnd + ref.tagEnd.length-1));
             },
             bbCodeParse() {
-                console.log(decode(this.content));
-            },
-            emitButton() {
-                this.$emit('button-clicked', this.$refs.text.innerHTML);
+                let html = decode(this.content);
+                this.$emit('button-clicked', html);
             },
             // TODO: UPDATE BELOW FUNCTIONS TO CORRESPOND TO TEXTAREA AND V-MODEL UPDATES
             insertImage(imgUrl) {
