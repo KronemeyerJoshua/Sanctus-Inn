@@ -19,7 +19,6 @@ class CreateProfilesTable extends Migration
             $table->string('discord_id')->nullable(true);
             $table->string('twitch_id')->nullable(true);
             $table->string('youtube_id')->nullable(true);
-            $table->string('mixer_id')->nullable(true);
             $table->text('bio')->nullable(true);
             $table->text('character')->nullable(true);
             $table->text('race')->nullable(true);
