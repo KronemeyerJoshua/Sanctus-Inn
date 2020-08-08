@@ -1,13 +1,13 @@
 <template>
     <div class="card">
             <p class="headline title is-4 is-flex"><router-link :to="{ name : 'home' }">Welcome to Sanctus Inn</router-link></p>
-            <p class="content">Hi there and welcome to Sanctus-Inn. This site is currently in a <strong>HEAVY DEVELOPMENT STATE</strong>
+            <p class="content" style="height: 60%;">Hi there and welcome to Sanctus-Inn. This site is currently in a <strong>HEAVY DEVELOPMENT STATE</strong>
             Any information you leave here will be wiped. If you have questions or concerns, feel free to email me at
                 <a href="mailto: jkroneme@asu.edu">jkroneme@asu.edu</a>
                 <br>
                 Thanks!
             </p>
-        <div class="bottom-card is-flex" style="justify-content: space-between">
+        <div class="bottom-card is-flex" style="justify-content: space-between; ">
             <p><router-link to="/forum/1">Announcements</router-link> by <router-link to="/profile/1">Gubstep</router-link></p>
             <p style="">3/7/2019 2:23:13</p>
         </div>
