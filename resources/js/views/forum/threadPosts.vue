@@ -11,7 +11,7 @@
             <h1 class="title">{{ this.posts[0].thread.title }}</h1>
         </div>
     <Post v-for="post in posts" :key="post.id" :user-id='post.user.id' :post-id="post.id" @quote-clicked="quoteInsert">
-        <template v-slot:avatar><img :id="'avatar' + post.id" :src="'/storage/images/' + post.user_id + '.jpg'" @error="noImageFound(post.id)"></template>
+        <template v-slot:avatar><img :id="'avatar' + post.id" :src="'/public/images/' + post.user_id + '.jpg'" @error="noImageFound(post.id)"></template>
         <template v-slot:username><router-link :to="'/profile/' + post.user.id">{{post.user.name}}</router-link></template>
         <template v-slot:timestamp>{{ formatDate(post.created_at) }}</template>
         <template v-slot:post-count>Tales Told: {{post.user.posts_count}}</template>
@@ -65,7 +65,7 @@
         methods: {
             quoteInsert(data) {
                 console.log(data);
-                this.$refs.wysiwyg.insert(data);
+                this.$refs.wysiwyg.insert("<blockquote>" + data + "</blockquote><br>");
             },
             goToPage(pageNum) {
 
