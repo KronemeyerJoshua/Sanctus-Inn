@@ -5,10 +5,10 @@
             <div v-else class="" key="2">
                 <div class="columns" style="height: 60vh">
 
-                    <iframe class="column is-three-quarters" id="video-stream"  :src="'https://player.twitch.tv/?channel=' + user + '&autoplay=true'" frameborder="0" allowfullscreen="true"
+                    <iframe class="column is-three-quarters" id="video-stream"  :src="'https://player.twitch.tv/?channel=' + user + '&autoplay=true&parent=sanctusinn.com'" frameborder="0" allowfullscreen="true"
                             @load="streamloaded" v-show="iframeLoaded" scrolling="no" style=""></iframe>
 
-                    <iframe class="column is-one-quarter" id="chat-stream"  :src="'https://twitch.tv/embed/' + user + '/chat'" frameborder="0"  scrolling="no"
+                    <iframe class="column is-one-quarter" id="chat-stream"  :src="'https://twitch.tv/embed/' + user + '/chat?parent=sanctusinn.com'" frameborder="0"  scrolling="no"
                             v-show="iframeLoaded" style=""></iframe>
 
                 </div>
