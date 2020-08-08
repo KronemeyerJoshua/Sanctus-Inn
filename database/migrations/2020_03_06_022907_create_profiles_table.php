@@ -14,16 +14,16 @@ class CreateProfilesTable extends Migration
     public function up()
     {
         Schema::create('profiles', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigInteger('id');
             $table->string('forum_id');
-            $table->string('discord_id');
-            $table->string('twitch_id');
-            $table->string('youtube_id');
-            $table->string('mixer_id');
-            $table->text('bio');
-            $table->text('character');
-            $table->text('race');
-            $table->text('class');
+            $table->string('discord_id')->nullable(true);
+            $table->string('twitch_id')->nullable(true);
+            $table->string('youtube_id')->nullable(true);
+            $table->string('mixer_id')->nullable(true);
+            $table->text('bio')->nullable(true);
+            $table->text('character')->nullable(true);
+            $table->text('race')->nullable(true);
+            $table->text('class')->nullable(true);
             $table->timestamps();
         });
     }
