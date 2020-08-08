@@ -135,6 +135,13 @@
 </script>
 
 <style scoped>
+    .avatar img {
+        min-height: 80px;
+        max-height: 80px;
+    }
+    .avatar {
+        margin-bottom: 0;
+    }
     .title {
         border-bottom: #c0a16b 2px inset;
         margin-bottom: 20px;
