@@ -68,7 +68,7 @@ class TwitchController extends Controller
 
 
         // Gets a random "featured" user
-        if ($user != null && !empty($json_decode['data']) && !preg_match('/[^A-Za-z0-9]/', $user)) {
+        if (!empty($json_decode['data'])) {
             $user = $json_decode['data'][rand(0, count($json_decode['data']) - 1)]['user_id'];
             $tempuser = file_get_contents('https://api.twitch.tv/helix/users?id='.$user, false, $json_context);
             $tempuser = json_decode($tempuser, true);
