@@ -73,7 +73,6 @@ class TwitchController extends Controller
             $tempuser = file_get_contents('https://api.twitch.tv/helix/users?id='.$user, false, $json_context);
             $tempuser = json_decode($tempuser, true);
             $user = $tempuser['data'][0]['login'];
-            break;
         } else {
             $user = 'lolgubstep';
         }
