@@ -6,29 +6,27 @@
             <div class="post-count"><slot name="post-count"></slot></div>
             <slot name="timestamp"></slot>
         </figure>
-        <div class="media-content" style="align-self: stretch;">
-            <div class="content" style="height: 100%;">
-                <slot name="content" id="post-body" class="post-body" style="flex-direction: row;"></slot>
-                <nav class="level is-mobile" style="justify-content: flex-end; margin-top: -20px;" v-if="this.$store.state.auth.user">
+        <div class="media-content is-flex column">
+                <slot name="content" id="post-body" class="post-body" ></slot>
+                <nav class="level is-flex" v-if="this.$store.state.auth.user">
                     <div class="level-right">
-                        <a class="level-item" v-if="userId === userid">
+                        <a class="item" v-if="userId === userid">
                             <span class="icon is-small"><FontAwesomeIcon class="icon" icon="edit" title="Edit" /></span>
                         </a>
-                        <a class="level-item">
+                        <a class="item">
                             <span class="icon is-small"><FontAwesomeIcon class="icon" icon="smile" title="Agree" /></span>
                         </a>
-                        <a class="level-item">
+                        <a class="item">
                             <span class="icon is-small"><FontAwesomeIcon class="icon" icon="frown" title="Disagree" /></span>
                         </a>
-                        <a class="level-item">
+                        <a class="item">
                             <span class="icon is-small"><FontAwesomeIcon class="icon" icon="quote-left" title="Quote" @click="this.scrollIntoView" /></span>
                         </a>
-                        <a class="level-item">
+                        <a class="item">
                             <span class="icon is-small"><FontAwesomeIcon class="icon" icon="flag" title="Report" /></span>
                         </a>
                     </div>
                 </nav>
-            </div>
 
         </div>
     </article>
@@ -77,15 +75,23 @@
 </script>
 
 <style scoped>
+    .level .level-right {
+        align-self: flex-end;
+        padding-bottom: 0.5rem;
+        display: inline-flex;
+    }
+    .level {
+        flex-basis: 100%;
+        justify-content: flex-end;
+    }
     .media + .media {
-
         border-top: 1px rgba(150,150,150,0.7) inset;
     }
-    .media-bottom-right {
-
+    .item {
+        margin-right: 0.5rem;
     }
     p {
-        height: 100%;
+        flex-grow: 1;
     }
     .post-count {
         width: 100%;
@@ -120,5 +126,8 @@
     .media .media-content {
         max-width: 100% !important;
         width: 50% !important;
+        flex-flow: row wrap;
+        align-self: stretch;
+        padding: 0;
     }
 </style>
