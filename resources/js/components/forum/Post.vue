@@ -111,9 +111,10 @@
     .media-left {
     }
     .avatar img {
-        max-height: 32px;
-        height: 32px;
-        width: auto;
+        max-height: 72px;
+        height: 72px;
+        max-width: 72px;
+        width: 72px;
     }
     .username {
         display: block;
