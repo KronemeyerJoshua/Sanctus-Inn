@@ -1,11 +1,18 @@
 <template>
+
     <div class="columns is-multiline">
+        <!-- BEGIN Main News -->
         <div class="column is-two-thirds">
             <div class="columns is-multiline is-centered">
                 <BigNewsCard v-for="count in counter" class="column" style="" :key="count"></BigNewsCard>
             </div>
         </div>
+        <!-- END Main News -->
+
+        <!-- BEGIN Sidebar -->
         <div class="column is-one-third">
+
+            <!-- BEGIN Recent Forum Posts Widget -->
             <div id="recent-forum" class="recent-forum">
                 <h1 class="title">Recent Forum Posts</h1>
                 <ul>
@@ -14,7 +21,11 @@
                     </li>
                 </ul>
             </div>
+            <!-- END Recent Forum Posts Widget -->
+
         </div>
+        <!-- END Sidebar -->
+
     </div>
 </template>
 
@@ -34,6 +45,7 @@
         methods: {
         },
         created() {
+            // Get Recent Forum Post threads for widget
             getRecentThreads(5)
             .then(({data}) => {
                 this.recentThreads = data;
