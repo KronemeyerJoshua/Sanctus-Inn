@@ -3,7 +3,7 @@
         <div class="modal-background" @click="close"></div>
         <div class="modal-content">
 
-            <div class="loginForm" v-on:keydown.enter="login">
+            <div class="loginForm" v-on:keydown.enter="register">
                 <div class="modal-title">Registration</div>
 
                 <div class="field">
