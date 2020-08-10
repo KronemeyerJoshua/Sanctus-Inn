@@ -8,8 +8,8 @@
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.subscript)"><FontAwesomeIcon class="icon" icon="subscript" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.superscript)"><FontAwesomeIcon class="icon" icon="superscript" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click=""><FontAwesomeIcon class="icon" icon="paragraph" /></button>
-                <button class="toolbar-btn button" @mousedown="preventDefault" @click=""><FontAwesomeIcon class="icon" icon="list-ol" /></button>
-                <button class="toolbar-btn button" @mousedown="preventDefault" @click=""><FontAwesomeIcon class="icon" icon="list-ul" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.olist)"><FontAwesomeIcon class="icon" icon="list-ol" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.ulist)"><FontAwesomeIcon class="icon" icon="list-ul" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('align')" ref="align"><FontAwesomeIcon class="icon" icon="align-left" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('link')" ref="link"><FontAwesomeIcon class="icon" icon="link" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('image')" ref="image"><FontAwesomeIcon class="icon" icon="image" /></button>
@@ -85,7 +85,7 @@
                 this.content = this.content.substring(0, e.selectionStart) + ref.tagStart + this.content.substring(e.selectionStart, e.selectionEnd) + ref.tagEnd + this.content.substring(e.selectionEnd, e.length);
 
                 // This forces vue to setSelectionRange after the content variable has been updated
-                setTimeout(() => this.$refs.text.setSelectionRange(selectionStart + ref.tagStart.length, selectionEnd + ref.tagEnd.length-1));
+                setTimeout(() => this.$refs.text.setSelectionRange(selectionStart + ref.tagStart.length, selectionEnd + ref.tagStart.length));
             },
             bbCodeParse() {
                 let html = decode(this.content);
