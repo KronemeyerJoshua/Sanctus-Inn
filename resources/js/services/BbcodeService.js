@@ -22,6 +22,14 @@ let bbcode = {
     superscript: {
         tagStart: "[sup]",
         tagEnd: "[/sup]"
+    },
+    ulist: {
+        tagStart: "[list]\n[*] ",
+        tagEnd: "\n[/list]"
+    },
+    olist: {
+        tagStart: "[list=1]\n[*] ",
+        tagEnd: "\n[/list]"
     }
 };
 
@@ -32,7 +40,10 @@ export function decode(content) {
         '\\[i\\](.+?)\\[/i\\]': '<i>$1</i>',
         '\\[s\\](.+?)\\[/s\\]': '<del>$1</del>',
         '\\[sub\\](.+?)\\[/sub\\]': '<sub>$1</sub>',
-        '\\[sup\\](.+?)\\[/sup\\]': '<sup>$1</sup>'
+        '\\[sup\\](.+?)\\[/sup\\]': '<sup>$1</sup>',
+        '\\[list\\]((.*|\n)*)\\[/list\\]': '<ul>$1</ul>',
+        '^\\[\\*\\](.+?)$': '<li>$1</li>',
+        '\\[list=1\\]((.*|\n)*)\\[/list\\]': '<ol>$1</ol>',
     };
 
     let bb = Object.keys(bbCodeMap).map((regex) => {
