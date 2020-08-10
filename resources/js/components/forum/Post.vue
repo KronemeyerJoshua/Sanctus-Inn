@@ -4,11 +4,13 @@
             <p class="avatar"><slot name="avatar"><img src="public/images/test-news-image.jpg"></slot></p>
             <strong class="username"><slot name="username">John Smith</slot></strong>
             <div class="post-count"><slot name="post-count"></slot></div>
-            <slot name="timestamp"></slot>
         </figure>
         <div class="media-content is-flex column">
                 <slot name="content" id="post-body" class="post-body" ></slot>
                 <nav class="level is-flex" v-if="this.$store.state.auth.user">
+                    <div class="level-left">
+                        <slot name="timestamp"></slot>
+                    </div>
                     <div class="level-right">
                         <a class="item" v-if="userId === userid">
                             <span class="icon is-small"><FontAwesomeIcon class="icon" icon="edit" title="Edit" /></span>
@@ -75,20 +77,27 @@
 </script>
 
 <style scoped>
+    .level-left {
+        justify-self: flex-start;
+        align-self: flex-end;
+    }
     .level .level-right {
         align-self: flex-end;
-        padding-bottom: 0.5rem;
         display: inline-flex;
     }
     .level {
         flex-basis: 100%;
-        justify-content: flex-end;
     }
     .media + .media {
         border-top: 1px rgba(150,150,150,0.7) inset;
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
     }
     .item {
         margin-right: 0.5rem;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
     }
     p {
         flex-grow: 1;
@@ -102,8 +111,8 @@
     .media-left {
     }
     .avatar img {
-        max-height: 64px;
-        height: 64px;
+        max-height: 32px;
+        height: 32px;
         width: auto;
     }
     .username {
