@@ -5,6 +5,11 @@
             Any information you leave here will be wiped. If you have questions or concerns, feel free to email me at
                 <a href="mailto: jkroneme@asu.edu">jkroneme@asu.edu</a>
                 <br>
+
+                The site is built from the ground up with Laravel and VueJS.<br>
+                - Custom Forums, profiles, registration, login, datatables, WYSIWYG<br>
+                Some of these may still be in development and incomplete. <br>
+
                 Thanks!
             </p>
         <div class="bottom-card is-flex" style="justify-content: space-between; flex-grow: 1; align-items: center;">
