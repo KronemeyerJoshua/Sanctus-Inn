@@ -14,7 +14,15 @@ body {
 }
 
 #app .appContainer {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
 
+blockquote {
+    font-style: italic;
+    border-left: solid 1px white;
+    padding-left: 10px;
 }
 
 a {
@@ -26,10 +34,11 @@ a:hover {
     text-decoration: underline;
 }
 .container {
-    min-height: 100vh;
+    flex: 1;
     max-width: 1530px;
-    background: rgba(24,26,25,0.8);
-    box-shadow: 0px 3px 3px 3px #0a0a0a ;
+    background: rgba(24,26,25,0.6);
+    box-shadow: 0px 0px 2px 2px #0a0a0a;
+    width: 100%;
 }
 
 .navbar {
