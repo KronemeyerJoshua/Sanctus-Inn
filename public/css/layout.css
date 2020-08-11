@@ -5,12 +5,26 @@
 }
 
 html {
-    background: #000000 url("../images/background-races.webp") no-repeat fixed bottom;
+    background: rgba(24,26,25,0.9) url("../images/background-races.webp") no-repeat fixed bottom;
     background-size: cover;
     overflow: auto;
 }
 
-body {
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track-piece {
+    display: none;
+    background: rgba(255,255,255,0.1);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 5px black;
+    background: rgba(90,90,90,1);;
 }
 
 #app .appContainer {
