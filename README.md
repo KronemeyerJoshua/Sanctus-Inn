@@ -35,3 +35,8 @@ Anything NOT listed below and found in site dependencies is temporary until I ca
 Yes, I am aware there are tokens/keys in the repo.
 
 They are no longer active and pose no security risk.
+
+### Copyright
+You may look at the repo as an example of my work, it is public for employers. <br>
+I ask that you please don't steal my code. <br>
+Copyright 2020, Joshua Kronemeyer, All rights reserved <br>
