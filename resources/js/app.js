@@ -1,10 +1,7 @@
 import router from './router/routes'
 import store from './store'
 import Vue from 'vue'
-import Vuelidate from 'vuelidate'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-Vue.use(Vuelidate);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
