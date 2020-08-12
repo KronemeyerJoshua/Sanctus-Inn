@@ -40,6 +40,12 @@
             <div v-if="this.$store.state.auth.user !== null">
                 <wysiwyg ref="wysiwyg" id="wysiwyg" class="wysiwyg" @button-clicked="submitPost"></wysiwyg>
             </div>
+            <div style="align-items: center; justify-content: center; text-align: center; width: 50%; margin: 0 auto;" v-else>
+                <p style="border: 2px outset var(--light-grey-bg); margin-top: 2rem; margin-bottom: 2rem;">Please
+                    <a @click="showLogin">Login</a>
+                    or
+                    <a @click="showRegistration">Register</a> to comment</p>
+            </div>
         </div>
     </div>
 </template>
@@ -72,6 +78,18 @@
             }
         },
         methods: {
+            /**
+             * Changes the vuex state to show the login modal
+             */
+            showLogin() {
+                this.$store.state.auth.showLogin = true;
+            },
+            /**
+             * Changes the vuex state to show the registration
+             */
+            showRegistration() {
+                this.$store.state.auth.showRegistration = true;
+            },
             /**
              * Inserts quote into WYSIWYG Editor
              * @param data The post content
