@@ -2,7 +2,8 @@ import apiClient from '../services/EventService'
 import ENUM from './enums'
 
 export const state = {
-    apiState: ENUM.INIT,
+    showLogin: false,
+    showRegistration: false,
     user: null,
     token: window.localStorage.getItem('token'),
 }
