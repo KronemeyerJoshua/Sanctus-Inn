@@ -1,7 +1,7 @@
 <template>
     <div class="appContainer">
     <div class="container">
-        <Navigation @show-login-modal="showLogin" @show-register-modal="showRegister"></Navigation>
+        <Navigation></Navigation>
         <keep-alive>
         <router-view v-if="$route.meta.keepAlive" />
         </keep-alive>
@@ -19,8 +19,8 @@
                 </p>
             </div>
         </div>
-    <Login :class="isActive ? 'is-active' : ''" @close-login-modal="isActive = false"></Login>
-    <Register :class="regIsActive ? 'is-active' : ''" @close-modal="regIsActive = false"></Register>
+    <Login :class="this.$store.state.auth.showLogin ? 'is-active' : ''"></Login>
+    <Register :class="this.$store.state.auth.showRegistration ? 'is-active' : ''"></Register>
     </div>
 </template>
 
@@ -28,17 +28,9 @@
     export default {
         data() {
             return {
-                isActive: false,
-                regIsActive: false
             }
         },
         methods: {
-            showLogin() {
-                this.isActive = true;
-            },
-            showRegister() {
-                this.regIsActive = true
-            }
         }
     }
 </script>
