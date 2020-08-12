@@ -73,7 +73,7 @@
         },
         methods: {
             close() {
-                this.$emit('close-modal')
+                this.$store.state.auth.showRegistration = false;
             },
             register() {
                 if (this.$v.$invalid) {

@@ -49,7 +49,7 @@
         },
         methods: {
             close() {
-                this.$emit('close-login-modal')
+                this.$store.state.auth.showLogin = false;
             },
             login() {
                 if (!this.verifyInputs())
