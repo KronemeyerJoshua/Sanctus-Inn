@@ -15,7 +15,9 @@
                 </div>
                 <p>Copyright &#169; 2020 Sanctus Inn
                 <br>
-                    Sanctus Inn contains content from Ashes of Creation &#169; Intrepid Studios
+                    Sanctus Inn contains content from
+                    <a href="https://ashesofcreation.com">Ashes of Creation</a> &#169;
+                    <a href="https://intrepidstudios.com">Intrepid Studios</a>
                 </p>
             </div>
         </div>
