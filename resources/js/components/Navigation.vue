@@ -83,10 +83,10 @@ export default {
 
     methods: {
         showLogin() {
-            this.$emit('show-login-modal')
+            this.$store.state.auth.showLogin = true;
         },
         showRegister() {
-            this.$emit('show-register-modal')
+            this.$store.state.auth.showRegistration = true;
         },
         async logout() {
             await this.$store.dispatch('auth/logout')
