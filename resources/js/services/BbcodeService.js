@@ -42,10 +42,15 @@ let bbcode = {
     aright: {
         tagStart: '[right]',
         tagEnd: '[/right]'
+    },
+    url: {
+        tagStart: '[url]',
+        tagEnd: '[/url]'
     }
 };
 
 export function decode(content) {
+    // This is the bbcode tag regex -> html map
     let bbCodeMap = {
         '\\[b\\](.+?)\\[/b\\]': '<strong>$1</strong>',
         '\\[u\\](.+?)\\[/u\\]': '<u>$1</u>',
@@ -59,8 +64,11 @@ export function decode(content) {
         '\\[list\\]((.*|\n)*)\\[/list\\]': '<ul>$1</ul>',
         '^\\[\\*\\](.+?)$': '<li>$1</li>',
         '\\[list=1\\]((.*|\n)*)\\[/list\\]': '<ol>$1</ol>',
+        '\\[url\\](.+?)\\[/url\\]': '<a href="$1">$1</a>',
+        '\\[url=(.+?)\\](.+?)\\[/url\\]': '<a href="$1">$2</a>',
     };
 
+    // Get our keys and make them into actual regex objects
     let bb = Object.keys(bbCodeMap).map((regex) => {
         const replacement = bbCodeMap[regex];
 
@@ -70,6 +78,8 @@ export function decode(content) {
         };
     });
 
+    // Go through our tags one-by-one
+    // By looking for tags one at a time, it preserves nested tags
     return bb.reduce((text, bbObj) => text.replace(bbObj.regexp, bbObj.replacement), content);
 }
 
