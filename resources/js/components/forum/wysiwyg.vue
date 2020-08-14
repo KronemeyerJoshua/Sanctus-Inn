@@ -9,9 +9,9 @@
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.superscript)"><FontAwesomeIcon class="icon" icon="superscript" /></button>
 
                 <!-- Paragraph Dropdown Menu -->
-                <div :class="dropdownp ? 'dropdown is-active' : 'dropdown'">
+                <div :class="dropdownmenus.paragraph ? 'dropdown is-active' : 'dropdown'">
                     <div class="dropdown-trigger">
-                        <button class="toolbar-btn button" @mousedown="preventDefault" @click="dropdownp = !dropdownp"><FontAwesomeIcon class="icon" icon="paragraph" /></button>
+                        <button class="toolbar-btn button" @mousedown="preventDefault" @click="dropdownmenus.paragraph = !dropdownmenus.paragraph"><FontAwesomeIcon class="icon" icon="paragraph" /></button>
                     </div>
                     <div class="dropdown-menu" id="dropdown-menu" role="menu">
                         <div class="dropdown-content">
@@ -35,7 +35,22 @@
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.aleft)" ref="align-left"><FontAwesomeIcon class="icon" icon="align-left" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.acenter)" ref="align-center"><FontAwesomeIcon class="icon" icon="align-center" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.aright)" ref="align-right"><FontAwesomeIcon class="icon" icon="align-right" /></button>
-                <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('link')" ref="link"><FontAwesomeIcon class="icon" icon="link" /></button>
+
+                <!-- Url Dropdown Menu -->
+                <div :class="dropdownmenus.url ? 'dropdown is-active' : 'dropdown'">
+                    <div class="dropdown-trigger">
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="dropdownmenus.url = !dropdownmenus.url" ref="url"><FontAwesomeIcon class="icon" icon="link" /></button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <input v-model="link" />
+                            <button @click="insertUrl">Ok</button>
+                            <button>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Paragraph Dropdown Menu -->
+
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('image')" ref="image"><FontAwesomeIcon class="icon" icon="image" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('video')" ref="video"><FontAwesomeIcon class="icon" icon="video" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('table')" ref="table"><FontAwesomeIcon class="icon" icon="table" /></button>
@@ -139,6 +154,32 @@
                 setTimeout(() => this.$refs.text.setSelectionRange(selectionStart + ref.tagStart.length, selectionEnd + ref.tagStart.length));
             },
             /**
+             * Special function for URL bbcode inserts
+             */
+            insertUrl() {
+                // Shorthand Reference
+                let e = this.$refs.text;
+
+                // Grab selection indices before we change any content
+                let selectionStart = e.selectionStart;
+                let selectionEnd = e.selectionEnd;
+
+                if (selectionStart !== selectionEnd) {
+                    // Wraps existing selection in url tag
+                    this.content = this.content.substring(0, e.selectionStart) + "[url=" + this.link + "]" +
+                        this.content.substring(e.selectionStart, e.selectionEnd) + "[/url]" + this.content.substring(e.selectionEnd, e.length);
+                }
+                else {
+                    // No selection found, wrapping url in url tags
+                    this.content = this.content.substring(0, e.selectionStart) + "[url=" + this.link + "]" +
+                        this.link + "[/url]" + this.content.substring(e.selectionEnd, e.length);
+                }
+
+                this.dropdownmenus.url = false;
+                // This forces vue to setSelectionRange after the content variable has been updated
+                setTimeout(() => this.$refs.text.setSelectionRange(selectionStart, selectionEnd));
+            },
+            /**
              * Parses bbcode into HTML before submission
              */
             bbCodeParse() {
@@ -180,27 +221,6 @@
                     img.src = imgUrl;
                 })
             },
-            insertLink(value, link) {
-                // Grab data from insert-link event
-                this.newValue = value;
-                this.link = link;
-
-                // We don't want random anchor tags, ensure content is valid
-                if (this.originSelect.length > 0 && this.link.length > 0) {
-                    this.$refs.text.innerHTML = this.$refs.text.innerHTML.replace(this.originSelect, "<a href='" + this.link + "'>" + this.newValue + "</a>");
-                }
-                else if (this.link.length < 1 || this.newValue < 1) {
-                    this.insert(this.newValue);
-                }
-                else {
-                    this.insert("<a href='" + this.link + "'>" + this.newValue + "</a>");
-                }
-
-                // Hide the window, reset the input data
-                this.showws = false;
-                this.link = '';
-                this.newValue = '';
-            },
             insert(string) {
                 this.$refs.text.innerHTML = this.$refs.text.innerHTML.substr(0, this.caretPosition) + string + this.$refs.text.innerHTML.substr(0, this.$refs.text.innerHTML.length);
             },
@@ -225,7 +245,12 @@
         },
         data() {
             return {
-                dropdownp: false,
+                dropdownmenus: {
+                    paragraph: false,
+                    url: false,
+                    image: false,
+                    table: false
+                },
                 content: '',
                 link: '',
                 newValue: '',
