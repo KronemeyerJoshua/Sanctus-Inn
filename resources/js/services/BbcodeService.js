@@ -30,6 +30,18 @@ let bbcode = {
     olist: {
         tagStart: "[list=1]\n[*] ",
         tagEnd: "\n[/list]"
+    },
+    aleft: {
+        tagStart: '[left]',
+        tagEnd: '[/left]'
+    },
+    acenter: {
+        tagStart: '[center]',
+        tagEnd: '[/center]'
+    },
+    aright: {
+        tagStart: '[right]',
+        tagEnd: '[/right]'
     }
 };
 
@@ -41,6 +53,9 @@ export function decode(content) {
         '\\[s\\](.+?)\\[/s\\]': '<del>$1</del>',
         '\\[sub\\](.+?)\\[/sub\\]': '<sub>$1</sub>',
         '\\[sup\\](.+?)\\[/sup\\]': '<sup>$1</sup>',
+        '\\[center\\](.+?)\\[/center\\]': '<p style="text-align: center">$1</p>',
+        '\\[left\\](.+?)\\[/left\\]': '<p style="text-align: left">$1</p>',
+        '\\[right\\](.+?)\\[/right\\]': '<p style="text-align: right">$1</p>',
         '\\[list\\]((.*|\n)*)\\[/list\\]': '<ul>$1</ul>',
         '^\\[\\*\\](.+?)$': '<li>$1</li>',
         '\\[list=1\\]((.*|\n)*)\\[/list\\]': '<ol>$1</ol>',
