@@ -1,5 +1,5 @@
 <template>
-    <div style="">
+    <div>
             <div class="toolbar is-flex" style="flex-flow: row wrap">
                 <span class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.underline)"><FontAwesomeIcon class="icon" icon="underline" /></span>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.bold)"><FontAwesomeIcon class="icon" icon="bold" /></button>
@@ -68,7 +68,7 @@
                     <button @click="insertVideo(link)">Insert</button>
                 </div>
             </div>
-            <textarea @focus="showws = false" id="content-area" class="textarea" ref="text" v-model="content"></textarea>
+            <textarea @click="Object.keys(dropdownmenus).forEach(k => dropdownmenus[k] = false)" id="content-area" class="textarea" ref="text" v-model="content"></textarea>
             <button class="button is-primary" @click="bbCodeParse">Post</button>
         <button class="button is-primary" @click="preview">Preview</button>
 
