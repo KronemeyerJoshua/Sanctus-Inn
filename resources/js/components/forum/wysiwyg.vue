@@ -43,7 +43,7 @@
                     </div>
                     <div class="dropdown-menu" id="dropdown-menu" role="menu">
                         <div class="dropdown-content">
-                            <input v-model="link" />
+                            <input v-model="image" />
                             <button @click="insertUrl">Ok</button>
                             <button>Cancel</button>
                         </div>
@@ -51,23 +51,26 @@
                 </div>
                 <!-- END Paragraph Dropdown Menu -->
 
-                <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('image')" ref="image"><FontAwesomeIcon class="icon" icon="image" /></button>
+                <!-- Image Dropdown Menu -->
+                <div :class="dropdownmenus.image ? 'dropdown is-active' : 'dropdown'">
+                    <div class="dropdown-trigger">
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="dropdownmenus.image = !dropdownmenus.image" ref="image"><FontAwesomeIcon class="icon" icon="image" /></button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <span ref="imageError"></span>
+                            <input v-model="image" />
+                            <button @click="insertImg">Ok</button>
+                            <button>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Image Dropdown Menu -->
+
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('video')" ref="video"><FontAwesomeIcon class="icon" icon="video" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('table')" ref="table"><FontAwesomeIcon class="icon" icon="table" /></button>
             </div>
-            <div class="popup" v-if="showws" :style="'left:' + this.x + 'px; top: ' + this.y + 'px'">
-                <InsertLink v-if="this.el === 'link'" :link-prop="link" :value-prop="newValue" @insert-link="insertLink"></InsertLink>
 
-                <div v-if="this.el === 'image'">
-                    <input v-model="link" />
-                    <button @click="insertImage(link)">Insert</button>
-                </div>
-
-                <div v-if="this.el === 'video'">
-                    <input v-model="link" />
-                    <button @click="insertVideo(link)">Insert</button>
-                </div>
-            </div>
             <textarea @click="Object.keys(dropdownmenus).forEach(k => dropdownmenus[k] = false)" id="content-area" class="textarea" ref="text" v-model="content"></textarea>
             <button class="button is-primary" @click="bbCodeParse">Post</button>
         <button class="button is-primary" @click="preview">Preview</button>
@@ -180,6 +183,20 @@
                 setTimeout(() => this.$refs.text.setSelectionRange(selectionStart, selectionEnd));
             },
             /**
+             *
+             */
+            insertImg() {
+                // Check if is image link
+                this.imageExists(this.image, 2000)
+                    .then(() => {
+                        this.content += bbcode.img.tagStart + this.image + bbcode.img.tagEnd;
+                    })
+                    .catch( (error) => {
+                        this.$refs.imageError.innerHTML = "Image could not be loaded";
+                        console.log(error);
+                    })
+            },
+            /**
              * Parses bbcode into HTML before submission
              */
             bbCodeParse() {
@@ -187,11 +204,6 @@
                 this.$emit('button-clicked', html);
             },
             // TODO: UPDATE BELOW FUNCTIONS TO CORRESPOND TO TEXTAREA AND V-MODEL UPDATES
-            insertImage(imgUrl) {
-                this.imageExists(imgUrl, 5000)
-                .then( () => this.insert( "<img src='" + imgUrl + "'>"))
-                .catch( () => false); // TODO: SEND ERROR MESSAGE TO POP-UP WINDOW
-            },
             insertVideo(vidUrl) {
                 this.insert("<iframe width='400' height='400' src='" + vidUrl + "' />")
             },
@@ -214,34 +226,14 @@
 
                     // Image timed out, reset img src
                     timer = setTimeout(function () {
-                        img.src = "//!!!!/test.jpg";
+                        img.src = "UnknownImage";
                         reject("timeout");
                     }, timeout);
 
                     img.src = imgUrl;
                 })
             },
-            insert(string) {
-                this.$refs.text.innerHTML = this.$refs.text.innerHTML.substr(0, this.caretPosition) + string + this.$refs.text.innerHTML.substr(0, this.$refs.text.innerHTML.length);
-            },
             // END TODO
-
-            // TODO: Get rid of this hacky ass implementation and use bulmas CSS dropdown
-            updatePopupPosition() {
-                // On window.resize, ensures button popup stays below button
-                if (this.showws) {
-                    this.x = this.$refs[this.el].offsetLeft - 30;
-                    this.y = this.$refs[this.el].offsetTop + 45;
-                }
-            },
-            show(ref) {
-                this.showws = true;
-                if (this.showws) {
-                    this.el = ref;
-                    this.x = this.$refs[ref].offsetLeft - 30;
-                    this.y = this.$refs[ref].offsetTop + 45;
-                }
-            }
         },
         data() {
             return {
@@ -253,11 +245,7 @@
                 },
                 content: '',
                 link: '',
-                newValue: '',
-                el: {},
-                x: 0,
-                y: 0,
-                showws: false,
+                image: ''
             }
         },
         beforeDestroy: function () {
@@ -276,16 +264,6 @@
 </script>
 
 <style scoped>
-    .popup {
-        z-index: 1000 !important;
-        position: absolute;
-        top: 0;
-        background: rgba(40,40,40,0.8);
-        border: 1px solid rgba(212,212,212,0.7);
-        border-radius: 5px;
-        padding: 5px;
-    }
-
     .icon {
         color: white;
     }
