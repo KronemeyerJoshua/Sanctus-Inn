@@ -7,7 +7,28 @@
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.strikethrough)"><FontAwesomeIcon class="icon" icon="strikethrough" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.subscript)"><FontAwesomeIcon class="icon" icon="subscript" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.superscript)"><FontAwesomeIcon class="icon" icon="superscript" /></button>
-                <button class="toolbar-btn button" @mousedown="preventDefault" @click=""><FontAwesomeIcon class="icon" icon="paragraph" /></button>
+
+                <!-- Paragraph Dropdown Menu -->
+                <div :class="dropdownp ? 'dropdown is-active' : 'dropdown'">
+                    <div class="dropdown-trigger">
+                        <button class="toolbar-btn button" @mousedown="preventDefault" @click="dropdownp = !dropdownp"><FontAwesomeIcon class="icon" icon="paragraph" /></button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <a class="dropdown-item">
+                                Quote
+                            </a>
+                            <a class="dropdown-item">
+                                Code
+                            </a>
+                            <a class="dropdown-item">
+                                Spoiler
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Paragraph Dropdown Menu -->
+
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.olist)"><FontAwesomeIcon class="icon" icon="list-ol" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.ulist)"><FontAwesomeIcon class="icon" icon="list-ul" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('align')" ref="align"><FontAwesomeIcon class="icon" icon="align-left" /></button>
@@ -71,22 +92,40 @@
         name: "wysiwyg",
         components: {InsertLink},
         methods: {
+            /**
+             * Prevents the textarea from losing focus when clicking buttons
+             * @param e The element affect
+             */
             preventDefault(e) {
-                // This prevents the textarea from losing focus on button mousedown
                 e.preventDefault();
             },
+            /**
+             * Preview Window for Bbcode -> HTML
+             */
             preview() {
                 // TODO: Implement Preview Window
             },
+            /**
+             * Inserts bbcode into the textarea
+             * @param ref Reference to bbcode js lib for tag
+             */
             insertbb(ref) {
+                // Shorthand Reference
                 let e = this.$refs.text;
+
+                // Grab selection indices before we change any content
                 let selectionStart = e.selectionStart;
                 let selectionEnd = e.selectionEnd;
+
+                // Insert our bbcode tags
                 this.content = this.content.substring(0, e.selectionStart) + ref.tagStart + this.content.substring(e.selectionStart, e.selectionEnd) + ref.tagEnd + this.content.substring(e.selectionEnd, e.length);
 
                 // This forces vue to setSelectionRange after the content variable has been updated
                 setTimeout(() => this.$refs.text.setSelectionRange(selectionStart + ref.tagStart.length, selectionEnd + ref.tagStart.length));
             },
+            /**
+             * Parses bbcode into HTML before submission
+             */
             bbCodeParse() {
                 let html = decode(this.content);
                 this.$emit('button-clicked', html);
@@ -151,6 +190,8 @@
                 this.$refs.text.innerHTML = this.$refs.text.innerHTML.substr(0, this.caretPosition) + string + this.$refs.text.innerHTML.substr(0, this.$refs.text.innerHTML.length);
             },
             // END TODO
+
+            // TODO: Get rid of this hacky ass implementation and use bulmas CSS dropdown
             updatePopupPosition() {
                 // On window.resize, ensures button popup stays below button
                 if (this.showws) {
@@ -169,6 +210,7 @@
         },
         data() {
             return {
+                dropdownp: false,
                 content: '',
                 link: '',
                 newValue: '',
