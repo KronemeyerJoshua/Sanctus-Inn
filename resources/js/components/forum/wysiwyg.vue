@@ -31,7 +31,10 @@
 
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.olist)"><FontAwesomeIcon class="icon" icon="list-ol" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.ulist)"><FontAwesomeIcon class="icon" icon="list-ul" /></button>
-                <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('align')" ref="align"><FontAwesomeIcon class="icon" icon="align-left" /></button>
+
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.aleft)" ref="align-left"><FontAwesomeIcon class="icon" icon="align-left" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.acenter)" ref="align-center"><FontAwesomeIcon class="icon" icon="align-center" /></button>
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="insertbb(bbcode.aright)" ref="align-right"><FontAwesomeIcon class="icon" icon="align-right" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('link')" ref="link"><FontAwesomeIcon class="icon" icon="link" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('image')" ref="image"><FontAwesomeIcon class="icon" icon="image" /></button>
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('video')" ref="video"><FontAwesomeIcon class="icon" icon="video" /></button>
@@ -68,7 +71,17 @@
         faItalic,
         faStrikethrough,
         faSubscript,
-        faSuperscript, faParagraph, faListOl, faListUl, faAlignLeft, faLink, faImage, faVideo, faTable
+        faSuperscript,
+        faParagraph,
+        faListOl,
+        faListUl,
+        faAlignLeft,
+        faAlignCenter,
+        faAlignRight,
+        faLink,
+        faImage,
+        faVideo,
+        faTable
     } from "@fortawesome/free-solid-svg-icons";
 
     library.add(faUnderline,
@@ -82,6 +95,8 @@
         faListOl,
         faListUl,
         faAlignLeft,
+        faAlignRight,
+        faAlignCenter,
         faLink,
         faImage,
         faVideo,
