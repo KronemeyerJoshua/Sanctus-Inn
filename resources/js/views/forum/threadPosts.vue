@@ -144,8 +144,13 @@
                         forum.getPosts(this.$route.params.threadId, this.pages)
                             .then(({data}) => {
                                 this.posts = data;
-                                this.currentPage = this.pages;
-                                this.$router.replace({name: this.$route.name, params: {page: this.currentPage.toString()}})
+                                if (this.currentPage !== this.pages) {
+                                    this.currentPage = this.pages;
+                                    this.$router.replace({
+                                        name: this.$route.name,
+                                        params: {page: this.currentPage.toString()}
+                                    });
+                                }
                             })
                             .catch((error) => {
                                 console.log(error)
