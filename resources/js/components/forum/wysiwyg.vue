@@ -120,10 +120,8 @@
         faVideo,
         faTable);
     // TODO: Image, video, table, align, paragraph
-    import InsertLink from "../wysiwyg/InsertLink";
     export default {
         name: "wysiwyg",
-        components: {InsertLink},
         methods: {
             /**
              * Prevents the textarea from losing focus when clicking buttons
