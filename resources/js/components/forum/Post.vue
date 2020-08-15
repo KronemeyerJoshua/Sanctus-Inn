@@ -16,10 +16,10 @@
                             <span class="icon is-small"><FontAwesomeIcon class="icon" icon="edit" title="Edit" /></span>
                         </a>
                         <a class="item">
-                            <span class="icon is-small"><FontAwesomeIcon class="icon" icon="smile" title="Agree" /></span>
+                            <span class="icon is-small"><FontAwesomeIcon class="icon" icon="smile" title="Agree" />{{agree.length}}</span>
                         </a>
                         <a class="item">
-                            <span class="icon is-small"><FontAwesomeIcon class="icon" icon="frown" title="Disagree" /></span>
+                            <span class="icon is-small"><FontAwesomeIcon class="icon" icon="frown" title="Disagree" />{{disagree.length}}</span>
                         </a>
                         <a class="item">
                             <span class="icon is-small"><FontAwesomeIcon class="icon" icon="quote-left" title="Quote" @click="this.scrollIntoView" /></span>
@@ -48,6 +48,8 @@
         props: {
             postId: [Number],
             userId: [Number],
+            agree: [Array],
+            disagree: [Array],
             default: "Post could not be loaded"
         },
         computed: {
