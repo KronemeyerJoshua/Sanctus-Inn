@@ -14,5 +14,7 @@ $factory->define(forum_posts::class, function (Faker $faker) {
         'thread_id' => $thread_id,
         'user_id' => ($count === 0) ? \App\forum_threads::all()->where('thread_id', $thread_id)->first()->user_id : \App\User::all()->random()->id,
         'content' => $faker->paragraph,
+        'agree' => '1,2,3,4,5',
+        'disagree' => '1,2,3'
     ];
 });
