@@ -19,7 +19,7 @@ class ForumThreadsController extends Controller
     }
 
     public function getRecentThreads($amount) {
-        return forum_threads::latest()->take(5)->get();
+        return forum_threads::latest('updated_at')->take(5)->get();
     }
 
     public function create(Request $request)
