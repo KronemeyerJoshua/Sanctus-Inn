@@ -15,7 +15,7 @@
             </div>
 
             <!-- Begin Posts -->
-            <Post v-for="post in posts" :key="post.id" :user-id='post.user.id' :post-id="post.id" @quote-clicked="quoteInsert(post.content, post.user)" @image-preview="imagePreviewActive = true">
+            <Post v-for="post in posts" :key="post.id" :user-id='post.user.id' :post-id="post.id" @quote-clicked="quoteInsert(post.content, post.user)" @image-preview="imagePreview">
                 <template v-slot:avatar><img :id="'avatar' + post.id" :src="'/public/images/' + post.user_id + '.jpg'" @error="noImageFound(post.id)"></template>
                 <template v-slot:username><router-link :to="'/profile/' + post.user.id">{{post.user.name}}</router-link></template>
                 <template v-slot:timestamp>{{ formatDate(post.created_at) }}</template>
@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <ImagePreview @close-preview-window="imagePreviewActive = false" link-prop="https://i.imgur.com/Hx1qLRX.jpeg" :class="imagePreviewActive ? 'is-active' : ''"></ImagePreview>
+        <ImagePreview @close-preview-window="imagePreviewActive = false" :link-prop="imagePreviewSrc" :class="imagePreviewActive ? 'is-active' : ''"></ImagePreview>
     </div>
 </template>
 
@@ -79,10 +79,19 @@
                 thread_id: this.$route.params.threadId,
                 isLoading: true,
                 imagePreviewActive: false,
+                imagePreviewSrc: '',
                 NavData: []
             }
         },
         methods: {
+            /**
+             * Event Method for image-preview
+             * Gives source to ImagePreview and sets display to true
+             */
+            imagePreview(src) {
+                this.imagePreviewSrc = src;
+                this.imagePreviewActive = true;
+            },
             /**
              * Changes the vuex state to show the login modal
              */
