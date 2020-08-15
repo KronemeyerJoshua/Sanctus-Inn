@@ -78,7 +78,7 @@
             Array.from(this.$refs['media-content'].getElementsByClassName('image-post')).forEach((e) => {
                 e.addEventListener('click', (event) => {
                     event.preventDefault();
-                    this.$emit('image-preview');
+                    this.$emit('image-preview', e.src);
                 })
             });
         }
