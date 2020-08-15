@@ -15,7 +15,7 @@
             </div>
 
             <!-- Begin Posts -->
-            <Post v-for="post in posts" :key="post.id" :user-id='post.user.id' :post-id="post.id" @quote-clicked="quoteInsert(post.content, post.user)">
+            <Post v-for="post in posts" :key="post.id" :user-id='post.user.id' :post-id="post.id" @quote-clicked="quoteInsert(post.content, post.user)" @image-preview="imagePreviewActive = true">
                 <template v-slot:avatar><img :id="'avatar' + post.id" :src="'/public/images/' + post.user_id + '.jpg'" @error="noImageFound(post.id)"></template>
                 <template v-slot:username><router-link :to="'/profile/' + post.user.id">{{post.user.name}}</router-link></template>
                 <template v-slot:timestamp>{{ formatDate(post.created_at) }}</template>
@@ -47,6 +47,8 @@
                     <a @click="showRegistration">Register</a> to comment</p>
             </div>
         </div>
+
+        <ImagePreview @close-preview-window="imagePreviewActive = false" link-prop="https://i.imgur.com/Hx1qLRX.jpeg" :class="imagePreviewActive ? 'is-active' : ''"></ImagePreview>
     </div>
 </template>
 
@@ -58,10 +60,12 @@
 
     import Wysiwyg from "../../components/forum/wysiwyg";
     import NavTree from "../../../../app/Http/Controllers/Forum/NavTree";
+    import ImagePreview from "../../components/wysiwyg/ImagePreview";
 
     export default {
         name: "threadPosts",
         components: {
+            ImagePreview,
             NavTree,
             Wysiwyg,
             Post
@@ -74,6 +78,7 @@
                 posts: {},
                 thread_id: this.$route.params.threadId,
                 isLoading: true,
+                imagePreviewActive: false,
                 NavData: []
             }
         },
@@ -194,6 +199,13 @@
                 .catch((error) => {
                     console.log(error)
                 })
+
+            /* Debugging Window Click Code
+            window.onclick = e => {
+                console.log(e.target);  // to get the element
+                console.log(e.target.tagName);  // to get the element tag name alone
+            }
+             */
         }
     }
 </script>
