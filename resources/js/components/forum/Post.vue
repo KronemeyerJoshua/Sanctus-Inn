@@ -5,8 +5,8 @@
             <strong class="username"><slot name="username">John Smith</slot></strong>
             <div class="post-count"><slot name="post-count"></slot></div>
         </figure>
-        <div class="media-content is-flex column">
-                <slot name="content" id="post-body" class="post-body" ></slot>
+        <div class="media-content is-flex column" ref="media-content">
+                <slot name="content" id="post-body" class="post-body"></slot>
                 <nav class="level is-flex" v-if="this.$store.state.auth.user">
                     <div class="level-left">
                         <slot name="timestamp"></slot>
@@ -72,6 +72,15 @@
                 console.log(quote.innerHTML);
                 this.$emit('quote-clicked', quote.innerHTML);
             }
+        },
+        mounted() {
+            // Binds click events for each image in the post
+            Array.from(this.$refs['media-content'].getElementsByClassName('image-post')).forEach((e) => {
+                e.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    this.$emit('image-preview');
+                })
+            });
         }
     }
 </script>
