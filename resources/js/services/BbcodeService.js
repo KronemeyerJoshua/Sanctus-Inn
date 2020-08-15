@@ -54,6 +54,18 @@ let bbcode = {
     youtube: {
         tagStart: '[youtube]',
         tagEnd: '[/youtube]'
+    },
+    quote: {
+        tagStart: '[quote]',
+        tagEnd: '[/quote]'
+    },
+    code: {
+        tagStart: '[code]',
+        tagEnd: '[/code]'
+    },
+    spoiler: {
+        tagStart: '[spoiler]',
+        tagEnd: '[/spoiler]'
     }
 };
 
