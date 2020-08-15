@@ -50,6 +50,10 @@ let bbcode = {
     img: {
         tagStart: '[img]',
         tagEnd: '[/img]'
+    },
+    youtube: {
+        tagStart: '[youtube]',
+        tagEnd: '[/youtube]'
     }
 };
 
@@ -71,7 +75,8 @@ export function decode(content) {
         '\\[url\\](.+?)\\[/url\\]': '<a href="$1">$1</a>',
         '\\[url=(.+?)\\](.+?)\\[/url\\]': '<a href="$1">$2</a>',
         '\\[img\\](.+?)\\[/img\\]': '<img class="image-post" src="$1">',
-        '\\[img (width=(\\d+[\\s]?)|height=(\\d+[\\s]?)) (width=(\\d+[\\s]?)|height=(\\d+[\\s]?))\](.+?)\\[/img\\]': '<img width="$3" height="$5" class="image-post" src="$7">'
+        '\\[img (width=(\\d+[\\s]?)|height=(\\d+[\\s]?)) (width=(\\d+[\\s]?)|height=(\\d+[\\s]?))\](.+?)\\[/img\\]': '<img width="$3" height="$5" class="image-post" src="$7">',
+        '\\[youtube\\].*(v=|.be)/(.*)\\\\?\\[/youtube\\]': '<iframe width="560" height="315" src="https://youtube.com/embed/$2" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
     };
 
     // Get our keys and make them into actual regex objects
