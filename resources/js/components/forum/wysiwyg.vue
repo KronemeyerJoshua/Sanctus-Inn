@@ -15,13 +15,13 @@
                     </div>
                     <div class="dropdown-menu" id="dropdown-menu" role="menu">
                         <div class="dropdown-content">
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" @click="insertbb(bbcode.quote)">
                                 Quote
                             </a>
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" @click="insertbb(bbcode.code)">
                                 Code
                             </a>
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" @click="insertbb(bbcode.spoiler)">
                                 Spoiler
                             </a>
                         </div>
