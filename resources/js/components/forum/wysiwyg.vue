@@ -67,7 +67,21 @@
                 </div>
                 <!-- END Image Dropdown Menu -->
 
-                <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('video')" ref="video"><FontAwesomeIcon class="icon" icon="video" /></button>
+                <!-- Youtube Dropdown Menu -->
+                <div :class="dropdownmenus.video ? 'dropdown is-active' : 'dropdown'">
+                    <div class="dropdown-trigger">
+                <button class="toolbar-btn button" @mousedown="preventDefault" @click="dropdownmenus.video = !dropdownmenus.video" ref="video"><FontAwesomeIcon class="icon" icon="video" /></button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <input v-model="video" />
+                            <button @click="insertVideo">Ok</button>
+                            <button>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+
                 <button class="toolbar-btn button" @mousedown="preventDefault" @click="show('table')" ref="table"><FontAwesomeIcon class="icon" icon="table" /></button>
             </div>
 
@@ -181,13 +195,15 @@
                 setTimeout(() => this.$refs.text.setSelectionRange(selectionStart, selectionEnd));
             },
             /**
-             *
+             * Inserts bbcode image after checking url
              */
             insertImg() {
+                let e = this.$refs.text;
+
                 // Check if is image link
                 this.imageExists(this.image, 2000)
                     .then(() => {
-                        this.content += bbcode.img.tagStart + this.image + bbcode.img.tagEnd;
+                        this.content = this.content.substring(0, e.selectionEnd) + bbcode.img.tagStart + this.image + bbcode.img.tagEnd + this.content.substring(e.selectionEnd, e.length);
                     })
                     .catch( (error) => {
                         this.$refs.imageError.innerHTML = "Image could not be loaded";
@@ -201,10 +217,19 @@
                 let html = decode(this.content);
                 this.$emit('button-clicked', html);
             },
-            // TODO: UPDATE BELOW FUNCTIONS TO CORRESPOND TO TEXTAREA AND V-MODEL UPDATES
-            insertVideo(vidUrl) {
-                this.insert("<iframe width='400' height='400' src='" + vidUrl + "' />")
+            /**
+             * Inserts bbcode youtube tags and url
+             */
+            insertVideo() {
+                let e = this.$refs.text;
+                this.content = this.content.substring(0, e.selectionEnd) + bbcode.youtube.tagStart + this.video + bbcode.youtube.tagEnd + this.content.substring(e.selectionEnd, e.length);
             },
+            /**
+             * Promise of whether image can be resolved or not
+             * @param imgUrl image url
+             * @param timeoutT ms to wait for response
+             * @returns {Promise<unknown>}
+             */
             imageExists(imgUrl, timeoutT) {
                 return new Promise(function (resolve, reject) {
                     let timeout = timeoutT;
@@ -231,7 +256,6 @@
                     img.src = imgUrl;
                 })
             },
-            // END TODO
         },
         data() {
             return {
@@ -239,11 +263,13 @@
                     paragraph: false,
                     url: false,
                     image: false,
-                    table: false
+                    table: false,
+                    video: false
                 },
                 content: '',
                 link: '',
-                image: ''
+                image: '',
+                video: ''
             }
         },
         beforeDestroy: function () {
