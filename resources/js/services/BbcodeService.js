@@ -46,6 +46,10 @@ let bbcode = {
     url: {
         tagStart: '[url]',
         tagEnd: '[/url]'
+    },
+    img: {
+        tagStart: '[img]',
+        tagEnd: '[/img]'
     }
 };
 
@@ -66,6 +70,8 @@ export function decode(content) {
         '\\[list=1\\]((.*|\n)*)\\[/list\\]': '<ol>$1</ol>',
         '\\[url\\](.+?)\\[/url\\]': '<a href="$1">$1</a>',
         '\\[url=(.+?)\\](.+?)\\[/url\\]': '<a href="$1">$2</a>',
+        '\\[img\\](.+?)\\[/img\\]': '<img class="image-post" src="$1">',
+        '\\[img (width=(\\d+[\\s]?)|height=(\\d+[\\s]?)) (width=(\\d+[\\s]?)|height=(\\d+[\\s]?))\](.+?)\\[/img\\]': '<img width="$3" height="$5" class="image-post" src="$7">'
     };
 
     // Get our keys and make them into actual regex objects
