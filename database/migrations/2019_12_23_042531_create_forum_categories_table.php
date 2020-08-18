@@ -16,6 +16,7 @@ class CreateForumCategoriesTable extends Migration
         Schema::create('forum_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
+            $table->foreignId('permission_id')->default(1)->references('id')->on('permissions');
             $table->timestamps();
         });
     }
