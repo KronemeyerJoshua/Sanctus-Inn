@@ -14,7 +14,7 @@ class CreateProfilesTable extends Migration
     public function up()
     {
         Schema::create('profiles', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->foreignId('id')->references('id')->on('users');
             $table->string('forum_id');
             $table->string('discord_id')->nullable(true);
             $table->string('twitch_id')->nullable(true);
