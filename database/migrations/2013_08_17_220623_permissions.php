@@ -14,7 +14,7 @@ class Permissions extends Migration
     public function up()
     {
         Schema::create('permissions', function (Blueprint $table) {
-            $table->integer('id');
+            $table->unsignedbigInteger('id')->primary();
             $table->text('role');
         });
     }
@@ -26,6 +26,6 @@ class Permissions extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('permissions');
     }
 }
