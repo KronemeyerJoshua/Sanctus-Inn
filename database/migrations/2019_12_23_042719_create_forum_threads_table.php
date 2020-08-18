@@ -15,10 +15,10 @@ class CreateForumThreadsTable extends Migration
     {
         Schema::create('forum_threads', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('subcategory_id');
+            $table->foreignId('subcategory_id')->references('id')->on('forum_subcategories');
             $table->string('title');
-            $table->integer('user_id');
-            $table->integer('permission_id');
+            $table->foreignId('user_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreignId('permission_id')->default(1)->references('id')->on('permissions');
             $table->timestamps();
         });
     }
