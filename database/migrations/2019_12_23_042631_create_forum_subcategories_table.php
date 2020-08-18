@@ -15,9 +15,10 @@ class CreateForumSubcategoriesTable extends Migration
     {
         Schema::create('forum_subcategories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('category_id');
+            $table->foreignId('category_id')->references('id')->on('forum_categories');
             $table->string('title');
             $table->string('description');
+            $table->foreignId('permission_id')->default(1)->references('id')->on('permissions');
             $table->timestamps();
         });
     }
