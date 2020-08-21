@@ -16,7 +16,7 @@
 
             <!-- Begin Posts -->
             <Post v-for="post in posts" :key="post.id" :user-id='post.user.id' :post-id="post.id" @quote-clicked="quoteInsert(post.content, post.user)" @image-preview="imagePreview" :agree="post.agree" :disagree="post.disagree">
-                <template v-slot:avatar><img :id="'avatar' + post.id" :src="'/public/images/' + post.user_id + '.jpg'" @error="noImageFound(post.id)"></template>
+                <template v-slot:avatar><img :id="'avatar' + post.id" :src="post.user.avatar ? '/public/images/' + post.user.avatar : '/public/images/default.jpg'" @error="noImageFound(post.id)"></template>
                 <template v-slot:username><router-link :to="'/profile/' + post.user.id">{{post.user.name}}</router-link></template>
                 <template v-slot:timestamp>{{ formatDate(post.created_at) }}</template>
                 <template v-slot:post-count>Tales Told: {{post.user.posts_count}}</template>
