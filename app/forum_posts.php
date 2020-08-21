@@ -14,4 +14,12 @@ class forum_posts extends Model
     public function thread() {
         return $this->belongsTo('App\forum_threads', 'thread_id')->select(array('id', 'subcategory_id', 'title'));
     }
+
+    public function agree() {
+        return $this->hasMany('App\PostAgree', 'post_id')->select('id');
+    }
+
+    public function disagree() {
+        return $this->hasMany('App\PostDisagree', 'post_id')->select('id');
+    }
 }
