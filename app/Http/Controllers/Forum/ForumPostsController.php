@@ -19,6 +19,12 @@ class ForumPostsController extends Controller
         {
             $post->user->name;
             $post->user->loadCount('posts');
+            foreach ($post->agree as $a) {
+                $a->user;
+            }
+            foreach ($post->disagree as $d) {
+                $d->user;
+            }
         }
         return $posts;
     }
