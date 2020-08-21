@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->integer('rate_limit')->default(2);
+            $table->text('avatar')->nullable();
             $table->foreignId('permission_id')->default(1)->references('id')->on('permissions');
         });
     }
