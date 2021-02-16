@@ -2,37 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class RosterController extends Controller
 {
     public function getRosterData()
     {
-        $json_options = [
-            "http" => [
-                "method" => "GET",
-                "header" => "Authorization: Bot NjM2NzkyMjc1NTY1MDE5MTQ3.XbE61A.d6ZwpH7OFdPFbCOtWvdCIXjxMqU"
-            ]
-        ];
-        $json_decode = array();
-            $game_races = array("Kaelar", "Vaelune", "Empyrean", "Py'Rai", "Ren'Kai", "Vek", "Dünir", "Niküa", "Tulnar");
-            $game_classes = array("Bard", "Cleric", "Fighter", "Mage", "Ranger", "Rogue", "Summoner", "Tank");
+        $game_races = array("Kaelar", "Vaelune", "Empyrean", "Py'Rai", "Ren'Kai", "Vek", "Dünir", "Niküa", "Tulnar");
+        $game_classes = array("Bard", "Cleric", "Fighter", "Mage", "Ranger", "Rogue", "Summoner", "Tank");
 
-            $json_context = stream_context_create($json_options);
-
-            $json_get = file_get_contents('https://discordapp.com/api/guilds/504797119530663964/roles?limit=1000', false, $json_context);
+        $json_decode = Http::withOptions([
+            "verify" => false])
+            ->withHeaders(["Authorization" => "Bot NjM2NzkyMjc1NTY1MDE5MTQ3.XbExBQ.s1O93EyVxfBPAA8FaWkarOR8c6Q"])
+            ->get("https://discordapp.com/api/guilds/504797119530663964/roles?limit=1000")
+            ->json();
 
             $roles = array();
-
-            $json_decode = json_decode($json_get, true);
-
             foreach ($json_decode as $role) {
                 $roles += [$role['id'] => $role['name']];
             }
 
-            $json_get = file_get_contents('https://discordapp.com/api/guilds/504797119530663964/members?limit=1000', false, $json_context);
-
-            $json_decode = json_decode($json_get, true);
+            $json_decode = Http::withOptions([
+                "verify" => false])
+                ->withHeaders(["Authorization" => "Bot NjM2NzkyMjc1NTY1MDE5MTQ3.XbExBQ.s1O93EyVxfBPAA8FaWkarOR8c6Q"])
+                ->get("https://discordapp.com/api/guilds/504797119530663964/members?limit=1000")
+                ->json();
 
             $users = array();
             foreach ($json_decode as $member) {
