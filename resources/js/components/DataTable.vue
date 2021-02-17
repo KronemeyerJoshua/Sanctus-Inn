@@ -3,7 +3,7 @@
                 <table class="table is-hoverable is-fullwidth">
                     <thead>
                     <tr>
-                        <th v-for="column in columns" @click="sortListString(column.field)">{{ column.label }}</th>
+                        <th class="is-unselectable" v-for="column in columns" @click="sortListString(column.field)">{{ column.label }}</th>
                     </tr>
                     </thead>
                     <tr v-for="member in this.data.slice(( (this.currentPage-1) * pageSize), pageSize * currentPage)">
